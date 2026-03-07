@@ -1,11 +1,37 @@
-<script setup lang="ts"></script>
-
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div class="app-container">
+    <NavBar v-if="route.path !== '/'" />
+    <div class="router-wrapper">
+      <RouterView />
+    </div>
+  </div>
 </template>
 
-<style scoped></style>
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
+import NavBar from './components/NavBar.vue'
+import { useAuthStore } from './stores/auth'
+
+const authStore = useAuthStore()
+const route = useRoute()
+
+onMounted(async () => {
+  if (authStore.token && !authStore.user) {
+    await authStore.fetchUser()
+  }
+})
+</script>
+
+<style scoped>
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.router-wrapper {
+  flex: 1;
+  overflow-y: auto;
+}
+</style>

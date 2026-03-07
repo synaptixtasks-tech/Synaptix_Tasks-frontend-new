@@ -1,0 +1,278 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  height: 100%;
+  background: #0f0314;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 135deg;
+  inherits: false;
+}
+
+body {
+  background-image: linear-gradient(
+    var(--angle),
+    hsl(274deg 81% 22%) 0%,
+    hsl(302deg 99% 19%) 13%,
+    hsl(319deg 94% 24%) 27%,
+    hsl(341deg 68% 37%) 42%,
+    hsl(14deg 61% 49%) 60%,
+    hsl(41deg 87% 45%) 100%
+  );
+
+  animation: gradientShift 15s ease-in-out infinite;
+  background-size: 150% 150%;
+  color: #e8e8f0;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    --angle: 135deg;
+  }
+  50% {
+    --angle: 200deg;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #523a5c;
+}
+::-webkit-scrollbar-thumb {
+  background: #9d88ab;
+  border-radius: 3px;
+}
+
+*/ #app {
+  position: relative;
+  z-index: 1;
+}
+#app-container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Buttons */
+.btn {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 22px;
+  border: 1px solid #9d88ab;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: transparent;
+  color: #c8c8d8;
+}
+/* .btn:hover {
+  border-color: #7fff6e;
+  color: #7fff6e;
+} */
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: #0f0314;
+  color: #523a5c;
+  /* border-color: #7fff6e; */
+  font-weight: 700;
+}
+.btn-primary:hover {
+  background: #79578f;
+  /* border-color: #a0ff8f; */
+  color: #fff;
+}
+
+.btn-danger {
+  color: #ff6eab;
+  border-color: #ff6eab;
+}
+.btn-danger:hover {
+  background: #ff6eab;
+  color: #523a5c;
+}
+
+.btn-ghost {
+  border-color: transparent;
+}
+.btn-ghost:hover {
+  border-color: #9d88ab;
+}
+
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 11.5px;
+}
+
+@media (max-width: 480px) {
+  .btn {
+    font-size: 11px;
+    padding: 8px 16px;
+  }
+
+  .btn-sm {
+    padding: 6px 12px;
+    font-size: 10px;
+  }
+}
+
+/* Inputs */
+input,
+textarea {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  background: #6b4f7d;
+  border: 1px solid #8a7498;
+  border-radius: 4px;
+  color: #e8e8f0;
+  padding: 10px 16px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+input:focus,
+textarea:focus {
+  border-color: #0f0314;
+  input::placeholder,
+  textarea::placeholder {
+    color: #a8a8b8;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  @media (max-width: 480px) {
+    input,
+    textarea {
+      font-size: 13px;
+      padding: 8px 12px;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      font-size: 12px;
+    }
+  }
+
+  /* Utility */
+  .tag {
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+  .tag-active {
+    background: rgba(127, 255, 110, 0.1);
+    color: #0f0314;
+    border: 1px solid rgba(127, 255, 110, 0.2);
+  }
+  .tag-done {
+    background: #6b4f7d;
+    color: #a8a8b8;
+    border: 1px solid #8a7498;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+
+  .fade-up {
+    animation: fadeUp 0.35s ease forwards;
+  }
+  .fade-in {
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  /* Error message */
+  .error-msg {
+    font-size: 12.5px;
+    color: #ff6eab;
+    padding: 10px 16px;
+    border: 1px solid rgba(255, 110, 171, 0.25);
+    border-radius: 4px;
+    background: rgba(255, 110, 171, 0.05);
+  }
+
+  /* Spinner */
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #8a7498;
+    border-top-color: #0f0314;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    display: inline-block;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

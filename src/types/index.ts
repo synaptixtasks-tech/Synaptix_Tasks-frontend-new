@@ -1,6 +1,14 @@
-export interface User {
+export interface TaskCreate {
+  title: string
+  description?: string | null
+  completed?: boolean
+}
+
+export interface Task extends TaskCreate {
   id: number
-  username: string
+  user_id: number
+  date_created: string
+  completed: boolean
 }
 
 export interface UserCreate {
@@ -8,22 +16,12 @@ export interface UserCreate {
   password: string
 }
 
-export interface Task {
+export interface User {
   id: number
-  title: string
-  description: string | null
-  completed: boolean
-  date_created: string
-  user_id: number
+  username: string
 }
 
-export interface TaskCreate {
-  title: string
-  description?: string | null
-  completed?: boolean
-}
-
-export interface AuthResponse {
+export interface TokenResponse {
   access_token: string
   token_type: string
 }
