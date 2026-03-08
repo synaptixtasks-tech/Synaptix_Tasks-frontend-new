@@ -24,7 +24,7 @@ export const useAuthStore = defineStore('auth', () => {
       if (errorMsg.includes('401')) {
         error.value = 'Invalid username or password'
       } else if (errorMsg.includes('Failed to connect') || errorMsg.includes('fetch')) {
-        error.value = 'Cannot connect to server. Is the backend running?'
+        error.value = 'Cannot connect to server.'
       } else {
         error.value = errorMsg
       }
@@ -51,7 +51,7 @@ export const useAuthStore = defineStore('auth', () => {
       } else if (errorMsg.includes('already exists') || errorMsg.includes('409')) {
         error.value = 'Username already exists'
       } else if (errorMsg.includes('Failed to connect') || errorMsg.includes('fetch')) {
-        error.value = 'Cannot connect to server. Is the backend running?'
+        error.value = 'Cannot connect to server.'
       } else {
         error.value = errorMsg
       }

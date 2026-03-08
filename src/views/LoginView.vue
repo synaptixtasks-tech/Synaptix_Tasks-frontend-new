@@ -2,11 +2,11 @@
   <div class="auth-page animate-on-load">
     <div class="auth-card fade-up">
       <div class="auth-header">
-        <div class="logo-big"><span class="lb">[</span>SYNAPTIX<span class="lb">]</span></div>
-        <p class="auth-sub">Neural task management</p>
+        <div class="logo-big"><span class="lb">[</span>SYNAPTIX Tasks<span class="lb">]</span></div>
+        <p class="auth-sub">LOGIN</p>
       </div>
 
-      <div class="auth-body">
+      <div class="auth-body animate-on-load" style="animation-delay: 0.3s">
         <div class="field">
           <label>USERNAME</label>
           <input
@@ -20,19 +20,56 @@
 
         <div class="field">
           <label>PASSWORD</label>
-          <input
-            v-model="password"
-            type="password"
-            placeholder="enter password"
-            @keyup.enter="handleLogin"
-            autocomplete="current-password"
-          />
+          <div class="input-wrapper">
+            <input
+              v-model="password"
+              :type="showPassword ? 'text' : 'password'"
+              placeholder="enter password"
+              @keyup.enter="handleLogin"
+              autocomplete="current-password"
+            />
+            <button
+              class="eye-btn"
+              @click="showPassword = !showPassword"
+              type="button"
+              tabindex="-1"
+            >
+              <svg
+                v-if="!showPassword"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <svg
+                v-else
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                />
+                <line x1="1" y1="1" x2="23" y2="23" />
+              </svg>
+            </button>
+          </div>
         </div>
 
         <div v-if="auth.error" class="error-msg">{{ auth.error }}</div>
 
-        <button class="btn btn-primary w-full" @click="handleLogin" :disabled="auth.loading">
-          <span v-if="auth.loading" class="spinner"></span>
+        <button class="btn btn-primary logre w-full" @click="handleLogin" :disabled="auth.loading">
+          <span v-if="auth.loading">CONNECTING...</span>
           <span v-else>ACCESS SYSTEM</span>
         </button>
 
@@ -55,6 +92,7 @@ const router = useRouter()
 
 const username = ref('')
 const password = ref('')
+const showPassword = ref(false)
 
 async function handleLogin() {
   if (!username.value || !password.value) return
@@ -103,15 +141,13 @@ setTimeout(() => {
 
 .auth-card {
   width: 100%;
-  max-width: 420px;
-  border: 1px solid #9d88ab;
+  max-width: 480px;
   border-radius: 8px;
-  background: #6b4f7d;
+  background: rgba(15, 3, 20, 0.5);
   position: relative;
   z-index: 1;
 }
 
-/* Top accent bar */
 .auth-card::before {
   content: '';
   position: absolute;
@@ -136,7 +172,27 @@ setTimeout(() => {
   letter-spacing: 0.2em;
   color: #e8e8f0;
   margin-bottom: 8px;
+  position: relative;
 }
+
+.logo-big::before {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    hsl(274deg 81% 22%) 0%,
+    hsl(302deg 99% 19%) 13%,
+    hsl(319deg 94% 24%) 27%,
+    hsl(341deg 68% 37%) 42%,
+    hsl(14deg 61% 49%) 60%,
+    hsl(41deg 87% 45%) 100%
+  );
+}
+
 .lb {
   color: #0f0314;
 }
@@ -166,6 +222,41 @@ label {
   letter-spacing: 0.12em;
 }
 
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding-right: 42px;
+}
+
+.eye-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a8a8b8;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.eye-btn:hover {
+  color: #e8e8f0;
+}
+
+.eye-btn svg {
+  width: 17px;
+  height: 17px;
+}
+
 .w-full {
   width: 100%;
   justify-content: center;
@@ -177,7 +268,7 @@ label {
   color: #a8a8b8;
 }
 .auth-footer a {
-  color: #0f0314;
+  color: #fff;
   text-decoration: none;
   margin-left: 4px;
 }
