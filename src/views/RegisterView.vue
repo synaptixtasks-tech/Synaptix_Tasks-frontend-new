@@ -197,6 +197,14 @@ setTimeout(() => {
   flex-direction: column;
   gap: 6px;
 }
+
+input:focus,
+textarea:focus {
+  border: 1px solid #8a7498;
+  color: #fff;
+  transform: scale(1.05);
+}
+
 label {
   font-size: 11px;
   color: #a8a8b8;

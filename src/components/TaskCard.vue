@@ -119,22 +119,17 @@ function formatDate(d: string | null | undefined) {
 
 <style scoped>
 .task-card {
-  border: 1px solid #8a7498;
   border-radius: 4px;
   padding: 16px 19px;
-  background: #6b4f7d;
+  background: rgba(15, 3, 20, 0.5);
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  transition:
-    border-color 0.15s,
-    background 0.15s;
-  animation: fadeUp 0.25s ease forwards;
+  transition: none;
 }
 .task-card:hover {
-  border-color: #9d88ab;
-  background: #7d5f8f;
+  background: rgba(15, 3, 20, 0.85);
 }
 .task-card.done {
   opacity: 0.55;
@@ -165,7 +160,6 @@ function formatDate(d: string | null | undefined) {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s ease;
   color: #523a5c;
 }
 .check-inner:hover {
@@ -173,7 +167,6 @@ function formatDate(d: string | null | undefined) {
 }
 .check-inner.checked {
   background: #8c64a5;
-  border-color: #8c64a5;
 }
 .check-inner svg {
   width: 10px;
@@ -234,7 +227,6 @@ function formatDate(d: string | null | undefined) {
   cursor: pointer;
   padding: 6px;
   color: #a8a8b8;
-  transition: all 0.15s ease;
   display: flex;
   align-items: center;
 }
@@ -243,8 +235,8 @@ function formatDate(d: string | null | undefined) {
   height: 14px;
 }
 .action-btn.edit:hover {
-  color: #8c64a5;
-  border-color: rgba(79, 255, 223, 0.3);
+  color: #fff;
+  border-color: #ccc;
   background: rgba(79, 255, 223, 0.05);
 }
 .action-btn.del:hover {
@@ -265,11 +257,15 @@ function formatDate(d: string | null | undefined) {
   gap: 8px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .task-card {
     gap: 8px;
     padding: 12px 16px;
     flex-direction: column;
+  }
+
+  .task-card:hover {
+    background: rgba(15, 3, 20, 0.5);
   }
 
   .task-left {
@@ -295,6 +291,10 @@ function formatDate(d: string | null | undefined) {
   .task-card {
     gap: 8px;
     padding: 10px 12px;
+  }
+
+  .task-card:hover {
+    background: rgba(15, 3, 20, 0.5);
   }
 
   .task-left {

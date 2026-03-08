@@ -156,10 +156,11 @@ body {
 }
 
 .btn-ghost {
-  border-color: transparent;
+  border: none;
 }
 .btn-ghost:hover {
-  border-color: #9d88ab;
+  color: #000;
+  background: #ff6eab;
 }
 
 .btn-sm {
@@ -197,7 +198,6 @@ input:focus,
 textarea:focus {
   border: 1px solid #8a7498;
   color: #fff;
-  transform: scale(1.05);
 }
 
 input::placeholder,
@@ -240,49 +240,13 @@ textarea {
 }
 .tag-active {
   background: rgba(127, 255, 110, 0.1);
-  color: #0f0314;
-  border: 1px solid rgba(127, 255, 110, 0.2);
+  color: #ccc;
+  border: 1px solid rgba(15, 3, 20, 0.7);
 }
 .tag-done {
   background: #6b4f7d;
   color: #a8a8b8;
   border: 1px solid #8a7498;
-}
-
-/* Animations */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
-  }
-}
-
-.fade-up {
-  animation: fadeUp 0.35s ease forwards;
-}
-.fade-in {
-  animation: fadeIn 0.3s ease forwards;
 }
 
 /* Error message */

@@ -21,7 +21,7 @@ import { RouterLink } from 'vue-router'
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 0;
 }
 
 .not-found-container {
@@ -34,23 +34,23 @@ import { RouterLink } from 'vue-router'
 }
 
 .error-code {
-  font-size: 5rem;
+  font-size: 10rem;
   font-weight: 700;
   color: #0f0314;
-  margin-bottom: 1rem;
-  text-shadow: 0 0 20px rgba(127, 255, 110, 0.3);
+  margin-bottom: 0;
+  transform: translateY(25px);
 }
 
 h1 {
   font-size: 2.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: #e8e8f0;
 }
 
 p {
   font-size: 1.1rem;
   color: #c8c8d8;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .btn {

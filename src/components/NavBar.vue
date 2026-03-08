@@ -137,7 +137,7 @@ setTimeout(() => {
 
 .nav-link {
   font-family: 'Poppins', sans-serif;
-  font-size: clamp(10px, 2vw, 12.5px);
+  font-size: clamp(15px, 2vw, 12.5px);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #c8c8d8;

@@ -2,13 +2,13 @@
   <div class="tasks-page">
     <!-- Header -->
     <div class="page-header">
-      <div class="header-left">
+      <div class="header-left animate-on-load" style="transition-delay: 0s">
         <h1 class="page-title"><span class="title-acc">//</span> TASKS</h1>
         <p class="page-meta" v-if="auth.user">
           user: <span>{{ auth.user.username }}</span>
         </p>
       </div>
-      <div class="stats-row">
+      <div class="stats-row animate-on-load" style="transition-delay: 0.05s">
         <div class="stat">
           <span class="stat-num">{{ tasks.stats.total }}</span>
           <span class="stat-label">total</span>
@@ -27,7 +27,7 @@
     </div>
 
     <!-- Add Task -->
-    <div class="add-task-section">
+    <div class="add-task-section animate-on-load" style="transition-delay: 0.1s">
       <div class="add-task-form" :class="{ expanded: isAdding }">
         <div class="add-row">
           <input
@@ -54,7 +54,7 @@
     </div>
 
     <!-- Filters -->
-    <div class="filters">
+    <div class="filters animate-on-load" style="transition-delay: 0.15s">
       <button
         v-for="f in filters"
         :key="f.value"
@@ -67,10 +67,8 @@
     </div>
 
     <!-- Task List -->
-    <div class="task-list">
-      <div v-if="tasks.loading" class="empty-state">
-        <div class="spinner"></div>
-      </div>
+    <div class="task-list animate-on-load" style="transition-delay: 0.2s">
+      <div v-if="tasks.loading" class="empty-state"></div>
 
       <div v-else-if="tasks.filtered.length === 0" class="empty-state">
         <div class="empty-icon">[ ]</div>
@@ -78,7 +76,13 @@
         <span v-if="tasks.filter !== 'all'">Try a different filter.</span>
       </div>
 
-      <TransitionGroup name="task" tag="div" class="task-list-inner">
+      <TransitionGroup
+        name="task"
+        tag="div"
+        class="task-list-inner"
+        @enter="onEnter"
+        @leave="onLeave"
+      >
         <TaskCard
           v-for="task in tasks.filtered"
           :key="task.id"
@@ -98,7 +102,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useTasksStore } from '../stores/tasks'
 import TaskCard from '../components/TaskCard.vue'
@@ -116,8 +120,6 @@ const filters: Array<{ value: 'all' | 'active' | 'done'; label: string }> = [
   { value: 'done', label: 'Done' },
 ]
 
-onMounted(() => tasks.fetchTasks())
-
 async function submitTask() {
   if (!newTitle.value.trim()) return
   await tasks.addTask(newTitle.value.trim(), newDesc.value.trim() || null)
@@ -131,11 +133,43 @@ function cancelAdd() {
   newDesc.value = ''
   isAdding.value = false
 }
+
+function onEnter(el: Element, done: () => void) {
+  const index = [...(el.parentNode?.children ?? [])].indexOf(el as HTMLElement)
+  ;(el as HTMLElement).style.transitionDelay = `${index * 0.05}s`
+  el.addEventListener('transitionend', done, { once: true })
+}
+
+function onLeave(el: Element, done: () => void) {
+  ;(el as HTMLElement).style.transitionDelay = '0s'
+  done()
+}
+
+onMounted(async () => {
+  await tasks.fetchTasks()
+  await nextTick()
+  document.querySelectorAll('.animate-on-load').forEach((el) => {
+    el.classList.add('visible')
+  })
+})
 </script>
 
 <style scoped>
+.animate-on-load {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+.animate-on-load.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .tasks-page {
-  max-width: 760px;
+  max-width: 800px;
   margin: 0 auto;
   padding: clamp(20px, 4vw, 40px) clamp(16px, 5vw, 24px);
   padding-top: 110px;
@@ -159,7 +193,7 @@ function cancelAdd() {
   margin-bottom: 6px;
 }
 .title-acc {
-  color: #8c64a5;
+  color: rgba(15, 3, 20, 1);
   margin-right: 0.3em;
 }
 
@@ -178,10 +212,9 @@ function cancelAdd() {
   flex-wrap: wrap;
   align-items: center;
   gap: clamp(8px, 2vw, 16px);
-  border: 1px solid #8a7498;
   border-radius: 4px;
   padding: clamp(8px, 2vw, 11px) clamp(12px, 3vw, 19px);
-  background: #6b4f7d;
+  background: rgba(15, 3, 20, 0.6);
 }
 
 .stat {
@@ -209,7 +242,7 @@ function cancelAdd() {
 .stat-divider {
   width: 1px;
   height: 30px;
-  background: #8a7498;
+  background: rgba(15, 3, 20, 0.5);
 }
 
 /* Add task */
@@ -217,13 +250,16 @@ function cancelAdd() {
   margin-bottom: 24px;
 }
 .add-task-form {
-  border: 1px solid #8a7498;
   border-radius: 4px;
-  background: #6b4f7d;
+  background: rgba(15, 3, 20, 0.7);
   overflow: hidden;
-  transition: border-color 0.15s;
+  max-height: 60px;
+  transition:
+    max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.2s ease;
 }
 .add-task-form.expanded {
+  max-height: 200px;
   border-color: #9d88ab;
 }
 .add-row {
@@ -239,6 +275,7 @@ function cancelAdd() {
   font-size: 14px;
   flex: 1;
   padding: 6px 10px;
+  transition: all 0.15s;
 }
 .add-input:focus {
   outline: none;
@@ -247,6 +284,7 @@ function cancelAdd() {
 .desc-row {
   padding: 0 10px 10px;
   border-top: 1px solid #8a7498;
+  animation: slideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .desc-row textarea {
   border: none;
@@ -254,6 +292,17 @@ function cancelAdd() {
   background: transparent;
   padding: 10px;
   font-size: 13px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Filters */
@@ -274,16 +323,23 @@ function cancelAdd() {
   background: transparent;
   color: #a8a8b8;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition:
+    color 0.2s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.15s ease;
 }
 .filter-btn:hover {
   color: #e8e8f0;
   border-color: #9d88ab;
 }
+.filter-btn:active {
+  transform: scale(0.97);
+}
 .filter-btn.active {
-  color: #8c64a5;
-  border-color: rgba(127, 255, 110, 0.4);
-  background: rgba(127, 255, 110, 0.06);
+  color: #000;
+  border-color: transparent;
+  background: #fff;
 }
 
 /* Task list */
@@ -315,15 +371,26 @@ function cancelAdd() {
   letter-spacing: 0.3em;
 }
 
-/* Transitions */
+/* TransitionGroup */
 .task-enter-active {
-  animation: fadeUp 0.25s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .task-leave-active {
-  animation: fadeUp 0.2s ease reverse;
+  transition: none;
+  transition-delay: 0s !important;
+  position: absolute;
+  width: 100%;
+}
+.task-enter-from {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.task-leave-to {
+  opacity: 0;
+  transform: translateX(20px);
 }
 .task-move {
-  transition: transform 0.25s ease;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (max-width: 768px) {
@@ -351,7 +418,7 @@ function cancelAdd() {
   }
 
   .filter-btn {
-    font-size: 10px;
+    font-size: 15px;
     padding: 5px 12px;
   }
 }
@@ -371,8 +438,7 @@ function cancelAdd() {
   }
 
   .stats-row {
-    flex-direction: column;
-    gap: 8px;
+    gap: 35px;
     padding: 8px 12px;
   }
 

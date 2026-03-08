@@ -1,12 +1,12 @@
 <template>
   <div class="profile-page">
-    <div class="page-header">
+    <div class="page-header animate-on-load" style="transition-delay: 0s">
       <h1 class="page-title"><span class="title-acc">//</span> PROFILE</h1>
     </div>
 
     <div class="cards-grid">
       <!-- User Info Card -->
-      <div class="card fade-up">
+      <div class="card animate-on-load" style="transition-delay: 0.1s">
         <div class="card-label">USER NODE</div>
         <div class="user-id">
           <span class="uid-hash">#{{ auth.user?.id?.toString().padStart(4, '0') || '---' }}</span>
@@ -30,7 +30,7 @@
       </div>
 
       <!-- Update Credentials -->
-      <div class="card fade-up" style="animation-delay: 0.1s">
+      <div class="card animate-on-load" style="transition-delay: 0.2s">
         <div class="card-label">UPDATE CREDENTIALS</div>
 
         <div class="field">
@@ -52,7 +52,7 @@
       </div>
 
       <!-- Danger Zone -->
-      <div class="card danger-card fade-up" style="animation-delay: 0.2s">
+      <div class="card danger-card animate-on-load" style="transition-delay: 0.3s">
         <div class="card-label danger">DANGER ZONE</div>
         <p class="danger-text">
           Permanently delete your account and all associated tasks. This action cannot be undone.
@@ -130,9 +130,28 @@ async function handleDelete() {
     confirmDelete.value = false
   }
 }
+
+setTimeout(() => {
+  document.querySelectorAll('.animate-on-load').forEach((el) => {
+    el.classList.add('visible')
+  })
+}, 50)
 </script>
 
 <style scoped>
+.animate-on-load {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.animate-on-load.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .profile-page {
   max-width: 760px;
   margin: 0 auto;
@@ -141,7 +160,7 @@ async function handleDelete() {
 }
 
 .page-header {
-  margin-bottom: 32px;
+  margin-bottom: 10px;
 }
 .page-title {
   font-family: 'Luckiest Guy', cursive;
@@ -160,14 +179,12 @@ async function handleDelete() {
 }
 
 .card {
-  border: 1px solid #8a7498;
   border-radius: 4px;
-  background: #6b4f7d;
+  background: rgba(15, 3, 20, 0.5);
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  animation: fadeUp 0.35s ease both;
 }
 
 .card-label {
@@ -220,7 +237,7 @@ async function handleDelete() {
   line-height: 1;
 }
 .us-val.accent {
-  color: #0f0314;
+  color: #8c64a5;
 }
 .us-val.muted {
   color: #a8a8b8;
