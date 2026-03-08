@@ -1,103 +1,119 @@
 <template>
-  <div class="auth-page animate-on-load">
-    <div class="auth-card fade-up">
-      <div class="auth-header">
+  <main class="auth-page animate-on-load">
+    <article class="auth-card fade-up">
+      <header class="auth-header">
         <div class="logo-big"><span class="lb">[</span>SYNAPTIX TASKS<span class="lb">]</span></div>
         <p class="auth-sub">Create new account</p>
-      </div>
-      <div class="auth-body animate-on-load" style="animation-delay: 0.3s">
-        <div class="field">
-          <label>USERNAME <span class="hint">min 4 chars</span></label>
-          <input
-            v-model="username"
-            type="text"
-            placeholder="choose a username"
-            autocomplete="username"
-          />
-        </div>
-        <div class="field">
-          <label>PASSWORD <span class="hint">min 8 chars</span></label>
-          <div class="input-wrapper">
-            <input
-              v-model="password"
-              :type="showPassword ? 'text' : 'password'"
-              placeholder="choose a password"
-              autocomplete="new-password"
-            />
-            <button
-              class="eye-btn"
-              @click="showPassword = !showPassword"
-              type="button"
-              tabindex="-1"
-            >
-              <svg
-                v-if="!showPassword"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-              <svg
-                v-else
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+      </header>
+
+      <section class="auth-body animate-on-load" style="animation-delay: 0.3s">
+        <form @submit.prevent="handleRegister" novalidate>
+          <fieldset>
+            <div class="field">
+              <label for="username">USERNAME <span class="hint">min 4 chars</span></label>
+              <input
+                id="username"
+                v-model="username"
+                type="text"
+                placeholder="choose a username"
+                autocomplete="username"
+              />
+            </div>
+
+            <div class="field">
+              <label for="password">PASSWORD <span class="hint">min 8 chars</span></label>
+              <div class="input-wrapper">
+                <input
+                  id="password"
+                  v-model="password"
+                  :type="showPassword ? 'text' : 'password'"
+                  placeholder="choose a password"
+                  autocomplete="new-password"
                 />
-                <line x1="1" y1="1" x2="23" y2="23" />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div v-if="auth.error" class="error-msg">{{ auth.error }}</div>
-        <button
-          class="btn btn-primary logre w-full"
-          @click="handleRegister"
-          :disabled="auth.loading"
-        >
-          <span v-if="auth.loading">Initializing</span>
-          <span v-else>INITIALIZE ACCOUNT</span>
-        </button>
-        <div class="auth-footer">
+                <button
+                  class="eye-btn"
+                  @click="showPassword = !showPassword"
+                  type="button"
+                  tabindex="-1"
+                  :aria-label="showPassword ? 'Hide password' : 'Show password'"
+                >
+                  <svg
+                    v-if="!showPassword"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <svg
+                    v-else
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                    />
+                    <line x1="1" y1="1" x2="23" y2="23" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </fieldset>
+
+          <output v-if="auth.error" class="error-msg" role="alert">{{ auth.error }}</output>
+
+          <button class="btn btn-primary logre w-full" type="submit" :disabled="auth.loading">
+            <span v-if="auth.loading">Initializing</span>
+            <span v-else>INITIALIZE ACCOUNT</span>
+          </button>
+        </form>
+
+        <footer class="auth-footer">
           Already registered?
           <RouterLink to="/login">Login</RouterLink>
-        </div>
-      </div>
-    </div>
-  </div>
+        </footer>
+      </section>
+    </article>
+  </main>
 </template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+
 const auth = useAuthStore()
 const router = useRouter()
+
 const username = ref('')
 const password = ref('')
 const showPassword = ref(false)
+
 async function handleRegister() {
   if (!username.value || !password.value) return
   const ok = await auth.register(username.value, password.value)
   if (ok) router.push('/tasks')
 }
+
 setTimeout(() => {
   document.querySelectorAll('.animate-on-load').forEach((el) => {
     el.classList.add('visible')
   })
 }, 50)
 </script>
+
 <style scoped>
 * {
   user-select: none;
@@ -105,6 +121,7 @@ setTimeout(() => {
   -moz-user-select: none;
   -ms-user-select: none;
 }
+
 .animate-on-load {
   opacity: 0;
   transform: translateY(24px);
@@ -112,10 +129,12 @@ setTimeout(() => {
     opacity 0.6s ease,
     transform 0.6s ease;
 }
+
 .animate-on-load.visible {
   opacity: 1;
   transform: translateY(0);
 }
+
 .auth-page {
   min-height: 100vh;
   display: flex;
@@ -126,6 +145,7 @@ setTimeout(() => {
   position: relative;
   overflow: hidden;
 }
+
 .auth-card {
   width: 100%;
   max-width: 480px;
@@ -134,6 +154,7 @@ setTimeout(() => {
   position: relative;
   z-index: 1;
 }
+
 .auth-card::before {
   content: '';
   position: absolute;
@@ -144,11 +165,13 @@ setTimeout(() => {
   background: none;
   border-radius: 8px 8px 0 0;
 }
+
 .auth-header {
   padding: clamp(24px, 5vw, 40px) clamp(24px, 5vw, 40px) clamp(16px, 4vw, 24px);
   text-align: center;
   border-bottom: 1px solid #8a7498;
 }
+
 .logo-big {
   font-family: 'Luckiest Guy', cursive;
   font-size: clamp(24px, 6vw, 32px);
@@ -180,18 +203,36 @@ setTimeout(() => {
 .lb {
   color: #0f0314;
 }
+
 .auth-sub {
   font-size: clamp(10px, 2vw, 12px);
   color: #a8a8b8;
   text-transform: uppercase;
   letter-spacing: 0.15em;
 }
+
 .auth-body {
   padding: clamp(20px, 4vw, 32px) clamp(20px, 5vw, 40px) clamp(24px, 5vw, 40px);
   display: flex;
   flex-direction: column;
   gap: 19px;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
 .field {
   display: flex;
   flex-direction: column;
@@ -213,20 +254,24 @@ label {
   gap: 8px;
   align-items: center;
 }
+
 .hint {
   color: #a8a8b8;
   font-size: 10px;
   opacity: 0.6;
 }
+
 .input-wrapper {
   position: relative;
   display: flex;
   align-items: center;
 }
+
 .input-wrapper input {
   width: 100%;
   padding-right: 42px;
 }
+
 .eye-btn {
   position: absolute;
   right: 12px;
@@ -241,27 +286,37 @@ label {
   transition: color 0.2s ease;
   outline: none;
 }
+
 .eye-btn:hover {
   color: #e8e8f0;
 }
+
 .eye-btn svg {
   width: 17px;
   height: 17px;
 }
+
+output.error-msg {
+  display: block;
+}
+
 .w-full {
   width: 100%;
   justify-content: center;
 }
+
 .auth-footer {
   text-align: center;
   font-size: 12.5px;
   color: #a8a8b8;
 }
+
 .auth-footer a {
   color: #fff;
   text-decoration: none;
   margin-left: 4px;
 }
+
 .auth-footer a:hover {
   text-decoration: underline;
 }

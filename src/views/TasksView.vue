@@ -1,33 +1,37 @@
 <template>
-  <div class="tasks-page">
+  <main class="tasks-page">
     <!-- Header -->
-    <div class="page-header">
+    <header class="page-header">
       <div class="header-left animate-on-load" style="transition-delay: 0s">
         <h1 class="page-title"><span class="title-acc">//</span> TASKS</h1>
         <p class="page-meta" v-if="auth.user">
           user: <span>{{ auth.user.username }}</span>
         </p>
       </div>
-      <div class="stats-row animate-on-load" style="transition-delay: 0.05s">
+      <aside class="stats-row animate-on-load" style="transition-delay: 0.05s">
         <div class="stat">
           <span class="stat-num">{{ tasks.stats.total }}</span>
           <span class="stat-label">total</span>
         </div>
-        <div class="stat-divider"></div>
+        <hr class="stat-divider" />
         <div class="stat">
           <span class="stat-num accent">{{ tasks.stats.active }}</span>
           <span class="stat-label">active</span>
         </div>
-        <div class="stat-divider"></div>
+        <hr class="stat-divider" />
         <div class="stat">
           <span class="stat-num muted">{{ tasks.stats.done }}</span>
           <span class="stat-label">done</span>
         </div>
-      </div>
-    </div>
+      </aside>
+    </header>
 
     <!-- Add Task -->
-    <div class="add-task-section animate-on-load" style="transition-delay: 0.1s">
+    <section
+      class="add-task-section animate-on-load"
+      style="transition-delay: 0.1s"
+      aria-label="Add new task"
+    >
       <div class="add-task-form" :class="{ expanded: isAdding }">
         <div class="add-row">
           <input
@@ -51,10 +55,10 @@
           <textarea v-model="newDesc" placeholder="Description (optional)" rows="2" />
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- Filters -->
-    <div class="filters animate-on-load" style="transition-delay: 0.15s">
+    <nav class="filters animate-on-load" style="transition-delay: 0.15s" aria-label="Task filters">
       <button
         v-for="f in filters"
         :key="f.value"
@@ -64,21 +68,25 @@
       >
         {{ f.label }}
       </button>
-    </div>
+    </nav>
 
     <!-- Task List -->
-    <div class="task-list animate-on-load" style="transition-delay: 0.2s">
-      <div v-if="tasks.loading" class="empty-state"></div>
+    <section
+      class="task-list animate-on-load"
+      style="transition-delay: 0.2s"
+      aria-label="Task list"
+    >
+      <p v-if="tasks.loading" class="empty-state"></p>
 
       <div v-else-if="tasks.filtered.length === 0" class="empty-state">
-        <div class="empty-icon">[ ]</div>
+        <span class="empty-icon">[ ]</span>
         <p>No tasks found.</p>
         <span v-if="tasks.filter !== 'all'">Try a different filter.</span>
       </div>
 
       <TransitionGroup
         name="task"
-        tag="div"
+        tag="ul"
         class="task-list-inner"
         @enter="onEnter"
         @leave="onLeave"
@@ -92,13 +100,13 @@
           @edit="(data) => tasks.editTask(task.id, data.title, data.description, task.completed)"
         />
       </TransitionGroup>
-    </div>
+    </section>
 
     <!-- Error -->
-    <div v-if="tasks.error" class="error-msg" style="max-width: 700px; margin: 0 auto 1rem">
+    <output v-if="tasks.error" class="error-msg" style="max-width: 700px; margin: 0 auto 1rem">
       {{ tasks.error }}
-    </div>
-  </div>
+    </output>
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -243,6 +251,8 @@ onMounted(async () => {
   width: 1px;
   height: 30px;
   background: rgba(15, 3, 20, 0.5);
+  border: none;
+  margin: 0;
 }
 
 /* Add task */
@@ -350,6 +360,9 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .empty-state {

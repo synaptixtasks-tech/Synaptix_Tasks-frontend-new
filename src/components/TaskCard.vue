@@ -1,5 +1,5 @@
 <template>
-  <div class="task-card" :class="{ done: task.completed, editing: isEditing }">
+  <li class="task-card" :class="{ done: task.completed, editing: isEditing }">
     <!-- View Mode -->
     <template v-if="!isEditing">
       <div class="task-left">
@@ -14,6 +14,7 @@
               viewBox="0 0 12 12"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
             >
               <polyline
                 points="2,6 5,9 10,3"
@@ -26,42 +27,48 @@
           </span>
         </button>
 
-        <div class="task-content">
-          <div class="task-title" :class="{ striked: task.completed }">{{ task.title }}</div>
-          <div v-if="task.description" class="task-desc">{{ task.description }}</div>
-          <div class="task-meta">
+        <article class="task-content">
+          <h3 class="task-title" :class="{ striked: task.completed }">{{ task.title }}</h3>
+          <p v-if="task.description" class="task-desc">{{ task.description }}</p>
+          <footer class="task-meta">
             <span class="tag" :class="task.completed ? 'tag-done' : 'tag-active'">
               {{ task.completed ? 'done' : 'active' }}
             </span>
-            <span class="task-date">{{ formatDate(task.date_created) }}</span>
-          </div>
-        </div>
+            <time class="task-date" :datetime="task.date_created ?? ''">{{
+              formatDate(task.date_created)
+            }}</time>
+          </footer>
+        </article>
       </div>
 
-      <div class="task-actions">
-        <button class="action-btn edit" @click="startEdit" title="Edit">
-          <svg viewBox="0 0 16 16" fill="none">
-            <path
-              d="M11.5 2.5l2 2L5 13H3v-2L11.5 2.5z"
-              stroke="currentColor"
-              stroke-width="1.3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
-        <button class="action-btn del" @click="$emit('delete')" title="Delete">
-          <svg viewBox="0 0 16 16" fill="none">
-            <path
-              d="M3 4h10M6 4V3h4v1M5 4v9h6V4H5z"
-              stroke="currentColor"
-              stroke-width="1.3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
-      </div>
+      <menu class="task-actions">
+        <li>
+          <button class="action-btn edit" @click="startEdit" title="Edit">
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path
+                d="M11.5 2.5l2 2L5 13H3v-2L11.5 2.5z"
+                stroke="currentColor"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </li>
+        <li>
+          <button class="action-btn del" @click="$emit('delete')" title="Delete">
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path
+                d="M3 4h10M6 4V3h4v1M5 4v9h6V4H5z"
+                stroke="currentColor"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </li>
+      </menu>
     </template>
 
     <!-- Edit Mode -->
@@ -75,7 +82,7 @@
         </div>
       </div>
     </template>
-  </div>
+  </li>
 </template>
 
 <script setup lang="ts">
@@ -185,6 +192,7 @@ function formatDate(d: string | null | undefined) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin: 0;
 }
 .task-title.striked {
   text-decoration: line-through;
@@ -195,6 +203,7 @@ function formatDate(d: string | null | undefined) {
   font-size: 12.5px;
   color: #c8c8d8;
   margin-top: 4px;
+  margin-bottom: 0;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -218,6 +227,9 @@ function formatDate(d: string | null | undefined) {
   display: flex;
   gap: 5px;
   flex-shrink: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .action-btn {

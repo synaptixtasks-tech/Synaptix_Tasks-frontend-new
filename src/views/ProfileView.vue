@@ -1,59 +1,58 @@
 <template>
-  <div class="profile-page">
-    <div class="page-header animate-on-load" style="transition-delay: 0s">
+  <main class="profile-page">
+    <header class="page-header animate-on-load" style="transition-delay: 0s">
       <h1 class="page-title"><span class="title-acc">//</span> PROFILE</h1>
-    </div>
+    </header>
 
-    <div class="cards-grid">
+    <section class="cards-grid">
       <!-- User Info Card -->
-      <div class="card animate-on-load" style="transition-delay: 0.1s">
-        <div class="card-label">USER NODE</div>
+      <article class="card animate-on-load" style="transition-delay: 0.1s">
+        <h2 class="card-label">USER NODE</h2>
         <div class="user-id">
-          <span class="uid-hash">#{{ auth.user?.id?.toString().padStart(4, '0') || '---' }}</span>
-          <span class="uid-name">{{ auth.user?.username || '...' }}</span>
+          <span class="username">{{ auth.user?.username || '...' }}</span>
         </div>
 
-        <div class="user-stats">
+        <dl class="user-stats">
           <div class="us-item">
-            <span class="us-val">{{ tasksStore.stats.total }}</span>
-            <span class="us-key">tasks</span>
+            <dd class="us-val">{{ tasksStore.stats.total }}</dd>
+            <dt class="us-key">tasks</dt>
           </div>
           <div class="us-item">
-            <span class="us-val accent">{{ tasksStore.stats.active }}</span>
-            <span class="us-key">active</span>
+            <dd class="us-val accent">{{ tasksStore.stats.active }}</dd>
+            <dt class="us-key">active</dt>
           </div>
           <div class="us-item">
-            <span class="us-val muted">{{ tasksStore.stats.done }}</span>
-            <span class="us-key">done</span>
+            <dd class="us-val muted">{{ tasksStore.stats.done }}</dd>
+            <dt class="us-key">done</dt>
           </div>
-        </div>
-      </div>
+        </dl>
+      </article>
 
       <!-- Update Credentials -->
-      <div class="card animate-on-load" style="transition-delay: 0.2s">
-        <div class="card-label">UPDATE CREDENTIALS</div>
+      <article class="card animate-on-load" style="transition-delay: 0.2s">
+        <h2 class="card-label">UPDATE CREDENTIALS</h2>
 
         <div class="field">
-          <label>NEW USERNAME</label>
-          <input v-model="newUsername" type="text" placeholder="username" />
+          <label for="new-username">NEW USERNAME</label>
+          <input id="new-username" v-model="newUsername" type="text" placeholder="username" />
         </div>
         <div class="field">
-          <label>NEW PASSWORD</label>
-          <input v-model="newPassword" type="password" placeholder="password" />
+          <label for="new-password">NEW PASSWORD</label>
+          <input id="new-password" v-model="newPassword" type="password" placeholder="password" />
         </div>
 
-        <div v-if="updateError" class="error-msg">{{ updateError }}</div>
-        <div v-if="updateSuccess" class="success-msg">Credentials updated.</div>
+        <output v-if="updateError" class="error-msg" role="alert">{{ updateError }}</output>
+        <output v-if="updateSuccess" class="success-msg" role="status">Credentials updated.</output>
 
-        <button class="btn btn-primary btn-sm" @click="handleUpdate" :disabled="updateLoading">
-          <span v-if="updateLoading" class="spinner"></span>
+        <button class="btn btn-primary btn-sm upgb" @click="handleUpdate" :disabled="updateLoading">
+          <span v-if="updateLoading" class="spinner" aria-hidden="true"></span>
           <span v-else>Update</span>
         </button>
-      </div>
+      </article>
 
       <!-- Danger Zone -->
-      <div class="card danger-card animate-on-load" style="transition-delay: 0.3s">
-        <div class="card-label danger">DANGER ZONE</div>
+      <article class="card danger-card animate-on-load" style="transition-delay: 0.3s">
+        <h2 class="card-label danger">DANGER ZONE</h2>
         <p class="danger-text">
           Permanently delete your account and all associated tasks. This action cannot be undone.
         </p>
@@ -63,14 +62,14 @@
             Delete Account
           </button>
         </div>
-        <div v-else class="confirm-row">
-          <span class="confirm-text">Are you sure?</span>
+        <div v-else class="confirm-row" role="group" aria-label="Confirm account deletion">
+          <strong class="confirm-text">Are you sure?</strong>
           <button class="btn btn-danger btn-sm" @click="handleDelete">Yes, delete</button>
           <button class="btn btn-sm" @click="confirmDelete = false">Cancel</button>
         </div>
-      </div>
-    </div>
-  </div>
+      </article>
+    </section>
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -189,11 +188,13 @@ setTimeout(() => {
 
 .card-label {
   font-size: 10.4px;
+  font-weight: normal;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: #a8a8b8;
   padding-bottom: 13px;
   border-bottom: 1px solid #8a7498;
+  margin: 0;
 }
 .card-label.danger {
   color: #ff6eab;
@@ -205,16 +206,7 @@ setTimeout(() => {
   align-items: baseline;
   gap: 13px;
 }
-.uid-hash {
-  font-family: 'Poppins', sans-serif;
-  font-size: 11.5px;
-  color: #a8a8b8;
-  background: #7d5f8f;
-  padding: 3px 10px;
-  border-radius: 2px;
-  border: 1px solid #8a7498;
-}
-.uid-name {
+.username {
   font-family: 'Luckiest Guy', cursive;
   font-size: 25.6px;
   font-weight: 700;
@@ -225,6 +217,7 @@ setTimeout(() => {
   display: flex;
   flex-wrap: wrap;
   gap: clamp(20px, 5vw, 32px);
+  margin: 0;
 }
 .us-item {
   display: flex;
@@ -235,6 +228,7 @@ setTimeout(() => {
   font-size: 28.8px;
   font-weight: 800;
   line-height: 1;
+  margin: 0;
 }
 .us-val.accent {
   color: #8c64a5;
@@ -270,6 +264,7 @@ label {
   border: 1px solid rgba(127, 255, 110, 0.25);
   border-radius: 4px;
   background: rgba(127, 255, 110, 0.05);
+  display: block;
 }
 
 /* Danger */
@@ -289,6 +284,7 @@ label {
 .confirm-text {
   font-size: 12.5px;
   color: #ff6eab;
+  font-weight: normal;
 }
 
 @media (max-width: 768px) {

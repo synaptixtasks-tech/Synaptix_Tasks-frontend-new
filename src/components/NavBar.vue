@@ -97,25 +97,13 @@ setTimeout(() => {
   min-height: 70px;
 }
 
-.logo {
-  text-decoration: none;
-  font-family: 'Luckiest Guy', cursive;
-  font-size: clamp(14px, 3vw, 17px);
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  flex-shrink: 0;
-}
-
 .logo-bracket {
   color: #8c64a5;
 }
 .logo-text {
   color: #e8e8f0;
-  width: clamp(50px, 10vw, 70px);
-  height: clamp(50px, 10vw, 70px);
+  width: clamp(70px, 10vw, 70px);
+  height: clamp(70px, 10vw, 70px);
   display: flex;
   align-items: center;
   justify-content: center;

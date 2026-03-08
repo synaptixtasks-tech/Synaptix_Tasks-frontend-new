@@ -131,7 +131,8 @@ body {
   font-weight: 700;
   animation: none;
 }
-.btn-primary.logre:hover {
+.btn-primary.logre:hover,
+.upgb:hover {
   background-image: linear-gradient(
     var(--angleb),
     hsl(274deg 81% 22%) 0%,

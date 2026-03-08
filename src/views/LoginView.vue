@@ -1,85 +1,94 @@
 <template>
-  <div class="auth-page animate-on-load">
-    <div class="auth-card fade-up">
-      <div class="auth-header">
+  <main class="auth-page animate-on-load">
+    <article class="auth-card fade-up">
+      <header class="auth-header">
         <div class="logo-big"><span class="lb">[</span>SYNAPTIX Tasks<span class="lb">]</span></div>
         <p class="auth-sub">LOGIN</p>
-      </div>
+      </header>
 
-      <div class="auth-body animate-on-load" style="animation-delay: 0.3s">
-        <div class="field">
-          <label>USERNAME</label>
-          <input
-            v-model="username"
-            type="text"
-            placeholder="enter username"
-            @keyup.enter="handleLogin"
-            autocomplete="username"
-          />
-        </div>
+      <section class="auth-body animate-on-load" style="animation-delay: 0.3s">
+        <form @submit.prevent="handleLogin" novalidate>
+          <fieldset>
+            <div class="field">
+              <label for="username">USERNAME</label>
+              <input
+                id="username"
+                v-model="username"
+                type="text"
+                placeholder="enter username"
+                @keyup.enter="handleLogin"
+                autocomplete="username"
+              />
+            </div>
 
-        <div class="field">
-          <label>PASSWORD</label>
-          <div class="input-wrapper">
-            <input
-              v-model="password"
-              :type="showPassword ? 'text' : 'password'"
-              placeholder="enter password"
-              @keyup.enter="handleLogin"
-              autocomplete="current-password"
-            />
-            <button
-              class="eye-btn"
-              @click="showPassword = !showPassword"
-              type="button"
-              tabindex="-1"
-            >
-              <svg
-                v-if="!showPassword"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-              <svg
-                v-else
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+            <div class="field">
+              <label for="password">PASSWORD</label>
+              <div class="input-wrapper">
+                <input
+                  id="password"
+                  v-model="password"
+                  :type="showPassword ? 'text' : 'password'"
+                  placeholder="enter password"
+                  @keyup.enter="handleLogin"
+                  autocomplete="current-password"
                 />
-                <line x1="1" y1="1" x2="23" y2="23" />
-              </svg>
-            </button>
-          </div>
-        </div>
+                <button
+                  class="eye-btn"
+                  @click="showPassword = !showPassword"
+                  type="button"
+                  tabindex="-1"
+                  :aria-label="showPassword ? 'Hide password' : 'Show password'"
+                >
+                  <svg
+                    v-if="!showPassword"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <svg
+                    v-else
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                    />
+                    <line x1="1" y1="1" x2="23" y2="23" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </fieldset>
 
-        <div v-if="auth.error" class="error-msg">{{ auth.error }}</div>
+          <output v-if="auth.error" class="error-msg" role="alert">{{ auth.error }}</output>
 
-        <button class="btn btn-primary logre w-full" @click="handleLogin" :disabled="auth.loading">
-          <span v-if="auth.loading">CONNECTING...</span>
-          <span v-else>ACCESS SYSTEM</span>
-        </button>
+          <button class="btn btn-primary logre w-full" type="submit" :disabled="auth.loading">
+            <span v-if="auth.loading">CONNECTING...</span>
+            <span v-else>ACCESS SYSTEM</span>
+          </button>
+        </form>
 
-        <div class="auth-footer">
+        <footer class="auth-footer">
           No account yet?
           <RouterLink to="/register">Register</RouterLink>
-        </div>
-      </div>
-    </div>
-  </div>
+        </footer>
+      </section>
+    </article>
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -196,6 +205,7 @@ setTimeout(() => {
 .lb {
   color: #0f0314;
 }
+
 .auth-sub {
   font-size: clamp(10px, 2vw, 12px);
   color: #a8a8b8;
@@ -205,6 +215,21 @@ setTimeout(() => {
 
 .auth-body {
   padding: clamp(20px, 4vw, 32px) clamp(20px, 5vw, 40px) clamp(24px, 5vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 19px;
@@ -264,6 +289,10 @@ label {
   height: 17px;
 }
 
+output.error-msg {
+  display: block;
+}
+
 .w-full {
   width: 100%;
   justify-content: center;
@@ -274,11 +303,13 @@ label {
   font-size: 12.5px;
   color: #a8a8b8;
 }
+
 .auth-footer a {
   color: #fff;
   text-decoration: none;
   margin-left: 4px;
 }
+
 .auth-footer a:hover {
   text-decoration: underline;
 }
