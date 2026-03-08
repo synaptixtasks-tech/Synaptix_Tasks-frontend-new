@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar" :class="{ 'fade-in': showNavbar }">
+  <nav class="navbar animate-on-load">
     <RouterLink to="/" class="logo">
       <span class="logo-text"><img src="/Synaptix.png" alt="" /></span>
     </RouterLink>
@@ -58,16 +58,26 @@ function handleLogout() {
   auth.logout()
   router.push('/login')
 }
+
+setTimeout(() => {
+  document.querySelectorAll('.animate-on-load').forEach((el) => {
+    el.classList.add('visible')
+  })
+}, 50)
 </script>
 
 <style scoped>
-@keyframes slideDown {
-  from {
-    transform: translateY(-100px);
-  }
-  to {
-    transform: translateY(0);
-  }
+.animate-on-load {
+  opacity: 0;
+  transform: translateY(-100%);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.animate-on-load.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .navbar {
@@ -83,7 +93,6 @@ function handleLogout() {
   border: none;
   z-index: 100;
   opacity: 1;
-  animation: slideDown 2s ease forwards;
   padding: 0 clamp(12px, 3vw, 20px);
   min-height: 70px;
 }

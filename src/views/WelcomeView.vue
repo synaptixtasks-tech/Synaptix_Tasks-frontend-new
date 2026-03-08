@@ -44,12 +44,14 @@
         </div>
       </div>
     </div>
-    <p class="welcome-footer animate-on-load" style="margin-top: 50px; transition-delay: 0.9s">
-      Synaptix © 2026
-    </p>
-    <p class="welcome-footer animate-on-load" style="transition-delay: 0.95s">
-      Created by <a href="#">mxzy</a> & <a href="#">xaviq</a>
-    </p>
+    <div class="allfoot">
+      <p class="welcome-footer animate-on-load" style="margin-top: 50px; transition-delay: 0.9s">
+        Synaptix © 2026
+      </p>
+      <p class="welcome-footer animate-on-load" style="transition-delay: 0.95s">
+        Created by <a href="#">mxzy</a> & <a href="#">xaviq</a>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -123,6 +125,7 @@ onMounted(() => {
   align-items: center;
   padding: 40px 20px;
   position: relative;
+  overflow: hidden;
 }
 
 .welcome-container {
@@ -163,7 +166,7 @@ onMounted(() => {
   color: #e8e8f0;
   font-family: 'Luckiest Guy', cursive;
   margin: 0;
-  line-height: 0.95;
+  line-height: 19vh;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -183,7 +186,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   height: 100%;
-  transform: translate(11%, 17%);
+  transform: translate(11%, 22%);
 }
 
 .welcome-content {
@@ -264,7 +267,7 @@ onMounted(() => {
 .welcome-actions {
   display: flex;
   gap: 16px;
-  justify-content: flex-start;
+  justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 20px;
 }
@@ -304,6 +307,11 @@ onMounted(() => {
   box-shadow: 0 8px 16px #b772e2;
 }
 
+.allfoot {
+  transform: translateY(80px);
+  text-align: center;
+}
+
 .welcome-footer {
   font-size: 14px;
   color: #a8a8b8;
@@ -316,7 +324,7 @@ a {
   text-decoration: underline;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1350px) {
   .welcome-container {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -336,12 +344,17 @@ a {
   }
 
   .welcome-left img {
-    max-height: 150px;
+    max-height: 200px;
   }
 
   .welcome-title {
     font-size: clamp(28px, 10vw, 60px);
     margin-right: 0;
+    line-height: 0.95;
+  }
+
+  .allfoot {
+    transform: none;
   }
 }
 
@@ -373,6 +386,7 @@ a {
 
   .welcome-title {
     font-size: clamp(24px, 8vw, 48px);
+    line-height: 0.95;
   }
 
   .welcome-desc {
@@ -398,8 +412,8 @@ a {
     font-size: 14px;
   }
 
-  .welcome-footer {
-    margin-top: 30px;
+  .allfoot {
+    transform: none;
   }
 }
 
@@ -426,6 +440,7 @@ a {
 
   .welcome-title {
     font-size: clamp(20px, 7vw, 36px);
+    line-height: 0.95;
   }
 
   .welcome-desc {
@@ -451,6 +466,10 @@ a {
 
   .feature-icon {
     font-size: 28px;
+  }
+
+  .allfoot {
+    transform: none;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="auth-page">
+  <div class="auth-page animate-on-load">
     <div class="auth-card fade-up">
       <div class="auth-header">
         <div class="logo-big"><span class="lb">[</span>SYNAPTIX<span class="lb">]</span></div>
@@ -61,9 +61,35 @@ async function handleLogin() {
   const ok = await auth.login(username.value, password.value)
   if (ok) router.push('/tasks')
 }
+
+setTimeout(() => {
+  document.querySelectorAll('.animate-on-load').forEach((el) => {
+    el.classList.add('visible')
+  })
+}, 50)
 </script>
 
 <style scoped>
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.animate-on-load {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.animate-on-load.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .auth-page {
   min-height: 100vh;
   display: flex;
