@@ -6,6 +6,7 @@
         <button
           class="check-btn"
           @click="$emit('toggle')"
+          :aria-pressed="task.completed"
           :title="task.completed ? 'Mark active' : 'Mark done'"
         >
           <span class="check-inner" :class="{ checked: task.completed }">
@@ -28,7 +29,7 @@
         </button>
 
         <article class="task-content">
-          <h3 class="task-title" :class="{ striked: task.completed }">{{ task.title }}</h3>
+          <strong class="task-title" :class="{ striked: task.completed }">{{ task.title }}</strong>
           <p v-if="task.description" class="task-desc">{{ task.description }}</p>
           <footer class="task-meta">
             <span class="tag" :class="task.completed ? 'tag-done' : 'tag-active'">
@@ -74,8 +75,18 @@
     <!-- Edit Mode -->
     <template v-else>
       <div class="edit-form">
-        <input v-model="editTitle" placeholder="Task title" ref="titleInput" />
-        <textarea v-model="editDesc" placeholder="Description (optional)" rows="2" />
+        <input
+          v-model="editTitle"
+          aria-label="Edytuj tytuł zadania"
+          placeholder="Task title"
+          ref="titleInput"
+        />
+        <textarea
+          v-model="editDesc"
+          aria-label="Edytuj opis zadania"
+          placeholder="Description (optional)"
+          rows="2"
+        />
         <div class="edit-actions">
           <button class="btn btn-primary btn-sm" @click="saveEdit">Save</button>
           <button class="btn btn-sm" @click="cancelEdit">Cancel</button>

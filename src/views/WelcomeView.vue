@@ -1,13 +1,18 @@
 <template>
   <div class="page-preloader" id="page-preloader">loading...</div>
 
-  <div class="welcome-page">
+  <main class="welcome-page">
     <div class="welcome-container">
-      <div class="welcome-left">
-        <img class="animate-on-load" src="/Synaptix.png" alt="" style="transition-delay: 0.05s" />
+      <header class="welcome-left">
+        <img
+          class="animate-on-load"
+          src="/Synaptix.png"
+          alt="Synaptix Logo"
+          style="transition-delay: 0.05s"
+        />
         <h1 class="welcome-title animate-on-load" style="transition-delay: 0.1s">Synaptix</h1>
-        <h3 class="welcome-subtitle animate-on-load" style="transition-delay: 0.2s">Tasks</h3>
-      </div>
+        <h2 class="welcome-subtitle animate-on-load" style="transition-delay: 0.2s">Tasks</h2>
+      </header>
 
       <div class="welcome-right">
         <div class="welcome-content animate-on-load" style="transition-delay: 0.2s">
@@ -16,43 +21,43 @@
             intuitive task management system designed to help you achieve your goals.
           </p>
 
-          <div class="features-section">
+          <section class="features-section">
             <h2 class="features-title">What can you do?</h2>
             <div class="features-grid">
-              <div class="feature-card animate-on-load" style="transition-delay: 0.3s">
+              <article class="feature-card animate-on-load" style="transition-delay: 0.3s">
                 <div class="feature-icon">📝</div>
                 <h3>Create Tasks</h3>
                 <p>Organize your ideas and create tasks with ease</p>
-              </div>
-              <div class="feature-card animate-on-load" style="transition-delay: 0.4s">
+              </article>
+              <article class="feature-card animate-on-load" style="transition-delay: 0.4s">
                 <div class="feature-icon">✓</div>
                 <h3>Track Progress</h3>
                 <p>Monitor task completion and stay on top of deadlines</p>
-              </div>
-              <div class="feature-card animate-on-load" style="transition-delay: 0.5s">
+              </article>
+              <article class="feature-card animate-on-load" style="transition-delay: 0.5s">
                 <div class="feature-icon">⚡</div>
                 <h3>Boost Productivity</h3>
                 <p>Streamline your workflow and maximize efficiency</p>
-              </div>
+              </article>
             </div>
-          </div>
+          </section>
 
-          <div class="welcome-actions animate-on-load" style="transition-delay: 0.6s">
+          <nav class="welcome-actions animate-on-load" style="transition-delay: 0.6s">
             <RouterLink to="/login" class="btn btn-primary">Get Started</RouterLink>
             <RouterLink to="/register" class="btn btn-secondary">Create Account</RouterLink>
-          </div>
+          </nav>
         </div>
       </div>
     </div>
-    <div class="allfoot">
+    <footer class="allfoot">
       <p class="welcome-footer animate-on-load" style="margin-top: 50px; transition-delay: 0.9s">
         Synaptix © 2026
       </p>
       <p class="welcome-footer animate-on-load" style="transition-delay: 0.95s">
         Created by <a href="#">mxzy</a> & <a href="#">xaviq</a>
       </p>
-    </div>
-  </div>
+    </footer>
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -267,7 +272,7 @@ onMounted(() => {
 .welcome-actions {
   display: flex;
   gap: 16px;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   margin-top: 20px;
 }

@@ -8,9 +8,7 @@
       <!-- User Info Card -->
       <article class="card animate-on-load" style="transition-delay: 0.1s">
         <h2 class="card-label">USER NODE</h2>
-        <div class="user-id">
-          <span class="username">{{ auth.user?.username || '...' }}</span>
-        </div>
+        <span class="username">{{ auth.user?.username || '...' }}</span>
 
         <dl class="user-stats">
           <div class="us-item">
@@ -201,11 +199,11 @@ setTimeout(() => {
 }
 
 /* User ID */
-.user-id {
+/* .user-id {
   display: flex;
   align-items: baseline;
   gap: 13px;
-}
+} */
 .username {
   font-family: 'Luckiest Guy', cursive;
   font-size: 25.6px;

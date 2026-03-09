@@ -1,12 +1,12 @@
 <template>
   <main class="auth-page animate-on-load">
-    <article class="auth-card fade-up">
+    <section class="auth-card fade-up">
       <header class="auth-header">
         <div class="logo-big"><span class="lb">[</span>SYNAPTIX Tasks<span class="lb">]</span></div>
-        <p class="auth-sub">LOGIN</p>
+        <h1 class="auth-sub">LOGIN</h1>
       </header>
 
-      <section class="auth-body animate-on-load" style="animation-delay: 0.3s">
+      <div class="auth-body animate-on-load" style="animation-delay: 0.3s">
         <form @submit.prevent="handleLogin" novalidate>
           <fieldset>
             <div class="field">
@@ -86,8 +86,8 @@
           No account yet?
           <RouterLink to="/register">Register</RouterLink>
         </footer>
-      </section>
-    </article>
+      </div>
+    </section>
   </main>
 </template>
 
