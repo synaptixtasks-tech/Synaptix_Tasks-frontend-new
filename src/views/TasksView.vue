@@ -110,7 +110,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useTasks } from '../composables/useTasks'
 import TaskCard from '../components/TaskCard.vue'
@@ -118,6 +118,20 @@ import type { Task } from '../types'
 
 const auth = useAuthStore()
 const { tasks, loading, error, addTask, updateTask, toggleTask, deleteTask, mutations } = useTasks()
+
+watch(loading, (newVal) => {
+  if (!newVal) {
+    // Usuń i dodaj klasę żeby animacja się wykonała
+    document.querySelectorAll('.animate-on-load').forEach((el) => {
+      el.classList.remove('visible')
+    })
+    setTimeout(() => {
+      document.querySelectorAll('.animate-on-load').forEach((el) => {
+        el.classList.add('visible')
+      })
+    }, 1)
+  }
+})
 
 const newTitle = ref('')
 const newDesc = ref('')
@@ -189,11 +203,14 @@ const filters: Array<{ value: 'all' | 'active' | 'done'; label: string }> = [
   { value: 'done', label: 'Done' },
 ]
 
-onMounted(async () => {
-  await nextTick()
-  document.querySelectorAll('.animate-on-load').forEach((el) => {
-    el.classList.add('visible')
-  })
+onMounted(() => {
+  if (!loading.value) {
+    setTimeout(() => {
+      document.querySelectorAll('.animate-on-load').forEach((el) => {
+        el.classList.add('visible')
+      })
+    }, 1)
+  }
 })
 </script>
 

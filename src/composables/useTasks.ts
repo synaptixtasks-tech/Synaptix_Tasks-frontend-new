@@ -17,6 +17,7 @@ export function useTasks() {
   } = useQuery({
     queryKey: TASKS_KEY,
     queryFn: () => tasksService.getTasks(),
+    notifyOnChangeProps: 'all',
   })
 
   // Mutation - dodawanie zadania (optimistic)
