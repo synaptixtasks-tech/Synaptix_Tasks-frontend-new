@@ -10,17 +10,17 @@
       </div>
       <aside class="stats-row animate-on-load" style="transition-delay: 0.05s">
         <div class="stat">
-          <span class="stat-num">{{ tasks.stats.total }}</span>
+          <span class="stat-num">{{ stats.total }}</span>
           <span class="stat-label">total</span>
         </div>
         <hr class="stat-divider" />
         <div class="stat">
-          <span class="stat-num accent">{{ tasks.stats.active }}</span>
+          <span class="stat-num accent">{{ stats.active }}</span>
           <span class="stat-label">active</span>
         </div>
         <hr class="stat-divider" />
         <div class="stat">
-          <span class="stat-num muted">{{ tasks.stats.done }}</span>
+          <span class="stat-num muted">{{ stats.done }}</span>
           <span class="stat-label">done</span>
         </div>
       </aside>
@@ -45,7 +45,7 @@
             v-if="isAdding"
             class="btn btn-primary btn-sm"
             @click="submitTask"
-            :disabled="!newTitle.trim()"
+            :disabled="!newTitle.trim() || isAddingTask"
           >
             Add
           </button>
@@ -63,8 +63,8 @@
         v-for="f in filters"
         :key="f.value"
         class="filter-btn"
-        :class="{ active: tasks.filter === f.value }"
-        @click="tasks.setFilter(f.value)"
+        :class="{ active: filter === f.value }"
+        @click="filter = f.value"
       >
         {{ f.label }}
       </button>
@@ -76,12 +76,12 @@
       style="transition-delay: 0.2s"
       aria-label="Task list"
     >
-      <p v-if="tasks.loading" class="empty-state"></p>
+      <p v-if="loading" class="empty-state"></p>
 
-      <div v-else-if="tasks.filtered.length === 0" class="empty-state">
+      <div v-else-if="filteredTasks.length === 0" class="empty-state">
         <span class="empty-icon">[ ]</span>
         <p>No tasks found.</p>
-        <span v-if="tasks.filter !== 'all'">Try a different filter.</span>
+        <span v-if="filter !== 'all'">Try a different filter.</span>
       </div>
 
       <TransitionGroup
@@ -92,45 +92,57 @@
         @leave="onLeave"
       >
         <TaskCard
-          v-for="task in tasks.filtered"
+          v-for="task in filteredTasks"
           :key="task.id"
           :task="task"
-          @toggle="tasks.toggleTask(task)"
-          @delete="tasks.removeTask(task.id)"
-          @edit="(data) => tasks.editTask(task.id, data.title, data.description, task.completed)"
+          @toggle="handleToggle(task)"
+          @delete="handleDelete(task.id)"
+          @edit="(data) => handleEdit(task.id, data.title, data.description, task.completed)"
         />
       </TransitionGroup>
     </section>
 
     <!-- Error -->
-    <output v-if="tasks.error" class="error-msg" style="max-width: 700px; margin: 0 auto 1rem">
-      {{ tasks.error }}
+    <output v-if="error" class="error-msg" style="max-width: 700px; margin: 0 auto 1rem">
+      {{ error }}
     </output>
   </main>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import { useAuthStore } from '../stores/auth'
-import { useTasksStore } from '../stores/tasks'
+import { useTasks } from '../composables/useTasks'
 import TaskCard from '../components/TaskCard.vue'
+import type { Task } from '../types'
 
 const auth = useAuthStore()
-const tasks = useTasksStore()
+const { tasks, loading, error, addTask, updateTask, toggleTask, deleteTask, mutations } = useTasks()
 
 const newTitle = ref('')
 const newDesc = ref('')
 const isAdding = ref(false)
+const filter = ref<'all' | 'active' | 'done'>('all')
 
-const filters: Array<{ value: 'all' | 'active' | 'done'; label: string }> = [
-  { value: 'all', label: 'All' },
-  { value: 'active', label: 'Active' },
-  { value: 'done', label: 'Done' },
-]
+// Computed
+const filteredTasks = computed(() => {
+  if (filter.value === 'active') return tasks.value.filter((t) => !t.completed)
+  if (filter.value === 'done') return tasks.value.filter((t) => t.completed)
+  return tasks.value
+})
 
+const stats = computed(() => ({
+  total: tasks.value.length,
+  done: tasks.value.filter((t) => t.completed).length,
+  active: tasks.value.filter((t) => !t.completed).length,
+}))
+
+const isAddingTask = computed(() => mutations.add.isPending.value)
+
+// Handlers
 async function submitTask() {
   if (!newTitle.value.trim()) return
-  await tasks.addTask(newTitle.value.trim(), newDesc.value.trim() || null)
+  await addTask(newTitle.value.trim(), newDesc.value.trim() || null)
   newTitle.value = ''
   newDesc.value = ''
   isAdding.value = false
@@ -142,6 +154,24 @@ function cancelAdd() {
   isAdding.value = false
 }
 
+async function handleToggle(task: Task) {
+  await toggleTask(task)
+}
+
+async function handleDelete(id: number) {
+  await deleteTask(id)
+}
+
+async function handleEdit(
+  id: number,
+  title: string,
+  description: string | null,
+  completed: boolean,
+) {
+  await updateTask(id, title, description, completed)
+}
+
+// Animation
 function onEnter(el: Element, done: () => void) {
   const index = [...(el.parentNode?.children ?? [])].indexOf(el as HTMLElement)
   ;(el as HTMLElement).style.transitionDelay = `${index * 0.05}s`
@@ -153,8 +183,13 @@ function onLeave(el: Element, done: () => void) {
   done()
 }
 
+const filters: Array<{ value: 'all' | 'active' | 'done'; label: string }> = [
+  { value: 'all', label: 'All' },
+  { value: 'active', label: 'Active' },
+  { value: 'done', label: 'Done' },
+]
+
 onMounted(async () => {
-  await tasks.fetchTasks()
   await nextTick()
   document.querySelectorAll('.animate-on-load').forEach((el) => {
     el.classList.add('visible')
