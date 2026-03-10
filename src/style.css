@@ -6,6 +6,20 @@
   padding: 0;
 }
 
+input[type='text'],
+input[type='number'],
+input[type='email'],
+input[type='tel'],
+textarea {
+  font-size: 16px;
+}
+
+input,
+textarea {
+  -webkit-appearance: none; /* iOS Safari */
+  appearance: none;
+}
+
 html {
   font-size: 16px;
   height: 100%;
