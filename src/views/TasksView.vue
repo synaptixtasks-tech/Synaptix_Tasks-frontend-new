@@ -209,7 +209,7 @@ onMounted(() => {
       document.querySelectorAll('.animate-on-load').forEach((el) => {
         el.classList.add('visible')
       })
-    }, 1)
+    })
   }
 })
 </script>

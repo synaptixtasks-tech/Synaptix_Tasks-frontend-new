@@ -132,7 +132,7 @@ setTimeout(() => {
   document.querySelectorAll('.animate-on-load').forEach((el) => {
     el.classList.add('visible')
   })
-}, 50)
+}, 5)
 </script>
 
 <style scoped>
