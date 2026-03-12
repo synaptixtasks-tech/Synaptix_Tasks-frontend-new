@@ -4,7 +4,7 @@ import { authService } from '../services/authService'
 import type { User } from '@/types'
 
 export const useAuthStore = defineStore('auth', () => {
-  const token = ref<string | null>(localStorage.getItem('access_token'))
+  const token = ref<string | null>(null)
   const user = ref<User | null>(null)
   const loading = ref(false)
   const error = ref<string | null>(null)
@@ -15,7 +15,6 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       console.log('Attempting login with username:', username)
       await authService.login(username, password)
-      token.value = localStorage.getItem('access_token')
       await fetchUser()
       return true
     } catch (e: unknown) {
@@ -40,7 +39,6 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       console.log('Attempting register with username:', username)
       await authService.register(username, password)
-      token.value = localStorage.getItem('access_token')
       await fetchUser()
       return true
     } catch (e: unknown) {
@@ -65,14 +63,13 @@ export const useAuthStore = defineStore('auth', () => {
     const u = await authService.getCurrentUser()
     if (u) {
       user.value = u
-      token.value = localStorage.getItem('access_token')
     } else {
       logout()
     }
   }
 
-  function logout(): void {
-    authService.logout()
+  async function logout(): Promise<void> {
+    await authService.logout()
     token.value = null
     user.value = null
   }

@@ -22,15 +22,22 @@ const router: Router = createRouter({
   routes,
 })
 
-router.beforeEach((to, _, next) => {
+let userChecked = false
+
+router.beforeEach(async (to, _, next) => {
   const authStore = useAuthStore()
-  const isAuthenticated = !!authStore.token
+
+  // Try to restore user session if not checked yet
+  if (!userChecked) {
+    userChecked = true
+    await authStore.fetchUser()
+  }
+
+  const isAuthenticated = !!authStore.user
 
   if (to.meta.requiresAuth && !isAuthenticated) {
-    // Redirect to login if trying to access protected route
     next('/login')
   } else if (to.meta.requiresGuest && isAuthenticated) {
-    // Redirect to tasks if trying to access guest routes while logged in
     next('/tasks')
   } else {
     next()

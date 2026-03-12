@@ -1,4 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
+import { existsSync } from 'fs'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -7,6 +8,14 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    ...(existsSync('./certs/key.pem') && {
+      https: {
+        key: await import('fs').then((fs) => fs.readFileSync('./certs/key.pem')),
+        cert: await import('fs').then((fs) => fs.readFileSync('./certs/cert.pem')),
+      },
+    }),
+  },
   plugins: [
     vue(),
     vueDevTools(),

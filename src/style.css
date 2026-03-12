@@ -83,7 +83,7 @@ body {
   border-radius: 3px;
 }
 
-*/ #app {
+#app {
   position: relative;
   z-index: 1;
 }

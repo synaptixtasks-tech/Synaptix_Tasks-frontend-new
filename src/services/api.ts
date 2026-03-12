@@ -1,10 +1,8 @@
 const BACKEND_URL = import.meta.env.VITE_API_URL
 
 function getHeaders() {
-  const token = localStorage.getItem('access_token')
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...(token && { Authorization: `Bearer ${token}` }),
   }
   return headers
 }
@@ -26,6 +24,7 @@ export const api = {
       const respond = await fetch(`${BACKEND_URL}${endpoint}`, {
         method: 'GET',
         headers: getHeaders(),
+        credentials: 'include',
       })
       return handleResponse(respond)
     } catch (e) {
@@ -39,6 +38,7 @@ export const api = {
         method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify(data),
+        credentials: 'include',
       })
       return handleResponse(respond)
     } catch (e) {
@@ -49,14 +49,13 @@ export const api = {
   async postForm(endpoint: string, data: Record<string, string>) {
     try {
       const form = new URLSearchParams(data)
-      const token = localStorage.getItem('access_token')
       const respond = await fetch(`${BACKEND_URL}${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          ...(token && { Authorization: `Bearer ${token}` }),
         },
         body: form,
+        credentials: 'include',
       })
       return handleResponse(respond)
     } catch (e) {
@@ -70,6 +69,7 @@ export const api = {
         method: 'PUT',
         headers: getHeaders(),
         body: JSON.stringify(data),
+        credentials: 'include',
       })
       return handleResponse(respond)
     } catch (e) {
@@ -82,6 +82,7 @@ export const api = {
       const respond = await fetch(`${BACKEND_URL}${endpoint}`, {
         method: 'DELETE',
         headers: getHeaders(),
+        credentials: 'include',
       })
       return handleResponse(respond)
     } catch (e) {
