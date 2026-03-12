@@ -122,6 +122,11 @@ setTimeout(() => {
   -ms-user-select: none;
 }
 
+body,
+html {
+  overflow-y: hidden;
+}
+
 .animate-on-load {
   opacity: 0;
   transform: translateY(24px);
@@ -174,12 +179,13 @@ setTimeout(() => {
 
 .logo-big {
   font-family: 'Luckiest Guy', cursive;
-  font-size: clamp(24px, 6vw, 32px);
+  font-size: 35px;
   font-weight: 800;
   letter-spacing: 0.2em;
   color: #e8e8f0;
   margin-bottom: 8px;
   position: relative;
+  white-space: nowrap;
 }
 
 .logo-big::before {
@@ -205,7 +211,7 @@ setTimeout(() => {
 }
 
 .auth-sub {
-  font-size: clamp(10px, 2vw, 12px);
+  font-size: clamp(14px, 2vw, 12px);
   color: #a8a8b8;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -319,5 +325,11 @@ output.error-msg {
 
 .auth-footer a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 530px) {
+  .logo-big {
+    font-size: 7vw;
+  }
 }
 </style>

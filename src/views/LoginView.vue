@@ -95,6 +95,7 @@
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { onMounted, onUnmounted } from 'vue'
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -114,6 +115,16 @@ setTimeout(() => {
     el.classList.add('visible')
   })
 }, 50)
+
+onMounted(() => {
+  // Блокуємо скрол при вході на сторінку
+  document.body.style.overflow = 'hidden'
+})
+
+onUnmounted(() => {
+  // Повертаємо скрол при переході на іншу сторінку
+  document.body.style.overflow = ''
+})
 </script>
 
 <style scoped>
@@ -122,6 +133,11 @@ setTimeout(() => {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+}
+
+body,
+html {
+  overflow: hidden;
 }
 
 .animate-on-load {
@@ -176,8 +192,9 @@ setTimeout(() => {
 
 .logo-big {
   font-family: 'Luckiest Guy', cursive;
-  font-size: clamp(24px, 6vw, 32px);
+  font-size: 35px;
   font-weight: 800;
+  white-space: nowrap;
   letter-spacing: 0.2em;
   color: #e8e8f0;
   margin-bottom: 8px;
@@ -207,7 +224,7 @@ setTimeout(() => {
 }
 
 .auth-sub {
-  font-size: clamp(10px, 2vw, 12px);
+  font-size: clamp(14px, 2vw, 12px);
   color: #a8a8b8;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -312,5 +329,11 @@ output.error-msg {
 
 .auth-footer a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 530px) {
+  .logo-big {
+    font-size: 7vw;
+  }
 }
 </style>

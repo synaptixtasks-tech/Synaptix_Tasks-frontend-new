@@ -161,7 +161,7 @@ setTimeout(() => {
 }
 .page-title {
   font-family: 'Luckiest Guy', cursive;
-  font-size: clamp(28px, 7vw, 35px);
+  font-size: 40px;
   font-weight: 800;
   letter-spacing: 0.1em;
 }
@@ -185,7 +185,7 @@ setTimeout(() => {
 }
 
 .card-label {
-  font-size: 10.4px;
+  font-size: 12px;
   font-weight: normal;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -198,12 +198,6 @@ setTimeout(() => {
   color: #ff6eab;
 }
 
-/* User ID */
-/* .user-id {
-  display: flex;
-  align-items: baseline;
-  gap: 13px;
-} */
 .username {
   font-family: 'Luckiest Guy', cursive;
   font-size: 25.6px;
@@ -285,7 +279,7 @@ label {
   font-weight: normal;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .profile-page {
     padding-top: 100px;
   }
@@ -309,7 +303,7 @@ label {
   .us-val {
     font-size: clamp(20px, 5vw, 28px);
   }
-}
+} */
 
 @media (max-width: 480px) {
   .profile-page {
@@ -318,7 +312,7 @@ label {
   }
 
   .page-title {
-    font-size: clamp(22px, 5vw, 24px);
+    font-size: 35px;
   }
 
   .cards-grid {
@@ -330,13 +324,7 @@ label {
     gap: 12px;
   }
 
-  .card-label {
-    font-size: 9px;
-    padding-bottom: 10px;
-  }
-
-  .user-id {
-    flex-direction: column;
+  /* .user-id {
     gap: 8px;
   }
 
@@ -345,13 +333,11 @@ label {
   }
 
   .user-stats {
-    flex-direction: column;
     gap: 16px;
     width: 100%;
   }
 
   .us-item {
-    width: 100%;
     text-align: center;
   }
 
@@ -361,7 +347,7 @@ label {
 
   .field {
     gap: 4px;
-  }
+  } */
 
   .button {
     width: 100%;

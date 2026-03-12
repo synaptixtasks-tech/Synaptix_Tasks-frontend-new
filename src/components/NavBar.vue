@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar animate-on-load">
+  <nav v-if="!isAuthPage" class="navbar animate-on-load">
     <RouterLink to="/" class="logo">
       <span class="logo-text"><img src="/Synaptix.png" alt="" /></span>
     </RouterLink>
@@ -142,7 +142,7 @@ setTimeout(() => {
   background: rgba(127, 255, 110, 0.06);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 500px) {
   .nav-link {
     padding: 4px 8px;
   }

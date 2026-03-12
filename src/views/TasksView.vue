@@ -11,7 +11,7 @@
       <aside class="stats-row animate-on-load" style="transition-delay: 0.05s">
         <div class="stat">
           <span class="stat-num">{{ stats.total }}</span>
-          <span class="stat-label">total</span>
+          <span class="stat-label">tasks</span>
         </div>
         <hr class="stat-divider" />
         <div class="stat">
@@ -41,18 +41,21 @@
             @keyup.enter="submitTask"
             class="add-input"
           />
-          <button
-            v-if="isAdding"
-            class="btn btn-primary btn-sm"
-            @click="submitTask"
-            :disabled="!newTitle.trim() || isAddingTask"
-          >
-            Add
-          </button>
-          <button v-if="isAdding" class="btn btn-sm" @click="cancelAdd">Cancel</button>
         </div>
-        <div v-if="isAdding" class="desc-row">
-          <textarea v-model="newDesc" placeholder="Description (optional)" rows="2" />
+        <div class="desc-row">
+          <div class="desc-row-inner">
+            <textarea v-model="newDesc" placeholder="Description (optional)" rows="2" />
+            <div class="actions-inner">
+              <button
+                class="btn btn-primary btn-sm"
+                @click="submitTask"
+                :disabled="!newTitle.trim() || isAddingTask"
+              >
+                Add
+              </button>
+              <button class="btn btn-sm" @click="cancelAdd">Cancel</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -106,6 +109,13 @@
     <output v-if="error" class="error-msg" style="max-width: 700px; margin: 0 auto 1rem">
       {{ error }}
     </output>
+
+    <footer>
+      <p class="welcome-footer animate-on-load" style="transition-delay: 0.95s">
+        Created by <a href="https://linktr.ee/mxzy1" target="_blank">mxzy</a> &
+        <a href="https://github.com/xaviq86" target="_blank">xaviq</a>
+      </p>
+    </footer>
   </main>
 </template>
 
@@ -121,7 +131,6 @@ const { tasks, loading, error, addTask, updateTask, toggleTask, deleteTask, muta
 
 watch(loading, (newVal) => {
   if (!newVal) {
-    // Usuń i dodaj klasę żeby animacja się wykonała
     document.querySelectorAll('.animate-on-load').forEach((el) => {
       el.classList.remove('visible')
     })
@@ -138,11 +147,27 @@ const newDesc = ref('')
 const isAdding = ref(false)
 const filter = ref<'all' | 'active' | 'done'>('all')
 
+// Stable order map
+const orderMap = ref<Map<number, number>>(new Map())
+
+watch(
+  tasks,
+  (newTasks) => {
+    newTasks.forEach((t) => {
+      if (!orderMap.value.has(t.id)) {
+        orderMap.value.set(t.id, orderMap.value.size)
+      }
+    })
+  },
+  { immediate: true },
+)
+
 // Computed
 const filteredTasks = computed(() => {
-  if (filter.value === 'active') return tasks.value.filter((t) => !t.completed)
-  if (filter.value === 'done') return tasks.value.filter((t) => t.completed)
-  return tasks.value
+  let list = tasks.value
+  if (filter.value === 'active') list = list.filter((t) => !t.completed)
+  else if (filter.value === 'done') list = list.filter((t) => t.completed)
+  return [...list].sort((a, b) => (orderMap.value.get(a.id) ?? 0) - (orderMap.value.get(b.id) ?? 0))
 })
 
 const stats = computed(() => ({
@@ -246,7 +271,7 @@ onMounted(() => {
 
 .page-title {
   font-family: 'Luckiest Guy', cursive;
-  font-size: clamp(28px, 7vw, 35px);
+  font-size: 40px;
   font-weight: 800;
   letter-spacing: 0.1em;
   line-height: 1;
@@ -258,7 +283,7 @@ onMounted(() => {
 }
 
 .page-meta {
-  font-size: 11.5px;
+  font-size: 12px;
   color: #a8a8b8;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -283,7 +308,7 @@ onMounted(() => {
 .stat-num {
   display: block;
   font-family: 'Luckiest Guy', cursive;
-  font-size: clamp(16px, 5vw, 24px);
+  font-size: 25px;
   font-weight: 800;
   line-height: 1;
 }
@@ -294,7 +319,7 @@ onMounted(() => {
   color: #a8a8b8;
 }
 .stat-label {
-  font-size: 10.4px;
+  font-size: 11px;
   color: #a8a8b8;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -315,14 +340,12 @@ onMounted(() => {
   border-radius: 4px;
   background: rgba(15, 3, 20, 0.7);
   overflow: hidden;
-  max-height: 60px;
-  transition:
-    max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 0.2s ease;
+  display: grid;
+  grid-template-rows: 1fr 0fr;
+  transition: all 0.3s ease;
 }
 .add-task-form.expanded {
-  max-height: 200px;
-  border-color: #9d88ab;
+  grid-template-rows: auto 1fr;
 }
 .add-row {
   display: flex;
@@ -334,7 +357,7 @@ onMounted(() => {
 .add-input {
   border: none;
   background: transparent;
-  font-size: 14px;
+  font-size: 15.5px;
   flex: 1;
   padding: 6px 10px;
   transition: all 0.15s;
@@ -344,9 +367,39 @@ onMounted(() => {
 }
 
 .desc-row {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  opacity: 0;
+  border-top: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+.add-task-form.expanded .desc-row {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  border-top-color: rgba(138, 116, 152, 0.5);
+}
+
+.actions-row {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.add-task-form.expanded .actions-row {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.actions-inner {
+  display: flex;
+  gap: 8px;
   padding: 0 10px 10px;
-  border-top: 1px solid #8a7498;
-  animation: slideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.desc-row-inner {
+  overflow: hidden;
+  min-height: 0;
 }
 .desc-row textarea {
   border: none;
@@ -354,17 +407,10 @@ onMounted(() => {
   background: transparent;
   padding: 10px;
   font-size: 13px;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  transition: none;
 }
 
 /* Filters */
@@ -440,12 +486,15 @@ onMounted(() => {
 .task-enter-active {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .task-leave-active {
-  transition: none;
-  transition-delay: 0s !important;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease !important;
   position: absolute;
   width: 100%;
 }
+
 .task-enter-from {
   opacity: 0;
   transform: translateY(-10px);
@@ -454,34 +503,36 @@ onMounted(() => {
   opacity: 0;
   transform: translateX(20px);
 }
+
 .task-move {
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.task-enter-active,
+.task-leave-active {
+  transition: all 0.3s ease;
+}
+
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 14px;
+}
+
+footer {
+  position: fixed;
+  right: 10px;
+  bottom: 0;
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
+  opacity: 0.6;
+}
+
+footer a {
+  color: rgba(15, 3, 20, 1);
+}
+
 @media (max-width: 768px) {
-  .tasks-page {
-    padding-top: 100px;
-  }
-
-  .page-header {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .stats-row {
-    justify-content: center;
-    width: 100%;
-  }
-
-  .stat-divider {
-    width: 30px;
-    height: 1px;
-  }
-
-  .add-input {
-    font-size: 13px;
-  }
-
   .filter-btn {
     font-size: 15px;
     padding: 5px 12px;
@@ -494,8 +545,20 @@ onMounted(() => {
     padding-top: 90px;
   }
 
+  .stats-row {
+    justify-content: center;
+    width: 100%;
+  }
+  .stat-num {
+    font-size: 22px;
+  }
+  .stat-divider {
+    width: 30px;
+    height: 1px;
+  }
+
   .page-title {
-    font-size: clamp(24px, 6vw, 28px);
+    font-size: 35px;
   }
 
   .page-header {

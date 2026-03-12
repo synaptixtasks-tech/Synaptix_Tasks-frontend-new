@@ -197,12 +197,12 @@ function formatDate(d: string | null | undefined) {
 }
 .task-title {
   font-family: 'Poppins', sans-serif;
-  font-size: 14px;
+  font-size: 18px;
   color: #e8e8f0;
   font-weight: 500;
-  white-space: nowrap;
+  white-space: normal;
+  word-break: break-word;
   overflow: hidden;
-  text-overflow: ellipsis;
   margin: 0;
 }
 .task-title.striked {
@@ -211,15 +211,16 @@ function formatDate(d: string | null | undefined) {
 }
 
 .task-desc {
-  font-size: 12.5px;
+  font-size: 14px;
   color: #c8c8d8;
   margin-top: 4px;
   margin-bottom: 0;
   overflow: hidden;
-  display: -webkit-box;
+  word-break: break-word;
+  /* display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: vertical; */
 }
 
 .task-meta {
@@ -280,37 +281,19 @@ function formatDate(d: string | null | undefined) {
   gap: 8px;
 }
 
-@media (max-width: 1000px) {
-  .task-card {
-    gap: 8px;
-    padding: 12px 16px;
-    flex-direction: column;
-  }
+.edit,
+.del {
+  transform: scale(1.1);
+}
 
-  .task-card:hover {
-    background: rgba(15, 3, 20, 0.5);
-  }
-
-  .task-left {
-    width: 100%;
-    gap: 12px;
-  }
-
-  .task-title {
-    font-size: 13px;
-  }
-
-  .task-desc {
-    font-size: 12px;
-  }
-
-  .task-actions {
-    width: 100%;
-    justify-content: flex-end;
+@media (max-width: 768px) {
+  .edit,
+  .del {
+    transform: scale(1.5);
   }
 }
 
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   .task-card {
     gap: 8px;
     padding: 10px 12px;
@@ -369,5 +352,5 @@ function formatDate(d: string | null | undefined) {
   .edit-form textarea {
     font-size: 12px;
   }
-}
+} */
 </style>

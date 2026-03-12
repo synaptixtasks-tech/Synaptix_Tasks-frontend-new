@@ -54,7 +54,8 @@
         Synaptix © 2026
       </p>
       <p class="welcome-footer animate-on-load" style="transition-delay: 0.95s">
-        Created by <a href="#">mxzy</a> & <a href="#">xaviq</a>
+        Created by <a href="https://linktr.ee/mxzy1" target="_blank">mxzy</a> &
+        <a href="https://github.com/xaviq86" target="_blank">xaviq</a>
       </p>
     </footer>
   </main>
@@ -333,7 +334,7 @@ a {
   .welcome-container {
     grid-template-columns: 1fr;
     gap: 40px;
-    padding: 0 20px;
+    padding: -40px 20px;
   }
 
   .welcome-left {
@@ -349,13 +350,21 @@ a {
   }
 
   .welcome-left img {
-    max-height: 200px;
+    max-height: 400px;
   }
 
   .welcome-title {
-    font-size: clamp(28px, 10vw, 60px);
+    font-size: clamp(28px, 10vw, 80px);
     margin-right: 0;
     line-height: 0.95;
+  }
+
+  .welcome-subtitle {
+    font-size: clamp(24px, 8vw, 40px);
+  }
+
+  .welcome-desc {
+    font-size: 22px;
   }
 
   .allfoot {
@@ -386,16 +395,16 @@ a {
   }
 
   .welcome-left img {
-    max-height: 120px;
+    max-height: 350px;
   }
 
   .welcome-title {
-    font-size: clamp(24px, 8vw, 48px);
-    line-height: 0.95;
+    font-size: 60px;
+    line-height: 1.3;
   }
 
   .welcome-desc {
-    font-size: 16px;
+    font-size: 20px;
   }
 
   .features-grid {
@@ -403,7 +412,7 @@ a {
   }
 
   .features-title {
-    font-size: 20px;
+    font-size: 205x;
   }
 
   .welcome-actions {
@@ -411,10 +420,22 @@ a {
     gap: 12px;
   }
 
+  .feature-icon {
+    font-size: 34px;
+  }
+
+  .feature-card h3 {
+    font-size: 18px;
+  }
+
+  .feature-card p {
+    font-size: 16px;
+  }
+
   .btn {
     width: 100%;
     padding: 12px 24px;
-    font-size: 14px;
+    font-size: 18px;
   }
 
   .allfoot {
@@ -424,7 +445,7 @@ a {
 
 @media (max-width: 480px) {
   .welcome-page {
-    padding: 24px 12px;
+    padding: 24px -10px;
   }
 
   .welcome-left {
@@ -440,21 +461,24 @@ a {
   }
 
   .welcome-left img {
-    max-height: 100px;
+    max-height: 70vw;
   }
 
   .welcome-title {
-    font-size: clamp(20px, 7vw, 36px);
-    line-height: 0.95;
+    font-size: 12vw;
+    line-height: 1.3;
+  }
+
+  .welcome-subtitle {
+    font-size: clamp(30px, 40px);
   }
 
   .welcome-desc {
-    font-size: 14px;
-    line-height: 0.8;
+    font-size: 4.5vw;
   }
 
   .features-title {
-    font-size: 18px;
+    font-size: 22px;
   }
 
   .feature-card {
@@ -462,15 +486,19 @@ a {
   }
 
   .feature-card h3 {
-    font-size: 14px;
+    font-size: 18px;
   }
 
   .feature-card p {
-    font-size: 12px;
+    font-size: 16px;
   }
 
   .feature-icon {
-    font-size: 28px;
+    font-size: 30px;
+  }
+
+  .btn {
+    font-size: 17px;
   }
 
   .allfoot {

@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
 }
-
+input,
 input[type='text'],
 input[type='number'],
 input[type='email'],
@@ -16,31 +16,21 @@ textarea {
 
 input,
 textarea {
-  -webkit-appearance: none; /* iOS Safari */
+  -webkit-appearance: none;
   appearance: none;
 }
 
 html {
   font-size: 16px;
-  height: 100%;
+  height: 100vh;
   background: #0f0314;
 }
 
 html,
 body {
-  height: 100%;
-}
-
-@media (max-width: 768px) {
-  html {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  html {
-    font-size: 14px;
-  }
+  height: 100vh;
+  touch-action: pan-x pan-y;
+  -webkit-text-size-adjust: none;
 }
 
 @property --angle {
@@ -66,6 +56,8 @@ body {
   font-family: 'Poppins', sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -ms-overflow-style: none;
+  overflow: hidden;
 }
 
 @keyframes gradientShift {
@@ -81,6 +73,7 @@ body {
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
+  display: none;
 }
 ::-webkit-scrollbar-track {
   background: #523a5c;
@@ -180,12 +173,16 @@ body {
 
 .btn-sm {
   padding: 6px 14px;
-  font-size: 11.5px;
+  font-size: 12px;
 }
 
-@media (max-width: 480px) {
+.btn-primary.logre {
+  font-size: 18px;
+}
+
+/* @media (max-width: 480px) {
   .btn {
-    font-size: 11px;
+    font-size: 13px;
     padding: 8px 16px;
   }
 
@@ -193,7 +190,11 @@ body {
     padding: 6px 12px;
     font-size: 10px;
   }
-}
+
+  .btn-primary.logre {
+    font-size: 16px;
+  }
+} */
 
 /* Inputs */
 input,
@@ -232,13 +233,15 @@ textarea {
 @media (max-width: 480px) {
   input,
   textarea {
-    font-size: 13px;
+    font-size: 18px;
     padding: 8px 12px;
   }
 
-  input::placeholder,
+  input::placeholder {
+    font-size: 16px;
+  }
   textarea::placeholder {
-    font-size: 12px;
+    font-size: 15px;
   }
 }
 
