@@ -67,6 +67,13 @@
         </div>
       </article>
     </section>
+
+    <footer class="animate-on-load" style="transition-delay: 1.5s">
+      <p class="welcome-footer">
+        Created by <a href="https://linktr.ee/mxzy1" target="_blank">mxzy</a> &
+        <a href="https://github.com/xaviq86" target="_blank">xaviq</a>
+      </p>
+    </footer>
   </main>
 </template>
 

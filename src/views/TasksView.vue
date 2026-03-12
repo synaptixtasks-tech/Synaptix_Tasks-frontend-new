@@ -110,8 +110,8 @@
       {{ error }}
     </output>
 
-    <footer>
-      <p class="welcome-footer animate-on-load" style="transition-delay: 0.95s">
+    <footer class="animate-on-load" style="transition-delay: 1.5s">
+      <p class="welcome-footer">
         Created by <a href="https://linktr.ee/mxzy1" target="_blank">mxzy</a> &
         <a href="https://github.com/xaviq86" target="_blank">xaviq</a>
       </p>
@@ -516,20 +516,6 @@ onMounted(() => {
 .btn-sm {
   padding: 6px 14px;
   font-size: 14px;
-}
-
-footer {
-  position: fixed;
-  right: 10px;
-  bottom: 0;
-  text-align: center;
-  font-size: 12px;
-  color: #fff;
-  opacity: 0.6;
-}
-
-footer a {
-  color: rgba(15, 3, 20, 1);
 }
 
 @media (max-width: 768px) {
