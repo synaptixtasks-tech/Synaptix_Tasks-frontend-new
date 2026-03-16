@@ -180,22 +180,6 @@ body {
   font-size: 18px;
 }
 
-/* @media (max-width: 480px) {
-  .btn {
-    font-size: 13px;
-    padding: 8px 16px;
-  }
-
-  .btn-sm {
-    padding: 6px 12px;
-    font-size: 10px;
-  }
-
-  .btn-primary.logre {
-    font-size: 16px;
-  }
-} */
-
 /* Inputs */
 input,
 textarea {
@@ -277,7 +261,7 @@ textarea {
   background: rgba(255, 110, 171, 0.05);
 }
 
-footer {
+.info-footer {
   position: fixed;
   right: 0px;
   bottom: 0;
@@ -285,9 +269,8 @@ footer {
   font-size: 12px;
   color: #fff;
   border-radius: 5px 0px 0px 0px;
-  background: #000;
 }
 
-footer a {
+.info-footer a {
   color: rgb(123, 31, 163);
 }

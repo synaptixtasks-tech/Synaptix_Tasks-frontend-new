@@ -68,7 +68,7 @@
       </article>
     </section>
 
-    <footer class="animate-on-load" style="transition-delay: 1.5s">
+    <footer class="info-footer animate-on-load" style="transition-delay: 1.5s">
       <p class="welcome-footer">
         Created by <a href="https://linktr.ee/mxzy1" target="_blank">mxzy</a> &
         <a href="https://github.com/xaviq86" target="_blank">xaviq</a>
@@ -157,7 +157,7 @@ setTimeout(() => {
 }
 
 .profile-page {
-  max-width: 760px;
+  max-width: 800px;
   margin: 0 auto;
   padding: clamp(20px, 4vw, 40px) clamp(16px, 5vw, 24px);
   padding-top: 110px;
@@ -286,32 +286,6 @@ label {
   font-weight: normal;
 }
 
-/* @media (max-width: 768px) {
-  .profile-page {
-    padding-top: 100px;
-  }
-
-  .page-title {
-    font-size: clamp(24px, 6vw, 28px);
-  }
-
-  .cards-grid {
-    gap: 16px;
-  }
-
-  .card {
-    padding: 20px;
-  }
-
-  .user-stats {
-    gap: clamp(16px, 4vw, 24px);
-  }
-
-  .us-val {
-    font-size: clamp(20px, 5vw, 28px);
-  }
-} */
-
 @media (max-width: 480px) {
   .profile-page {
     padding: clamp(16px, 3vw, 20px) clamp(12px, 3vw, 16px);
@@ -330,31 +304,6 @@ label {
     padding: 16px;
     gap: 12px;
   }
-
-  /* .user-id {
-    gap: 8px;
-  }
-
-  .uid-name {
-    font-size: clamp(20px, 5vw, 25px);
-  }
-
-  .user-stats {
-    gap: 16px;
-    width: 100%;
-  }
-
-  .us-item {
-    text-align: center;
-  }
-
-  .us-val {
-    font-size: clamp(18px, 4vw, 24px);
-  }
-
-  .field {
-    gap: 4px;
-  } */
 
   .button {
     width: 100%;

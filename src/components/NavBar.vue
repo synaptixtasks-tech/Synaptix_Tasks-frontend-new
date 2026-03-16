@@ -1,61 +1,48 @@
 <template>
-  <nav v-if="!isAuthPage" class="navbar animate-on-load">
+  <nav class="navbar animate-on-load">
     <RouterLink to="/" class="logo">
       <span class="logo-text"><img src="/Synaptix.png" alt="" /></span>
     </RouterLink>
 
-    <div class="nav-links" v-if="!isAuthPage">
-      <!-- Authenticated user nav -->
-      <template v-if="auth.token">
-        <RouterLink to="/tasks" class="nav-link" :class="{ active: $route.path === '/tasks' }">
-          Tasks
-        </RouterLink>
-        <RouterLink to="/profile" class="nav-link" :class="{ active: $route.path === '/profile' }">
-          Profile
-        </RouterLink>
-        <button class="btn btn-sm btn-ghost" @click="handleLogout">Logout</button>
-      </template>
-
-      <!-- Unauthenticated user nav -->
-      <!-- <template v-else>
-        <RouterLink to="/login" class="btn btn-sm btn-primary">Login</RouterLink>
-        <RouterLink to="/register" class="btn btn-sm btn-secondary">Register</RouterLink>
-      </template> -->
+    <div class="nav-links">
+      <RouterLink to="/tasks" class="nav-link" :class="{ active: $route.path === '/tasks' }">
+        Tasks
+      </RouterLink>
+      <RouterLink to="/profile" class="nav-link" :class="{ active: $route.path === '/profile' }">
+        Profile
+      </RouterLink>
+      <button class="btn btn-sm btn-ghost" @click="handleLogout">Logout</button>
     </div>
   </nav>
 </template>
 
 <script setup lang="ts">
-import { RouterLink, useRouter, useRoute } from 'vue-router'
-import { computed, ref, onMounted } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
+// import { computed, ref, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 
 const auth = useAuthStore()
 const router = useRouter()
-const route = useRoute()
+// const route = useRoute()
 
-const showNavbar = ref(false)
+// const showNavbar = ref(false)
 
-const isAuthPage = computed(() => {
-  return route.path === '/login' || route.path === '/register'
-})
+// const isWelcomePage = computed(() => {
+//   return route.path === '/'
+// })
 
-const isWelcomePage = computed(() => {
-  return route.path === '/'
-})
+// onMounted(() => {
+//   if (isWelcomePage.value) {
+//     setTimeout(() => {
+//       showNavbar.value = true
+//     }, 1000)
+//   } else {
+//     showNavbar.value = true
+//   }
+// })
 
-onMounted(() => {
-  if (isWelcomePage.value) {
-    setTimeout(() => {
-      showNavbar.value = true
-    }, 1000)
-  } else {
-    showNavbar.value = true
-  }
-})
-
-function handleLogout() {
-  auth.logout()
+async function handleLogout() {
+  await auth.logout()
   router.push('/login')
 }
 
@@ -77,7 +64,7 @@ setTimeout(() => {
 
 .animate-on-load.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 .navbar {

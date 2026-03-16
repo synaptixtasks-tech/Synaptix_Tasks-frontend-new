@@ -39,6 +39,7 @@ export const api = {
         headers: getHeaders(),
         body: JSON.stringify(data),
         credentials: 'include',
+        cache: 'no-store',
       })
       return handleResponse(respond)
     } catch (e) {
@@ -56,6 +57,7 @@ export const api = {
         },
         body: form,
         credentials: 'include',
+        cache: 'no-store',
       })
       return handleResponse(respond)
     } catch (e) {
@@ -83,6 +85,7 @@ export const api = {
         method: 'DELETE',
         headers: getHeaders(),
         credentials: 'include',
+        cache: 'no-store',
       })
       return handleResponse(respond)
     } catch (e) {

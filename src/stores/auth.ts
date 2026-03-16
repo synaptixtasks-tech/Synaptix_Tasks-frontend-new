@@ -60,9 +60,9 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function fetchUser(): Promise<void> {
-    const u = await authService.getCurrentUser()
-    if (u) {
-      user.value = u
+    const CurrentUser = await authService.getCurrentUser()
+    if (CurrentUser) {
+      user.value = CurrentUser
     } else {
       logout()
     }

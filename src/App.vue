@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <NavBar v-if="route.path !== '/'" />
+    <NavBar v-if="!['/', '/login', '/register'].includes(route.path)" />
     <div class="router-wrapper">
       <RouterView />
     </div>
