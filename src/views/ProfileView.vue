@@ -292,6 +292,10 @@ label {
     padding-top: 90px;
   }
 
+  .page-header {
+    margin-bottom: 5px;
+  }
+
   .page-title {
     font-size: 35px;
   }

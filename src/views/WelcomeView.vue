@@ -1,15 +1,10 @@
 <template>
-  <div class="page-preloader" id="page-preloader">loading...</div>
+  <div class="page-preloader" id="page-preloader"></div>
 
   <main class="welcome-page">
     <div class="welcome-container">
       <header class="welcome-left">
-        <img
-          class="animate-on-load"
-          src="/Synaptix.png"
-          alt="Synaptix Logo"
-          style="transition-delay: 0.05s"
-        />
+        <img src="/Synaptix.png" alt="Synaptix Logo" style="transition-delay: 0.05s" />
         <h1 class="welcome-title animate-on-load" style="transition-delay: 0.1s">Synaptix</h1>
         <h2 class="welcome-subtitle animate-on-load" style="transition-delay: 0.2s">Tasks</h2>
       </header>
@@ -65,19 +60,69 @@
 import { onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 
-onMounted(() => {
-  setTimeout(() => {
-    const preloader = document.getElementById('page-preloader') as HTMLElement | null
-    if (preloader && !preloader.classList.contains('done')) {
-      preloader.classList.add('done')
-    }
+const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms))
 
-    setTimeout(() => {
-      document.querySelectorAll('.animate-on-load').forEach((el) => {
-        el.classList.add('visible')
-      })
-    }, 400)
-  }, 600)
+const nextTwoFrames = () =>
+  new Promise<void>((resolve) =>
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+  )
+
+onMounted(async () => {
+  const preloader = document.getElementById('page-preloader') as HTMLElement | null
+  const img = document.querySelector('.welcome-left img') as HTMLElement | null
+  const welcomeLeft = document.querySelector('.welcome-left') as HTMLElement | null
+
+  if (!preloader || !img || !welcomeLeft) return
+
+  preloader.appendChild(img)
+  img.style.cssText = `
+    opacity: 1;
+    transform: none;
+    max-height: 100px;
+    border-radius: 40px;
+    transition: none;
+    position: relative;
+  `
+
+  await wait(600)
+
+  const fromRect = img.getBoundingClientRect()
+
+  welcomeLeft.setAttribute('style', 'transform: none !important; transition: none !important;')
+  welcomeLeft.prepend(img)
+  img.style.cssText = ''
+
+  void welcomeLeft.offsetHeight
+
+  const toRect = img.getBoundingClientRect()
+
+  welcomeLeft.removeAttribute('style')
+
+  const dx = fromRect.left - toRect.left + (fromRect.width - toRect.width) / 2
+  const dy = fromRect.top - toRect.top + (fromRect.height - toRect.height) / 2
+  const scaleX = fromRect.width / toRect.width
+  const scaleY = fromRect.height / toRect.height
+
+  img.style.transform = `translate(${dx}px, ${dy}px) scale(${scaleX}, ${scaleY})`
+  img.style.transition = 'none'
+  img.style.opacity = '1'
+
+  preloader.classList.add('done')
+  await wait(400)
+  preloader.remove()
+
+  await wait(100)
+  await nextTwoFrames()
+
+  img.style.transition = 'transform 0.8s ease, opacity 0.6s ease'
+  img.style.transform = ''
+  img.style.opacity = ''
+
+  await wait(550)
+  document.querySelectorAll('.animate-on-load').forEach((el) => el.classList.add('visible'))
+
+  await wait(800)
+  img.style.cssText = ''
 })
 </script>
 
@@ -99,16 +144,16 @@ onMounted(() => {
   opacity: 1;
   visibility: visible;
   transition:
-    opacity 0.4s ease,
-    visibility 0.4s ease;
+    background-color 0.4s ease,
+    visibility 0s ease 0.4s;
 }
 
 .done {
-  opacity: 0;
+  background-color: transparent;
   visibility: hidden;
+  pointer-events: none;
 }
 
-/* Базовий стан для анімації */
 .animate-on-load {
   opacity: 0;
   transform: translateY(24px);
@@ -124,7 +169,13 @@ onMounted(() => {
 
 .welcome-page {
   min-height: 100vh;
-  background: linear-gradient(160deg, transparent 0%, transparent 50%, #0f0314 50.1%, #0f0314 100%);
+  background: linear-gradient(
+    -230deg,
+    transparent 0%,
+    transparent 50%,
+    #0f0314 50.1%,
+    #0f0314 100%
+  );
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -150,18 +201,14 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   gap: 0;
-  transform: rotate(-20deg);
-}
-
-/* Перевизначаємо transform для .welcome-left після появи */
-.welcome-left.visible {
-  transform: rotate(-20deg) !important;
 }
 
 .welcome-left img {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
   max-height: 250px;
-  width: auto;
-  display: block;
   z-index: 1;
   border-radius: 40px;
 }
@@ -174,6 +221,7 @@ onMounted(() => {
   margin: 0;
   line-height: 19vh;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  mix-blend-mode: difference;
 }
 
 .welcome-subtitle {
@@ -201,7 +249,6 @@ onMounted(() => {
   gap: 32px;
 }
 
-/* Перевизначаємо transform для .welcome-right вмісту після появи */
 .welcome-content.visible {
   transform: translateY(0) !important;
 }

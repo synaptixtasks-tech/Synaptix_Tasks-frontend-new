@@ -31,6 +31,7 @@
       class="add-task-section animate-on-load"
       style="transition-delay: 0.1s"
       aria-label="Add new task"
+      @focusout="handleSectionBlur"
     >
       <div class="add-task-form" :class="{ expanded: isAdding }">
         <div class="add-row">
@@ -227,6 +228,15 @@ const filters: Array<{ value: 'all' | 'active' | 'done'; label: string }> = [
   { value: 'active', label: 'Active' },
   { value: 'done', label: 'Done' },
 ]
+
+function handleSectionBlur(event: FocusEvent) {
+  const section = event.currentTarget as HTMLElement
+  const relatedTarget = event.relatedTarget as Node | null
+
+  if (!section.contains(relatedTarget)) {
+    cancelAdd()
+  }
+}
 
 onMounted(() => {
   if (!loading.value) {

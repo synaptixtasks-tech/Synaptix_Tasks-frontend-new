@@ -146,7 +146,6 @@ html {
   align-items: center;
   justify-content: center;
   padding: clamp(16px, 5vw, 32px);
-  padding-top: 102px;
   position: relative;
   overflow: hidden;
 }

@@ -217,10 +217,6 @@ function formatDate(d: string | null | undefined) {
   margin-bottom: 0;
   overflow: hidden;
   word-break: break-word;
-  /* display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical; */
 }
 
 .task-meta {
@@ -292,65 +288,4 @@ function formatDate(d: string | null | undefined) {
     transform: scale(1.5);
   }
 }
-
-/* @media (max-width: 480px) {
-  .task-card {
-    gap: 8px;
-    padding: 10px 12px;
-  }
-
-  .task-card:hover {
-    background: rgba(15, 3, 20, 0.5);
-  }
-
-  .task-left {
-    gap: 10px;
-  }
-
-  .check-inner {
-    width: 16px;
-    height: 16px;
-  }
-
-  .task-title {
-    font-size: 12px;
-  }
-
-  .task-desc {
-    font-size: 11px;
-    margin-top: 3px;
-  }
-
-  .task-meta {
-    gap: 8px;
-    margin-top: 6px;
-  }
-
-  .task-date {
-    font-size: 9px;
-  }
-
-  .tag {
-    font-size: 9px;
-    padding: 2px 6px;
-  }
-
-  .action-btn {
-    padding: 4px;
-  }
-
-  .action-btn svg {
-    width: 12px;
-    height: 12px;
-  }
-
-  .edit-form {
-    gap: 8px;
-  }
-
-  .edit-form input,
-  .edit-form textarea {
-    font-size: 12px;
-  }
-} */
 </style>

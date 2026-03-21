@@ -5,6 +5,13 @@
   margin: 0;
   padding: 0;
 }
+
+::selection {
+  background: #ff6eab;
+  color: #fff;
+  text-shadow: 0.1em 0.1em 0px #000;
+}
+
 input,
 input[type='text'],
 input[type='number'],
@@ -107,10 +114,7 @@ body {
   background: transparent;
   color: #c8c8d8;
 }
-/* .btn:hover {
-  border-color: #7fff6e;
-  color: #7fff6e;
-} */
+
 .btn:active {
   transform: translateY(1px);
 }
@@ -267,10 +271,10 @@ textarea {
   bottom: 0;
   text-align: center;
   font-size: 12px;
-  color: #fff;
+  color: #ff6eab;
   border-radius: 5px 0px 0px 0px;
 }
 
 .info-footer a {
-  color: rgb(123, 31, 163);
+  color: #fff;
 }
