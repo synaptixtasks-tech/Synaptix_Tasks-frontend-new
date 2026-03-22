@@ -220,7 +220,6 @@ onMounted(async () => {
   font-family: 'Luckiest Guy', cursive;
   margin: 0;
   line-height: 19vh;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   mix-blend-mode: difference;
 }
 
@@ -397,7 +396,8 @@ a {
   }
 
   .welcome-left img {
-    max-height: 400px;
+    max-height: 375px;
+    margin-bottom: 20px;
   }
 
   .welcome-title {
@@ -443,6 +443,7 @@ a {
 
   .welcome-left img {
     max-height: 350px;
+    margin-bottom: 10px;
   }
 
   .welcome-title {
@@ -509,6 +510,7 @@ a {
 
   .welcome-left img {
     max-height: 70vw;
+    margin-bottom: 5px;
   }
 
   .welcome-title {

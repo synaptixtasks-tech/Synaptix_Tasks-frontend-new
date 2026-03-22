@@ -76,7 +76,13 @@
 
           <output v-if="auth.error" class="error-msg" role="alert">{{ auth.error }}</output>
 
-          <button class="btn btn-primary logre w-full" type="submit" :disabled="auth.loading">
+          <button
+            class="btn btn-primary logre w-full"
+            type="submit"
+            :disabled="auth.loading"
+            :class="{ 'active-click': isClicked }"
+            @click="isClicked = true"
+          >
             <span v-if="auth.loading">CONNECTING...</span>
             <span v-else>ACCESS SYSTEM</span>
           </button>
@@ -100,16 +106,24 @@ import { onMounted, onUnmounted } from 'vue'
 const auth = useAuthStore()
 const router = useRouter()
 
+const isClicked = ref(false)
+
 const username = ref('')
 const password = ref('')
 const showPassword = ref(false)
 
 async function handleLogin() {
-  if (!username.value || !password.value) return
+  if (!username.value || !password.value) {
+    isClicked.value = false
+    return
+  }
   const ok = await auth.login(username.value, password.value)
-  if (ok) router.push('/tasks')
+  if (ok) {
+    router.push('/tasks')
+  } else {
+    isClicked.value = false
+  }
 }
-
 setTimeout(() => {
   document.querySelectorAll('.animate-on-load').forEach((el) => {
     el.classList.add('visible')

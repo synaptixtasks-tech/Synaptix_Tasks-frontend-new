@@ -18,28 +18,11 @@
 
 <script setup lang="ts">
 import { RouterLink, useRouter } from 'vue-router'
-// import { computed, ref, onMounted } from 'vue'
+
 import { useAuthStore } from '../stores/auth'
 
 const auth = useAuthStore()
 const router = useRouter()
-// const route = useRoute()
-
-// const showNavbar = ref(false)
-
-// const isWelcomePage = computed(() => {
-//   return route.path === '/'
-// })
-
-// onMounted(() => {
-//   if (isWelcomePage.value) {
-//     setTimeout(() => {
-//       showNavbar.value = true
-//     }, 1000)
-//   } else {
-//     showNavbar.value = true
-//   }
-// })
 
 async function handleLogout() {
   await auth.logout()

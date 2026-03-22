@@ -5,7 +5,6 @@
     </header>
 
     <section class="cards-grid">
-      <!-- User Info Card -->
       <article class="card animate-on-load" style="transition-delay: 0.1s">
         <h2 class="card-label">USER NODE</h2>
         <span class="username">{{ auth.user?.username || '...' }}</span>
@@ -26,7 +25,6 @@
         </dl>
       </article>
 
-      <!-- Update Credentials -->
       <article class="card animate-on-load" style="transition-delay: 0.2s">
         <h2 class="card-label">UPDATE CREDENTIALS</h2>
 
@@ -43,12 +41,11 @@
         <output v-if="updateSuccess" class="success-msg" role="status">Credentials updated.</output>
 
         <button class="btn btn-primary btn-sm upgb" @click="handleUpdate" :disabled="updateLoading">
-          <span v-if="updateLoading" class="spinner" aria-hidden="true"></span>
+          <span v-if="updateLoading" class="spinner" aria-hidden="true">Updating...</span>
           <span v-else>Update</span>
         </button>
       </article>
 
-      <!-- Danger Zone -->
       <article class="card danger-card animate-on-load" style="transition-delay: 0.3s">
         <h2 class="card-label danger">DANGER ZONE</h2>
         <p class="danger-text">
@@ -243,7 +240,6 @@ setTimeout(() => {
   margin-top: 2px;
 }
 
-/* Fields */
 .field {
   display: flex;
   flex-direction: column;
@@ -255,10 +251,9 @@ label {
   letter-spacing: 0.12em;
 }
 
-/* Success */
 .success-msg {
   font-size: 12.5px;
-  color: #0f0314;
+  color: #ccc;
   padding: 10px 16px;
   border: 1px solid rgba(127, 255, 110, 0.25);
   border-radius: 4px;
@@ -266,7 +261,6 @@ label {
   display: block;
 }
 
-/* Danger */
 .danger-card {
   border-color: rgba(255, 110, 171, 0.2);
 }

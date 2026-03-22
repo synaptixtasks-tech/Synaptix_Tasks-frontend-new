@@ -265,7 +265,6 @@ function formatDate(d: string | null | undefined) {
   background: rgba(255, 110, 171, 0.05);
 }
 
-/* Edit form */
 .edit-form {
   flex: 1;
   display: flex;
@@ -286,6 +285,10 @@ function formatDate(d: string | null | undefined) {
   .edit,
   .del {
     transform: scale(1.5);
+  }
+
+  .task-card:hover {
+    background: rgba(15, 3, 20, 0.5);
   }
 }
 </style>

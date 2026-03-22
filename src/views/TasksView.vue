@@ -148,7 +148,6 @@ const newDesc = ref('')
 const isAdding = ref(false)
 const filter = ref<'all' | 'active' | 'done'>('all')
 
-// Stable order map
 const orderMap = ref<Map<number, number>>(new Map())
 
 watch(
@@ -163,7 +162,6 @@ watch(
   { immediate: true },
 )
 
-// Computed
 const filteredTasks = computed(() => {
   let list = tasks.value
   if (filter.value === 'active') list = list.filter((t) => !t.completed)
@@ -340,7 +338,6 @@ onMounted(() => {
   margin: 0;
 }
 
-/* Add task */
 .add-task-section {
   margin-bottom: 24px;
 }
@@ -421,7 +418,6 @@ onMounted(() => {
   transition: none;
 }
 
-/* Filters */
 .filters {
   display: flex;
   gap: 6px;
@@ -458,7 +454,6 @@ onMounted(() => {
   background: #fff;
 }
 
-/* Task list */
 .task-list {
   min-height: 200px;
 }

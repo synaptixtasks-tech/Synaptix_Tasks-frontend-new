@@ -6,8 +6,14 @@
   padding: 0;
 }
 
+::-moz-selection {
+  background: rgba(255, 110, 171, 0.99);
+  color: #fff;
+  text-shadow: 0.1em 0.1em 0px #000;
+}
+
 ::selection {
-  background: #ff6eab;
+  background: rgba(255, 110, 171, 0.99);
   color: #fff;
   text-shadow: 0.1em 0.1em 0px #000;
 }
@@ -142,8 +148,8 @@ body {
   font-weight: 700;
   animation: none;
 }
-.btn-primary.logre:hover,
-.upgb:hover {
+.btn-primary.logre.active-click,
+.upgb.active-click {
   background-image: linear-gradient(
     var(--angleb),
     hsl(274deg 81% 22%) 0%,
@@ -154,8 +160,13 @@ body {
     hsl(41deg 87% 45%) 100%
   );
   color: rgba(255, 255, 255, 0.8);
-  transform: scale(0.95);
   animation: gradientShiftb 2s ease-in infinite;
+}
+
+.btn-primary.logre:hover,
+.upgb:hover {
+  transform: scale(0.95);
+  opacity: 0.9;
 }
 
 .btn-danger {
