@@ -340,6 +340,15 @@ output.error-msg {
   text-decoration: underline;
 }
 
+@media (max-width: 800px) {
+  input:focus,
+  textarea:focus {
+    border: 1px solid #8a7498;
+    color: #fff;
+    transform: scale(1);
+  }
+}
+
 @media (max-width: 530px) {
   .logo-big {
     font-size: 7vw;

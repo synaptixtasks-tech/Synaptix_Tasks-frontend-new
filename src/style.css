@@ -161,6 +161,7 @@ body {
   );
   color: rgba(255, 255, 255, 0.8);
   animation: gradientShiftb 2s ease-in infinite;
+  border: none;
 }
 
 .btn-primary.logre:hover,
@@ -227,6 +228,14 @@ textarea::placeholder:focus {
 textarea {
   resize: vertical;
   min-height: 80px;
+}
+
+@media (max-width: 800px) {
+  .btn-primary.logre:hover,
+  .upgb:hover {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 480px) {
