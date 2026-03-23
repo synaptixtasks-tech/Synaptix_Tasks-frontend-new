@@ -150,6 +150,8 @@ const filter = ref<'all' | 'active' | 'done'>('all')
 
 const orderMap = ref<Map<number, number>>(new Map())
 
+const isSubmitting = false
+
 watch(
   tasks,
   (newTasks) => {
@@ -227,12 +229,21 @@ const filters: Array<{ value: 'all' | 'active' | 'done'; label: string }> = [
   { value: 'done', label: 'Done' },
 ]
 
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent)
+
 function handleSectionBlur(event: FocusEvent) {
   const section = event.currentTarget as HTMLElement
   const relatedTarget = event.relatedTarget as Node | null
 
   if (!section.contains(relatedTarget)) {
-    cancelAdd()
+    setTimeout(
+      () => {
+        if (!isSubmitting) {
+          cancelAdd()
+        }
+      },
+      isIOS ? 150 : 0,
+    )
   }
 }
 
