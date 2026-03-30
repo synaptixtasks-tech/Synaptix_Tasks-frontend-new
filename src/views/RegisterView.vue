@@ -112,11 +112,6 @@ setTimeout(() => {
   -ms-user-select: none;
 }
 
-html,
-body {
-  overflow-y: hidden;
-}
-
 .animate-on-load {
   opacity: 0;
   transform: translateY(24px);

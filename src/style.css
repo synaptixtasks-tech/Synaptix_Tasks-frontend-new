@@ -41,7 +41,7 @@ html {
 
 html,
 body {
-  height: 100vh;
+  min-height: 100vh;
   touch-action: pan-x pan-y;
   -webkit-text-size-adjust: none;
 }

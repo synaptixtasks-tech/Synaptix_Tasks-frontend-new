@@ -227,7 +227,7 @@ onMounted(async () => {
   align-items: center;
   /* justify-content: center; */
   height: 100%;
-  transform: translate(11%, 22%);
+  transform: translate(11%, 13%);
 }
 
 .welcome-content {
@@ -533,6 +533,10 @@ a {
 
   .btn {
     font-size: 17px;
+  }
+
+  .allfoot {
+    margin-bottom: 50px;
   }
 }
 </style>
