@@ -270,7 +270,7 @@ function onInputBlur() {
 
 .tasks-page {
   max-width: 800px;
-  min-height: var(--real-vh, 100dvh);
+  height: var(--real-vh, 100vh, 100dvh);
   margin: 0 auto;
   padding: clamp(20px, 4vw, 40px) clamp(16px, 5vw, 24px);
   padding-top: 110px;
