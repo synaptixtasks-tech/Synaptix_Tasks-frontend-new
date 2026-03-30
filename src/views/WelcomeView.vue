@@ -211,6 +211,7 @@ onMounted(async () => {
   max-height: 250px;
   z-index: 1;
   border-radius: 40px;
+  margin-bottom: 1.5%;
 }
 
 .welcome-title {
@@ -219,7 +220,7 @@ onMounted(async () => {
   color: #e8e8f0;
   font-family: 'Luckiest Guy', cursive;
   margin: 0;
-  line-height: 19vh;
+  line-height: 1;
   mix-blend-mode: difference;
 }
 
@@ -228,7 +229,7 @@ onMounted(async () => {
   font-size: clamp(24px, 8vw, 60px);
   font-weight: 600;
   margin: 0;
-  line-height: 1;
+  line-height: 0;
   margin-top: -5px;
   font-family: 'Poppins', sans-serif;
 }

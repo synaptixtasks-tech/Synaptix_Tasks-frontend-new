@@ -11,34 +11,14 @@
           <fieldset>
             <div class="field">
               <label for="username">USERNAME</label>
-              <input
-                id="username"
-                v-model="username"
-                type="text"
-                placeholder="enter username"
-                @keyup.enter="handleLogin"
-                autocomplete="username"
-              />
+              <input id="username" v-model="username" type="text" placeholder="enter username" @keyup.enter="handleLogin" autocomplete="username" />
             </div>
 
             <div class="field">
               <label for="password">PASSWORD</label>
               <div class="input-wrapper">
-                <input
-                  id="password"
-                  v-model="password"
-                  :type="showPassword ? 'text' : 'password'"
-                  placeholder="enter password"
-                  @keyup.enter="handleLogin"
-                  autocomplete="current-password"
-                />
-                <button
-                  class="eye-btn"
-                  @click="showPassword = !showPassword"
-                  type="button"
-                  tabindex="-1"
-                  :aria-label="showPassword ? 'Hide password' : 'Show password'"
-                >
+                <input id="password" v-model="password" :type="showPassword ? 'text' : 'password'" placeholder="enter password" @keyup.enter="handleLogin" autocomplete="current-password" />
+                <button class="eye-btn" @click="showPassword = !showPassword" type="button" tabindex="-1" :aria-label="showPassword ? 'Hide password' : 'Show password'">
                   <svg
                     v-if="!showPassword"
                     xmlns="http://www.w3.org/2000/svg"
@@ -76,13 +56,7 @@
 
           <output v-if="auth.error" class="error-msg" role="alert">{{ auth.error }}</output>
 
-          <button
-            class="btn btn-primary logre w-full"
-            type="submit"
-            :disabled="auth.loading"
-            :class="{ 'active-click': isClicked }"
-            @click="isClicked = true"
-          >
+          <button class="btn btn-primary logre w-full" type="submit" :disabled="auth.loading" :class="{ 'active-click': isClicked }" @click="isClicked = true">
             <span v-if="auth.loading">CONNECTING...</span>
             <span v-else>ACCESS SYSTEM</span>
           </button>
@@ -101,7 +75,6 @@
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
-import { onMounted, onUnmounted } from 'vue'
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -129,16 +102,6 @@ setTimeout(() => {
     el.classList.add('visible')
   })
 }, 50)
-
-onMounted(() => {
-  // Блокуємо скрол при вході на сторінку
-  document.body.style.overflow = 'hidden'
-})
-
-onUnmounted(() => {
-  // Повертаємо скрол при переході на іншу сторінку
-  document.body.style.overflow = ''
-})
 </script>
 
 <style scoped>
@@ -149,9 +112,9 @@ onUnmounted(() => {
   -ms-user-select: none;
 }
 
-body,
-html {
-  overflow: hidden;
+html,
+body {
+  overflow-y: hidden;
 }
 
 .animate-on-load {
@@ -168,7 +131,7 @@ html {
 }
 
 .auth-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -221,15 +184,7 @@ html {
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(
-    90deg,
-    hsl(274deg 81% 22%) 0%,
-    hsl(302deg 99% 19%) 13%,
-    hsl(319deg 94% 24%) 27%,
-    hsl(341deg 68% 37%) 42%,
-    hsl(14deg 61% 49%) 60%,
-    hsl(41deg 87% 45%) 100%
-  );
+  background: linear-gradient(90deg, hsl(274deg 81% 22%) 0%, hsl(302deg 99% 19%) 13%, hsl(319deg 94% 24%) 27%, hsl(341deg 68% 37%) 42%, hsl(14deg 61% 49%) 60%, hsl(41deg 87% 45%) 100%);
 }
 
 .lb {

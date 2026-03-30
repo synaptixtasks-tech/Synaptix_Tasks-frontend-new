@@ -48,14 +48,10 @@
 
       <article class="card danger-card animate-on-load" style="transition-delay: 0.3s">
         <h2 class="card-label danger">DANGER ZONE</h2>
-        <p class="danger-text">
-          Permanently delete your account and all associated tasks. This action cannot be undone.
-        </p>
+        <p class="danger-text">Permanently delete your account and all associated tasks. This action cannot be undone.</p>
 
         <div v-if="!confirmDelete">
-          <button class="btn btn-danger btn-sm" @click="confirmDelete = true">
-            Delete Account
-          </button>
+          <button class="btn btn-danger btn-sm" @click="confirmDelete = true">Delete Account</button>
         </div>
         <div v-else class="confirm-row" role="group" aria-label="Confirm account deletion">
           <strong class="confirm-text">Are you sure?</strong>
@@ -93,7 +89,7 @@ const updateSuccess = ref(false)
 const confirmDelete = ref(false)
 
 onMounted(() => {
-  if (tasksStore.tasks.length === 0) tasksStore.fetchTasks()
+  tasksStore.fetchTasks()
 })
 
 async function handleUpdate() {
@@ -155,6 +151,7 @@ setTimeout(() => {
 
 .profile-page {
   max-width: 800px;
+  min-height: 100dvh;
   margin: 0 auto;
   padding: clamp(20px, 4vw, 40px) clamp(16px, 5vw, 24px);
   padding-top: 110px;

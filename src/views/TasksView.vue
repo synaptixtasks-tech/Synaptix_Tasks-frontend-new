@@ -27,33 +27,16 @@
     </header>
 
     <!-- Add Task -->
-    <section
-      class="add-task-section animate-on-load"
-      style="transition-delay: 0.1s"
-      aria-label="Add new task"
-      @focusout="handleSectionBlur"
-    >
+    <section class="add-task-section animate-on-load" style="transition-delay: 0.1s" aria-label="Add new task" @focusout="handleSectionBlur">
       <div class="add-task-form" :class="{ expanded: isAdding }">
         <div class="add-row">
-          <input
-            v-model="newTitle"
-            placeholder="+ add new task..."
-            @focus="isAdding = true"
-            @keyup.enter="submitTask"
-            class="add-input"
-          />
+          <input v-model="newTitle" placeholder="+ add new task..." @focus="isAdding = true" @keyup.enter="submitTask" class="add-input" />
         </div>
         <div class="desc-row">
           <div class="desc-row-inner">
             <textarea v-model="newDesc" placeholder="Description (optional)" rows="2" />
             <div class="actions-inner">
-              <button
-                class="btn btn-primary btn-sm"
-                @click="submitTask"
-                :disabled="!newTitle.trim() || isAddingTask"
-              >
-                Add
-              </button>
+              <button class="btn btn-primary btn-sm" @click="submitTask" :disabled="!newTitle.trim() || isAddingTask">Add</button>
               <button class="btn btn-sm" @click="cancelAdd">Cancel</button>
             </div>
           </div>
@@ -63,23 +46,13 @@
 
     <!-- Filters -->
     <nav class="filters animate-on-load" style="transition-delay: 0.15s" aria-label="Task filters">
-      <button
-        v-for="f in filters"
-        :key="f.value"
-        class="filter-btn"
-        :class="{ active: filter === f.value }"
-        @click="filter = f.value"
-      >
+      <button v-for="f in filters" :key="f.value" class="filter-btn" :class="{ active: filter === f.value }" @click="filter = f.value">
         {{ f.label }}
       </button>
     </nav>
 
     <!-- Task List -->
-    <section
-      class="task-list animate-on-load"
-      style="transition-delay: 0.2s"
-      aria-label="Task list"
-    >
+    <section class="task-list animate-on-load" style="transition-delay: 0.2s" aria-label="Task list">
       <p v-if="loading" class="empty-state"></p>
 
       <div v-else-if="filteredTasks.length === 0" class="empty-state">
@@ -88,13 +61,7 @@
         <span v-if="filter !== 'all'">Try a different filter.</span>
       </div>
 
-      <TransitionGroup
-        name="task"
-        tag="ul"
-        class="task-list-inner"
-        @enter="onEnter"
-        @leave="onLeave"
-      >
+      <TransitionGroup name="task" tag="ul" class="task-list-inner" @enter="onEnter" @leave="onLeave">
         <TaskCard
           v-for="task in filteredTasks"
           :key="task.id"
@@ -202,12 +169,7 @@ async function handleDelete(id: number) {
   await deleteTask(id)
 }
 
-async function handleEdit(
-  id: number,
-  title: string,
-  description: string | null,
-  completed: boolean,
-) {
+async function handleEdit(id: number, title: string, description: string | null, completed: boolean) {
   await updateTask(id, title, description, completed)
 }
 
@@ -274,6 +236,7 @@ onMounted(() => {
 
 .tasks-page {
   max-width: 800px;
+  min-height: 100dvh;
   margin: 0 auto;
   padding: clamp(20px, 4vw, 40px) clamp(16px, 5vw, 24px);
   padding-top: 110px;

@@ -53,15 +53,7 @@ body {
 }
 
 body {
-  background-image: linear-gradient(
-    var(--angle),
-    hsl(274deg 81% 22%) 0%,
-    hsl(302deg 99% 19%) 13%,
-    hsl(319deg 94% 24%) 27%,
-    hsl(341deg 68% 37%) 42%,
-    hsl(14deg 61% 49%) 60%,
-    hsl(41deg 87% 45%) 100%
-  );
+  background-image: linear-gradient(var(--angle), hsl(274deg 81% 22%) 0%, hsl(302deg 99% 19%) 13%, hsl(319deg 94% 24%) 27%, hsl(341deg 68% 37%) 42%, hsl(14deg 61% 49%) 60%, hsl(41deg 87% 45%) 100%);
 
   animation: gradientShift 15s ease-in-out infinite;
   background-size: 150% 150%;
@@ -150,15 +142,7 @@ body {
 }
 .btn-primary.logre.active-click,
 .upgb.active-click {
-  background-image: linear-gradient(
-    var(--angleb),
-    hsl(274deg 81% 22%) 0%,
-    hsl(302deg 99% 19%) 13%,
-    hsl(319deg 94% 24%) 27%,
-    hsl(341deg 68% 37%) 42%,
-    hsl(14deg 61% 49%) 60%,
-    hsl(41deg 87% 45%) 100%
-  );
+  background-image: linear-gradient(var(--angleb), hsl(274deg 81% 22%) 0%, hsl(302deg 99% 19%) 13%, hsl(319deg 94% 24%) 27%, hsl(341deg 68% 37%) 42%, hsl(14deg 61% 49%) 60%, hsl(41deg 87% 45%) 100%);
   color: rgba(255, 255, 255, 0.8);
   animation: gradientShiftb 2s ease-in infinite;
   border: none;

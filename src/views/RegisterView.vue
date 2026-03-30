@@ -11,32 +11,14 @@
           <fieldset>
             <div class="field">
               <label for="username">USERNAME <span class="hint">min 4 chars</span></label>
-              <input
-                id="username"
-                v-model="username"
-                type="text"
-                placeholder="choose a username"
-                autocomplete="username"
-              />
+              <input id="username" v-model="username" type="text" placeholder="choose a username" autocomplete="username" />
             </div>
 
             <div class="field">
               <label for="password">PASSWORD <span class="hint">min 8 chars</span></label>
               <div class="input-wrapper">
-                <input
-                  id="password"
-                  v-model="password"
-                  :type="showPassword ? 'text' : 'password'"
-                  placeholder="choose a password"
-                  autocomplete="new-password"
-                />
-                <button
-                  class="eye-btn"
-                  @click="showPassword = !showPassword"
-                  type="button"
-                  tabindex="-1"
-                  :aria-label="showPassword ? 'Hide password' : 'Show password'"
-                >
+                <input id="password" v-model="password" :type="showPassword ? 'text' : 'password'" placeholder="choose a password" autocomplete="new-password" />
+                <button class="eye-btn" @click="showPassword = !showPassword" type="button" tabindex="-1" :aria-label="showPassword ? 'Hide password' : 'Show password'">
                   <svg
                     v-if="!showPassword"
                     xmlns="http://www.w3.org/2000/svg"
@@ -73,13 +55,7 @@
           </fieldset>
 
           <output v-if="auth.error" class="error-msg" role="alert">{{ auth.error }}</output>
-          <button
-            class="btn btn-primary logre w-full"
-            type="submit"
-            :disabled="auth.loading"
-            :class="{ 'active-click': isClicked }"
-            @click="isClicked = true"
-          >
+          <button class="btn btn-primary logre w-full" type="submit" :disabled="auth.loading" :class="{ 'active-click': isClicked }" @click="isClicked = true">
             <span v-if="auth.loading">Initializing</span>
             <span v-else>INITIALIZE ACCOUNT</span>
           </button>
@@ -136,8 +112,8 @@ setTimeout(() => {
   -ms-user-select: none;
 }
 
-body,
-html {
+html,
+body {
   overflow-y: hidden;
 }
 
@@ -155,7 +131,7 @@ html {
 }
 
 .auth-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -208,15 +184,7 @@ html {
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(
-    270deg,
-    hsl(274deg 81% 22%) 0%,
-    hsl(302deg 99% 19%) 13%,
-    hsl(319deg 94% 24%) 27%,
-    hsl(341deg 68% 37%) 42%,
-    hsl(14deg 61% 49%) 60%,
-    hsl(41deg 87% 45%) 100%
-  );
+  background: linear-gradient(270deg, hsl(274deg 81% 22%) 0%, hsl(302deg 99% 19%) 13%, hsl(319deg 94% 24%) 27%, hsl(341deg 68% 37%) 42%, hsl(14deg 61% 49%) 60%, hsl(41deg 87% 45%) 100%);
 }
 
 .lb {
