@@ -30,11 +30,11 @@
 
         <div class="field">
           <label for="new-username">NEW USERNAME</label>
-          <input id="new-username" v-model="newUsername" type="text" placeholder="username" />
+          <input id="new-username" v-model="newUsername" type="text" placeholder="username" @blur="onInputBlur" />
         </div>
         <div class="field">
           <label for="new-password">NEW PASSWORD</label>
-          <input id="new-password" v-model="newPassword" type="password" placeholder="password" />
+          <input id="new-password" v-model="newPassword" type="password" placeholder="password" @blur="onInputBlur" />
         </div>
 
         <output v-if="updateError" class="error-msg" role="alert">{{ updateError }}</output>
@@ -147,6 +147,19 @@ onMounted(() => {
 onUnmounted(() => {
   if (vpHandler) window.visualViewport?.removeEventListener('resize', vpHandler)
 })
+
+function onInputBlur() {
+  const isMobile = window.innerWidth <= 1024 && ('ontouchstart' in window || navigator.maxTouchPoints > 0)
+
+  if (!isMobile) return
+
+  setTimeout(() => {
+    const vh = window.visualViewport?.height ?? window.innerHeight
+    document.documentElement.style.setProperty('--real-vh', `${vh}px`)
+
+    window.scrollTo(0, 0)
+  }, 100)
+}
 </script>
 
 <style scoped>

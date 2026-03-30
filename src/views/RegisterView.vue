@@ -11,13 +11,13 @@
           <fieldset>
             <div class="field">
               <label for="username">USERNAME <span class="hint">min 4 chars</span></label>
-              <input id="username" v-model="username" type="text" placeholder="choose a username" autocomplete="username" />
+              <input id="username" v-model="username" type="text" placeholder="choose a username" autocomplete="username" @blur="onInputBlur" />
             </div>
 
             <div class="field">
               <label for="password">PASSWORD <span class="hint">min 8 chars</span></label>
               <div class="input-wrapper">
-                <input id="password" v-model="password" :type="showPassword ? 'text' : 'password'" placeholder="choose a password" autocomplete="new-password" />
+                <input id="password" v-model="password" :type="showPassword ? 'text' : 'password'" placeholder="choose a password" autocomplete="new-password" @blur="onInputBlur" />
                 <button class="eye-btn" @click="showPassword = !showPassword" type="button" tabindex="-1" :aria-label="showPassword ? 'Hide password' : 'Show password'">
                   <svg
                     v-if="!showPassword"
@@ -102,6 +102,19 @@ setTimeout(() => {
     el.classList.add('visible')
   })
 }, 50)
+
+function onInputBlur() {
+  const isMobile = window.innerWidth <= 1024 && ('ontouchstart' in window || navigator.maxTouchPoints > 0)
+
+  if (!isMobile) return
+
+  setTimeout(() => {
+    const vh = window.visualViewport?.height ?? window.innerHeight
+    document.documentElement.style.setProperty('--real-vh', `${vh}px`)
+
+    window.scrollTo(0, 0)
+  }, 100)
+}
 </script>
 
 <style scoped>
@@ -126,7 +139,7 @@ setTimeout(() => {
 }
 
 .auth-page {
-  min-height: 100dvh;
+  min-height: var(--real-vh, 100dvh);
   display: flex;
   align-items: center;
   justify-content: center;

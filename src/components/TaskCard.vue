@@ -3,27 +3,10 @@
     <!-- View Mode -->
     <template v-if="!isEditing">
       <div class="task-left">
-        <button
-          class="check-btn"
-          @click="$emit('toggle')"
-          :aria-pressed="task.completed"
-          :title="task.completed ? 'Mark active' : 'Mark done'"
-        >
+        <button class="check-btn" @click="$emit('toggle')" :aria-pressed="task.completed" :title="task.completed ? 'Mark active' : 'Mark done'">
           <span class="check-inner" :class="{ checked: task.completed }">
-            <svg
-              v-if="task.completed"
-              viewBox="0 0 12 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <polyline
-                points="2,6 5,9 10,3"
-                stroke="currentColor"
-                stroke-width="1.8"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+            <svg v-if="task.completed" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <polyline points="2,6 5,9 10,3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </span>
         </button>
@@ -35,9 +18,7 @@
             <span class="tag" :class="task.completed ? 'tag-done' : 'tag-active'">
               {{ task.completed ? 'done' : 'active' }}
             </span>
-            <time class="task-date" :datetime="task.date_created ?? ''">{{
-              formatDate(task.date_created)
-            }}</time>
+            <time class="task-date" :datetime="task.date_created ?? ''">{{ formatDate(task.date_created) }}</time>
           </footer>
         </article>
       </div>
@@ -46,26 +27,14 @@
         <li>
           <button class="action-btn edit" @click="startEdit" title="Edit">
             <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path
-                d="M11.5 2.5l2 2L5 13H3v-2L11.5 2.5z"
-                stroke="currentColor"
-                stroke-width="1.3"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+              <path d="M11.5 2.5l2 2L5 13H3v-2L11.5 2.5z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
         </li>
         <li>
           <button class="action-btn del" @click="$emit('delete')" title="Delete">
             <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path
-                d="M3 4h10M6 4V3h4v1M5 4v9h6V4H5z"
-                stroke="currentColor"
-                stroke-width="1.3"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+              <path d="M3 4h10M6 4V3h4v1M5 4v9h6V4H5z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
         </li>
@@ -75,18 +44,8 @@
     <!-- Edit Mode -->
     <template v-else>
       <div class="edit-form">
-        <input
-          v-model="editTitle"
-          aria-label="Edytuj tytuł zadania"
-          placeholder="Task title"
-          ref="titleInput"
-        />
-        <textarea
-          v-model="editDesc"
-          aria-label="Edytuj opis zadania"
-          placeholder="Description (optional)"
-          rows="2"
-        />
+        <input v-model="editTitle" aria-label="Edytuj tytuł zadania" placeholder="Task title" ref="titleInput" @blur="onInputBlur" />
+        <textarea v-model="editDesc" aria-label="Edytuj opis zadania" placeholder="Description (optional)" rows="2" @blur="onInputBlur" />
         <div class="edit-actions">
           <button class="btn btn-primary btn-sm" @click="saveEdit">Save</button>
           <button class="btn btn-sm" @click="cancelEdit">Cancel</button>

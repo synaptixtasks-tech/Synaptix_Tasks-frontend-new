@@ -30,11 +30,11 @@
     <section class="add-task-section animate-on-load" style="transition-delay: 0.1s" aria-label="Add new task" @focusout="handleSectionBlur">
       <div class="add-task-form" :class="{ expanded: isAdding }">
         <div class="add-row">
-          <input v-model="newTitle" placeholder="+ add new task..." @focus="isAdding = true" @keyup.enter="submitTask" class="add-input" />
+          <input v-model="newTitle" placeholder="+ add new task..." @focus="isAdding = true" @keyup.enter="submitTask" @blur="onInputBlur" class="add-input" />
         </div>
         <div class="desc-row">
           <div class="desc-row-inner">
-            <textarea v-model="newDesc" placeholder="Description (optional)" rows="2" />
+            <textarea v-model="newDesc" placeholder="Description (optional)" rows="2" @blur="onInputBlur" />
             <div class="actions-inner">
               <button class="btn btn-primary btn-sm" @click="submitTask" :disabled="!newTitle.trim() || isAddingTask">Add</button>
               <button class="btn btn-sm" @click="cancelAdd">Cancel</button>
@@ -213,9 +213,13 @@ let vpHandler: (() => void) | null = null
 
 onMounted(() => {
   vpHandler = () => {
-    document.documentElement.style.setProperty('--real-vh', `${window.visualViewport?.height ?? window.innerHeight}px`)
+    const vh = window.visualViewport?.height ?? window.innerHeight
+    document.documentElement.style.setProperty('--real-vh', `${vh}px`)
+    window.scrollTo(0, 0)
   }
+
   window.visualViewport?.addEventListener('resize', vpHandler)
+  window.visualViewport?.addEventListener('scroll', vpHandler)
   vpHandler()
 
   if (!loading.value) {
@@ -226,8 +230,22 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  if (vpHandler) window.visualViewport?.removeEventListener('resize', vpHandler)
+  window.visualViewport?.removeEventListener('resize', vpHandler)
+  window.visualViewport?.removeEventListener('scroll', vpHandler)
 })
+
+function onInputBlur() {
+  const isMobile = window.innerWidth <= 1024 && ('ontouchstart' in window || navigator.maxTouchPoints > 0)
+
+  if (!isMobile) return
+
+  setTimeout(() => {
+    const vh = window.visualViewport?.height ?? window.innerHeight
+    document.documentElement.style.setProperty('--real-vh', `${vh}px`)
+
+    window.scrollTo(0, 0)
+  }, 100)
+}
 </script>
 
 <style scoped>
