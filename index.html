@@ -4,23 +4,14 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <meta name="theme-color" content="#42b883" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Synaptix" />
-    <meta
-      name="description"
-      content="A TodoList-type project for CVs, created by two ambitious young amateurs."
-    />
-    <meta
-      property="og:description"
-      content="A TodoList-type project for CVs, created by two ambitious young amateurs."
-    />
+    <meta name="description" content="A TodoList-type project for CVs, created by two ambitious young amateurs." />
+    <meta property="og:description" content="A TodoList-type project for CVs, created by two ambitious young amateurs." />
     <meta name="author" content="mxzy & xaviq" />
     <meta name="keywords" content="web development tasks todo list project" />
     <meta property="og:type" content="website" />
@@ -28,10 +19,7 @@
     <title>Synaptix - Tasks</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <style>
       html,
@@ -42,7 +30,12 @@
   </head>
 
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <div class="page">
+      <div id="app"></div>
+      <script type="module" src="/src/main.ts"></script>
+      <script>
+        $('.page').css('height', $(window).height() + 'px')
+      </script>
+    </div>
   </body>
 </html>
