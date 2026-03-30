@@ -41,10 +41,18 @@ html {
 
 html,
 body {
-  height: 100vh;
+  height: 100%;
+  width: 100%;
+  verscroll-behavior-y: none;
   touch-action: pan-x pan-y;
   -webkit-text-size-adjust: none;
+  position: fixed;
   overflow: hidden;
+}
+
+#app {
+  height: 100dvh;
+  overflow-y: auto;
 }
 
 @property --angle {
@@ -64,7 +72,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -ms-overflow-style: none;
   display: grid;
-  height: 100vh;
   grid-template:
     'messages' 1fr
     'input' auto

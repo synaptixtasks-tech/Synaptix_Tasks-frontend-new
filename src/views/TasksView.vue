@@ -239,15 +239,20 @@ onMounted(() => {
 // })
 
 function onInputBlur() {
-  const isMobile = window.innerWidth <= 1024 && ('ontouchstart' in window || navigator.maxTouchPoints > 0)
-
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
   if (!isMobile) return
 
+  // Даємо браузеру час на закриття клавіатури
   setTimeout(() => {
+    // Замість жорсткого scrollTo(0,0), просимо браузер перерахувати в'юпорт
+    window.scrollTo({
+      top: window.scrollY, // залишаємося на тій же позиції
+      behavior: 'instant',
+    })
+
+    // Оновлюємо нашу змінну висоти
     const vh = window.visualViewport?.height ?? window.innerHeight
     document.documentElement.style.setProperty('--real-vh', `${vh}px`)
-
-    window.scrollTo(0, 0)
   }, 100)
 }
 </script>
@@ -268,7 +273,7 @@ function onInputBlur() {
 
 .tasks-page {
   max-width: 800px;
-  min-height: var(--real-vh, 100dvh);
+  height: var(--real-vh, 100vh, 100dvh);
   margin: 0 auto;
   padding: clamp(20px, 4vw, 40px) clamp(16px, 5vw, 24px);
   padding-top: 110px;
