@@ -199,6 +199,7 @@ onMounted(async () => {
   z-index: 1;
   border-radius: 40px;
   margin-bottom: 1.5%;
+  /* margin-bottom: 0;  windows */
 }
 
 .welcome-title {
@@ -208,6 +209,7 @@ onMounted(async () => {
   font-family: 'Luckiest Guy', cursive;
   margin: 0;
   line-height: 1;
+  /* line-height: 19vh;  windows */
   mix-blend-mode: difference;
 }
 
@@ -217,6 +219,7 @@ onMounted(async () => {
   font-weight: 600;
   margin: 0;
   line-height: 0;
+  /* line-height: 0.8; windows */
   margin-top: -5px;
   font-family: 'Poppins', sans-serif;
 }

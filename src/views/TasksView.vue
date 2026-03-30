@@ -209,7 +209,8 @@ function handleSectionBlur(event: FocusEvent) {
   }
 }
 
-let vpHandler: (() => void) | null = null
+// Визначаємо тип обробника для повної сумісності з DOM API
+let vpHandler: ((ev: Event) => void) | null = null
 
 onMounted(() => {
   vpHandler = () => {
@@ -218,9 +219,11 @@ onMounted(() => {
     window.scrollTo(0, 0)
   }
 
-  window.visualViewport?.addEventListener('resize', vpHandler)
-  window.visualViewport?.addEventListener('scroll', vpHandler)
-  vpHandler()
+  if (window.visualViewport && vpHandler) {
+    window.visualViewport.addEventListener('resize', vpHandler)
+    window.visualViewport.addEventListener('scroll', vpHandler)
+    vpHandler(new Event('resize')) // Викликаємо одразу для ініціалізації
+  }
 
   if (!loading.value) {
     setTimeout(() => {
@@ -230,8 +233,11 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  window.visualViewport?.removeEventListener('resize', vpHandler)
-  window.visualViewport?.removeEventListener('scroll', vpHandler)
+  // Додаємо перевірку, щоб TS не сварився на можливий null
+  if (window.visualViewport && vpHandler) {
+    window.visualViewport.removeEventListener('resize', vpHandler)
+    window.visualViewport.removeEventListener('scroll', vpHandler)
+  }
 })
 
 function onInputBlur() {

@@ -44,8 +44,8 @@
     <!-- Edit Mode -->
     <template v-else>
       <div class="edit-form">
-        <input v-model="editTitle" aria-label="Edytuj tytuł zadania" placeholder="Task title" ref="titleInput" @blur="onInputBlur" />
-        <textarea v-model="editDesc" aria-label="Edytuj opis zadania" placeholder="Description (optional)" rows="2" @blur="onInputBlur" />
+        <input v-model="editTitle" aria-label="Edytuj tytuł zadania" placeholder="Task title" ref="titleInput" />
+        <textarea v-model="editDesc" aria-label="Edytuj opis zadania" placeholder="Description (optional)" rows="2" />
         <div class="edit-actions">
           <button class="btn btn-primary btn-sm" @click="saveEdit">Save</button>
           <button class="btn btn-sm" @click="cancelEdit">Cancel</button>
