@@ -71,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useTasksStore } from '../stores/tasks'
@@ -133,6 +133,20 @@ setTimeout(() => {
     el.classList.add('visible')
   })
 }, 5)
+
+let vpHandler: (() => void) | null = null
+
+onMounted(() => {
+  vpHandler = () => {
+    document.documentElement.style.setProperty('--real-vh', `${window.visualViewport?.height ?? window.innerHeight}px`)
+  }
+  window.visualViewport?.addEventListener('resize', vpHandler)
+  vpHandler()
+})
+
+onUnmounted(() => {
+  if (vpHandler) window.visualViewport?.removeEventListener('resize', vpHandler)
+})
 </script>
 
 <style scoped>
@@ -151,7 +165,7 @@ setTimeout(() => {
 
 .profile-page {
   max-width: 800px;
-  min-height: 100dvh;
+  min-height: var(--real-vh, 100dvh);
   margin: 0 auto;
   padding: clamp(20px, 4vw, 40px) clamp(16px, 5vw, 24px);
   padding-top: 110px;

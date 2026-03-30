@@ -11,10 +11,7 @@
 
       <div class="welcome-right">
         <div class="welcome-content animate-on-load" style="transition-delay: 0.2s">
-          <p class="welcome-desc">
-            Organize your thoughts and manage your tasks efficiently. Stay productive with our
-            intuitive task management system designed to help you achieve your goals.
-          </p>
+          <p class="welcome-desc">Organize your thoughts and manage your tasks efficiently. Stay productive with our intuitive task management system designed to help you achieve your goals.</p>
 
           <section class="features-section">
             <h2 class="features-title">What can you do?</h2>
@@ -45,9 +42,7 @@
       </div>
     </div>
     <footer class="allfoot">
-      <p class="welcome-footer animate-on-load" style="margin-top: 50px; transition-delay: 0.9s">
-        Synaptix © 2026
-      </p>
+      <p class="welcome-footer animate-on-load" style="margin-top: 50px; transition-delay: 0.9s">Synaptix © 2026</p>
       <p class="welcome-footer animate-on-load" style="transition-delay: 0.95s">
         Created by <a href="https://linktr.ee/mxzy1" target="_blank">mxzy</a> &
         <a href="https://github.com/xaviq86" target="_blank">xaviq</a>
@@ -62,10 +57,7 @@ import { RouterLink } from 'vue-router'
 
 const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms))
 
-const nextTwoFrames = () =>
-  new Promise<void>((resolve) =>
-    requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
-  )
+const nextTwoFrames = () => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))
 
 onMounted(async () => {
   const preloader = document.getElementById('page-preloader') as HTMLElement | null
@@ -169,13 +161,7 @@ onMounted(async () => {
 
 .welcome-page {
   min-height: 100vh;
-  background: linear-gradient(
-    -230deg,
-    transparent 0%,
-    transparent 50%,
-    #0f0314 50.1%,
-    #0f0314 100%
-  );
+  background: linear-gradient(-230deg, transparent 0%, transparent 50%, #0f0314 50.1%, #0f0314 100%);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -186,6 +172,7 @@ onMounted(async () => {
 }
 
 .welcome-container {
+  flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
@@ -238,7 +225,7 @@ onMounted(async () => {
   color: #c8c8d8;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   height: 100%;
   transform: translate(11%, 22%);
 }
@@ -321,7 +308,8 @@ onMounted(async () => {
   display: flex;
   gap: 16px;
   justify-content: space-evenly;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  white-space: nowrap;
   margin-top: 20px;
 }
 
@@ -361,7 +349,6 @@ onMounted(async () => {
 }
 
 .allfoot {
-  transform: translateY(80px);
   text-align: center;
 }
 
@@ -413,10 +400,6 @@ a {
 
   .welcome-desc {
     font-size: 22px;
-  }
-
-  .allfoot {
-    transform: none;
   }
 }
 
@@ -486,10 +469,6 @@ a {
     padding: 12px 24px;
     font-size: 18px;
   }
-
-  .allfoot {
-    transform: none;
-  }
 }
 
 @media (max-width: 480px) {
@@ -523,6 +502,11 @@ a {
     font-size: clamp(30px, 40px);
   }
 
+  .welcome-actions {
+    flex-wrap: wrap;
+    white-space: wrap;
+  }
+
   .welcome-desc {
     font-size: 4.5vw;
   }
@@ -549,10 +533,6 @@ a {
 
   .btn {
     font-size: 17px;
-  }
-
-  .allfoot {
-    transform: none;
   }
 }
 </style>

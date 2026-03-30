@@ -88,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useTasks } from '../composables/useTasks'
 import TaskCard from '../components/TaskCard.vue'
@@ -209,14 +209,24 @@ function handleSectionBlur(event: FocusEvent) {
   }
 }
 
+let vpHandler: (() => void) | null = null
+
 onMounted(() => {
+  vpHandler = () => {
+    document.documentElement.style.setProperty('--real-vh', `${window.visualViewport?.height ?? window.innerHeight}px`)
+  }
+  window.visualViewport?.addEventListener('resize', vpHandler)
+  vpHandler()
+
   if (!loading.value) {
     setTimeout(() => {
-      document.querySelectorAll('.animate-on-load').forEach((el) => {
-        el.classList.add('visible')
-      })
+      document.querySelectorAll('.animate-on-load').forEach((el) => el.classList.add('visible'))
     })
   }
+})
+
+onUnmounted(() => {
+  if (vpHandler) window.visualViewport?.removeEventListener('resize', vpHandler)
 })
 </script>
 
@@ -236,7 +246,7 @@ onMounted(() => {
 
 .tasks-page {
   max-width: 800px;
-  min-height: 100dvh;
+  min-height: var(--real-vh, 100dvh);
   margin: 0 auto;
   padding: clamp(20px, 4vw, 40px) clamp(16px, 5vw, 24px);
   padding-top: 110px;
