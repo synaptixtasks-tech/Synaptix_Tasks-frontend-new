@@ -64,6 +64,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -ms-overflow-style: none;
   overflow: hidden;
+
+  display: grid;
+  height: 100vh;
+  grid-template:
+    'messages' 1fr
+    'input' auto
+    'keyboard' env(keyboard-inset-height, 0px);
 }
 
 @keyframes gradientShift {
