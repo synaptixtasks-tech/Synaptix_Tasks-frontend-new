@@ -34,49 +34,9 @@
     <script type="module" src="/src/main.ts"></script>
 
     <script setup lang="ts">
-      import { ref, onMounted, onUnmounted } from 'vue'
-
-      const topElement = ref<HTMLElement | null>(null)
-      const bottomElement = ref<HTMLElement | null>(null)
-
-      let pendingUpdate = false
-
-      const viewportHandler = () => {
-        if (pendingUpdate) return
-        pendingUpdate = true
-
-        requestAnimationFrame(() => {
-          pendingUpdate = false
-
-          const viewport = window.visualViewport
-          if (!viewport) return
-
-          if (topElement.value) {
-            const topOffset = Math.max(0, viewport.offsetTop)
-            topElement.value.style.transform = `translateY(${topOffset}px)`
-          }
-
-          if (bottomElement.value && viewport.offsetTop >= 0) {
-            const bottomOffset = Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop)
-            bottomElement.value.style.transform = `translateY(-${bottomOffset}px)`
-          }
-        })
+      if ('virtualKeyboard' in navigator) {
+        navigator.virtualKeyboard.overlaysContent = true
       }
-
-      onMounted(() => {
-        if (window.visualViewport) {
-          window.visualViewport.addEventListener('scroll', viewportHandler)
-          window.visualViewport.addEventListener('resize', viewportHandler)
-          viewportHandler()
-        }
-      })
-
-      onUnmounted(() => {
-        if (window.visualViewport) {
-          window.visualViewport.removeEventListener('scroll', viewportHandler)
-          window.visualViewport.removeEventListener('resize', viewportHandler)
-        }
-      })
     </script>
   </body>
 </html>
