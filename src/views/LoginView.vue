@@ -115,18 +115,15 @@ function onInputBlur() {
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
   if (!isMobile) return
 
-  // Даємо браузеру час на закриття клавіатури
   setTimeout(() => {
-    // Замість жорсткого scrollTo(0,0), просимо браузер перерахувати в'юпорт
     window.scrollTo({
-      top: window.scrollY, // залишаємося на тій же позиції
+      top: window.scrollY,
       behavior: 'instant',
     })
 
-    // Оновлюємо нашу змінну висоти
     const vh = window.visualViewport?.height ?? window.innerHeight
     document.documentElement.style.setProperty('--real-vh', `${vh}px`)
-  }, 100)
+  }, 5)
 }
 </script>
 

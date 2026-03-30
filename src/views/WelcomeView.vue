@@ -116,6 +116,25 @@ onMounted(async () => {
   await wait(800)
   img.style.cssText = ''
 })
+
+const isNotLinux = (): boolean => {
+  if (typeof window === 'undefined') return false
+
+  const platform = window.navigator.platform.toLowerCase()
+
+  return !platform.includes('linux') && !platform.includes('android')
+}
+
+if (isNotLinux()) {
+  const welcomel = document.querySelector('.welcome-left img') as HTMLElement | null
+  if (welcomel) welcomel.style.marginBottom = '0'
+
+  const welcomet = document.querySelector('.welcome-title') as HTMLElement | null
+  if (welcomet) welcomet.style.lineHeight = '19vh'
+
+  const welcomes = document.querySelector('.welcome-subtitle') as HTMLElement | null
+  if (welcomes) welcomes.style.lineHeight = '0.8'
+}
 </script>
 
 <style scoped>
