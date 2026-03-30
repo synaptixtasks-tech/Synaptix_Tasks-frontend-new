@@ -88,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useTasks } from '../composables/useTasks'
 import TaskCard from '../components/TaskCard.vue'
@@ -209,21 +209,20 @@ function handleSectionBlur(event: FocusEvent) {
   }
 }
 
-// Визначаємо тип обробника для повної сумісності з DOM API
-let vpHandler: ((ev: Event) => void) | null = null
+// let vpHandler: ((ev: Event) => void) | null = null
 
 onMounted(() => {
-  vpHandler = () => {
-    const vh = window.visualViewport?.height ?? window.innerHeight
-    document.documentElement.style.setProperty('--real-vh', `${vh}px`)
-    window.scrollTo(0, 0)
-  }
+  // vpHandler = () => {
+  //   const vh = window.visualViewport?.height ?? window.innerHeight
+  //   document.documentElement.style.setProperty('--real-vh', `${vh}px`)
+  //   window.scrollTo(0, 0)
+  // }
 
-  if (window.visualViewport && vpHandler) {
-    window.visualViewport.addEventListener('resize', vpHandler)
-    window.visualViewport.addEventListener('scroll', vpHandler)
-    vpHandler(new Event('resize')) // Викликаємо одразу для ініціалізації
-  }
+  // if (window.visualViewport && vpHandler) {
+  //   window.visualViewport.addEventListener('resize', vpHandler)
+  //   window.visualViewport.addEventListener('scroll', vpHandler)
+  //   vpHandler(new Event('resize'))
+  // }
 
   if (!loading.value) {
     setTimeout(() => {
@@ -232,13 +231,12 @@ onMounted(() => {
   }
 })
 
-onUnmounted(() => {
-  // Додаємо перевірку, щоб TS не сварився на можливий null
-  if (window.visualViewport && vpHandler) {
-    window.visualViewport.removeEventListener('resize', vpHandler)
-    window.visualViewport.removeEventListener('scroll', vpHandler)
-  }
-})
+// onUnmounted(() => {
+//   if (window.visualViewport && vpHandler) {
+//     window.visualViewport.removeEventListener('resize', vpHandler)
+//     window.visualViewport.removeEventListener('scroll', vpHandler)
+//   }
+// })
 
 function onInputBlur() {
   const isMobile = window.innerWidth <= 1024 && ('ontouchstart' in window || navigator.maxTouchPoints > 0)

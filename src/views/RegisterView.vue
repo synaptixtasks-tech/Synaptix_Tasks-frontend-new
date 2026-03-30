@@ -113,7 +113,7 @@ function onInputBlur() {
     document.documentElement.style.setProperty('--real-vh', `${vh}px`)
 
     window.scrollTo(0, 0)
-  }, 100)
+  }, 50)
 }
 </script>
 
