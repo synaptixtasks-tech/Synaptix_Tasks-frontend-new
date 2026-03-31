@@ -34,7 +34,7 @@
         </div>
         <div class="desc-row">
           <div class="desc-row-inner">
-            <textarea v-model="newDesc" placeholder="Description (optional)" rows="2" @focus="handleFocus" />
+            <textarea v-model="newDesc" placeholder="Description (optional)" rows="2" />
             <div class="actions-inner">
               <button class="btn btn-primary btn-sm" @click="submitTask" :disabled="!newTitle.trim() || isAddingTask">Add</button>
               <button class="btn btn-sm" @click="cancelAdd">Cancel</button>
@@ -209,20 +209,8 @@ function handleSectionBlur(event: FocusEvent) {
   }
 }
 
-// let vpHandler: ((ev: Event) => void) | null = null
-
 onMounted(() => {
-  // vpHandler = () => {
-  //   const vh = window.visualViewport?.height ?? window.innerHeight
-  //   document.documentElement.style.setProperty('--real-vh', `${vh}px`)
-  //   window.scrollTo(0, 0)
-  // }
-
-  // if (window.visualViewport && vpHandler) {
-  //   window.visualViewport.addEventListener('resize', vpHandler)
-  //   window.visualViewport.addEventListener('scroll', vpHandler)
-  //   vpHandler(new Event('resize'))
-  // }
+  Handler(new Event('resize'))
 
   if (!loading.value) {
     setTimeout(() => {
@@ -231,32 +219,9 @@ onMounted(() => {
   }
 })
 
-// onUnmounted(() => {
-//   if (window.visualViewport && vpHandler) {
-//     window.visualViewport.removeEventListener('resize', vpHandler)
-//     window.visualViewport.removeEventListener('scroll', vpHandler)
-//   }
-// })
-
-// function onInputBlur() {
-//   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-//   if (!isMobile) return
-
-//   setTimeout(() => {
-//     window.scrollTo({
-//       top: window.scrollY,
-//       behavior: 'instant',
-//     })
-
-//     const vh = window.visualViewport?.height ?? window.innerHeight
-//     document.documentElement.style.setProperty('--real-vh', `${vh}px`)
-//   }, 5)
-// }
-
 function handleFocus(event: FocusEvent) {
   isAdding.value = true
 
-  // Даємо клавіатурі 300мс виїхати, потім скролимо до інпуту
   setTimeout(() => {
     ;(event.target as HTMLElement).scrollIntoView({
       behavior: 'smooth',
@@ -283,11 +248,13 @@ function handleFocus(event: FocusEvent) {
 .tasks-page {
   max-width: 800px;
   min-height: 100dvh;
+  height: 100dvh;
   margin: 0 auto;
   padding: clamp(20px, 4vw, 40px) clamp(16px, 5vw, 24px);
   padding-top: 110px;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .page-header {

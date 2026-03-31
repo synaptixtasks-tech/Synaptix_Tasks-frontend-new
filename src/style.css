@@ -40,12 +40,13 @@ html {
 
 html,
 body {
-  height: 100dvh;
+  height: 100%;
   width: 100%;
   touch-action: pan-x pan-y;
   -webkit-text-size-adjust: none;
-  overflow-x: hidden;
+  overflow: hidden;
   touch-action: manipulation;
+  -webkit-overflow-scrolling: touch;
 }
 
 #app {

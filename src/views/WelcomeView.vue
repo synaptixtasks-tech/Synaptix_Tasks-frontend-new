@@ -115,26 +115,19 @@ onMounted(async () => {
 
   await wait(800)
   img.style.cssText = ''
+
+  const isNotLinux = (): boolean => {
+    if (typeof window === 'undefined') return false
+
+    const platform = window.navigator.platform.toLowerCase()
+
+    return !platform.includes('linux') && !platform.includes('android')
+  }
+
+  if (isNotLinux()) {
+    document.documentElement.classList.add('not-linux')
+  }
 })
-
-const isNotLinux = (): boolean => {
-  if (typeof window === 'undefined') return false
-
-  const platform = window.navigator.platform.toLowerCase()
-
-  return !platform.includes('linux') && !platform.includes('android')
-}
-
-if (isNotLinux()) {
-  const welcomel = document.querySelector('.welcome-left img') as HTMLElement | null
-  if (welcomel) welcomel.style.marginBottom = '0'
-
-  const welcomet = document.querySelector('.welcome-title') as HTMLElement | null
-  if (welcomet) welcomet.style.lineHeight = '19vh'
-
-  const welcomes = document.querySelector('.welcome-subtitle') as HTMLElement | null
-  if (welcomes) welcomes.style.lineHeight = '0.8'
-}
 </script>
 
 <style scoped>
@@ -218,7 +211,6 @@ if (isNotLinux()) {
   z-index: 1;
   border-radius: 40px;
   margin-bottom: 1.5%;
-  /* margin-bottom: 0;  windows */
 }
 
 .welcome-title {
@@ -228,7 +220,6 @@ if (isNotLinux()) {
   font-family: 'Luckiest Guy', cursive;
   margin: 0;
   line-height: 1;
-  /* line-height: 19vh;  windows */
   mix-blend-mode: difference;
 }
 
@@ -238,16 +229,24 @@ if (isNotLinux()) {
   font-weight: 600;
   margin: 0;
   line-height: 0;
-  /* line-height: 0.8; windows */
   margin-top: -5px;
   font-family: 'Poppins', sans-serif;
+}
+
+.not-linux .welcome-left img {
+  margin-bottom: 0;
+}
+.not-linux .welcome-title {
+  line-height: 19vh;
+}
+.not-linux .welcome-subtitle {
+  line-height: 0.8;
 }
 
 .welcome-right {
   color: #c8c8d8;
   display: flex;
   align-items: center;
-  /* justify-content: center; */
   height: 100%;
   transform: translate(11%, 13%);
 }

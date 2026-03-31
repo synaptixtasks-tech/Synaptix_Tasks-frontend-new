@@ -147,21 +147,6 @@ onMounted(() => {
 onUnmounted(() => {
   if (vpHandler) window.visualViewport?.removeEventListener('resize', vpHandler)
 })
-
-// function onInputBlur() {
-//   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-//   if (!isMobile) return
-
-//   setTimeout(() => {
-//     window.scrollTo({
-//       top: window.scrollY,
-//       behavior: 'instant',
-//     })
-
-//     const vh = window.visualViewport?.height ?? window.innerHeight
-//     document.documentElement.style.setProperty('--real-vh', `${vh}px`)
-//   }, 5)
-// }
 </script>
 
 <style scoped>
