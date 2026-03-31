@@ -210,8 +210,6 @@ function handleSectionBlur(event: FocusEvent) {
 }
 
 onMounted(() => {
-  Handler(new Event('resize'))
-
   if (!loading.value) {
     setTimeout(() => {
       document.querySelectorAll('.animate-on-load').forEach((el) => el.classList.add('visible'))
