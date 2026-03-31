@@ -11,21 +11,13 @@
           <fieldset>
             <div class="field">
               <label for="username">USERNAME</label>
-              <input id="username" v-model="username" type="text" placeholder="enter username" @keyup.enter="handleLogin" autocomplete="username" @blur="onInputBlur" />
+              <input id="username" v-model="username" type="text" placeholder="enter username" @keyup.enter="handleLogin" autocomplete="username" />
             </div>
 
             <div class="field">
               <label for="password">PASSWORD</label>
               <div class="input-wrapper">
-                <input
-                  id="password"
-                  v-model="password"
-                  :type="showPassword ? 'text' : 'password'"
-                  placeholder="enter password"
-                  @keyup.enter="handleLogin"
-                  autocomplete="current-password"
-                  @blur="onInputBlur"
-                />
+                <input id="password" v-model="password" :type="showPassword ? 'text' : 'password'" placeholder="enter password" @keyup.enter="handleLogin" autocomplete="current-password" />
                 <button class="eye-btn" @click="showPassword = !showPassword" type="button" tabindex="-1" :aria-label="showPassword ? 'Hide password' : 'Show password'">
                   <svg
                     v-if="!showPassword"
@@ -111,20 +103,20 @@ setTimeout(() => {
   })
 }, 50)
 
-function onInputBlur() {
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-  if (!isMobile) return
+// function onInputBlur() {
+//   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+//   if (!isMobile) return
 
-  setTimeout(() => {
-    window.scrollTo({
-      top: window.scrollY,
-      behavior: 'instant',
-    })
+//   setTimeout(() => {
+//     window.scrollTo({
+//       top: window.scrollY,
+//       behavior: 'instant',
+//     })
 
-    const vh = window.visualViewport?.height ?? window.innerHeight
-    document.documentElement.style.setProperty('--real-vh', `${vh}px`)
-  }, 5)
-}
+//     const vh = window.visualViewport?.height ?? window.innerHeight
+//     document.documentElement.style.setProperty('--real-vh', `${vh}px`)
+//   }, 5)
+// }
 </script>
 
 <style scoped>

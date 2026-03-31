@@ -30,11 +30,11 @@
 
         <div class="field">
           <label for="new-username">NEW USERNAME</label>
-          <input id="new-username" v-model="newUsername" type="text" placeholder="username" @blur="onInputBlur" />
+          <input id="new-username" v-model="newUsername" type="text" placeholder="username" />
         </div>
         <div class="field">
           <label for="new-password">NEW PASSWORD</label>
-          <input id="new-password" v-model="newPassword" type="password" placeholder="password" @blur="onInputBlur" />
+          <input id="new-password" v-model="newPassword" type="password" placeholder="password" />
         </div>
 
         <output v-if="updateError" class="error-msg" role="alert">{{ updateError }}</output>
@@ -148,20 +148,20 @@ onUnmounted(() => {
   if (vpHandler) window.visualViewport?.removeEventListener('resize', vpHandler)
 })
 
-function onInputBlur() {
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-  if (!isMobile) return
+// function onInputBlur() {
+//   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+//   if (!isMobile) return
 
-  setTimeout(() => {
-    window.scrollTo({
-      top: window.scrollY,
-      behavior: 'instant',
-    })
+//   setTimeout(() => {
+//     window.scrollTo({
+//       top: window.scrollY,
+//       behavior: 'instant',
+//     })
 
-    const vh = window.visualViewport?.height ?? window.innerHeight
-    document.documentElement.style.setProperty('--real-vh', `${vh}px`)
-  }, 5)
-}
+//     const vh = window.visualViewport?.height ?? window.innerHeight
+//     document.documentElement.style.setProperty('--real-vh', `${vh}px`)
+//   }, 5)
+// }
 </script>
 
 <style scoped>

@@ -11,13 +11,13 @@
           <fieldset>
             <div class="field">
               <label for="username">USERNAME <span class="hint">min 4 chars</span></label>
-              <input id="username" v-model="username" type="text" placeholder="choose a username" autocomplete="username" @blur="onInputBlur" />
+              <input id="username" v-model="username" type="text" placeholder="choose a username" autocomplete="username" />
             </div>
 
             <div class="field">
               <label for="password">PASSWORD <span class="hint">min 8 chars</span></label>
               <div class="input-wrapper">
-                <input id="password" v-model="password" :type="showPassword ? 'text' : 'password'" placeholder="choose a password" autocomplete="new-password" @blur="onInputBlur" />
+                <input id="password" v-model="password" :type="showPassword ? 'text' : 'password'" placeholder="choose a password" autocomplete="new-password" />
                 <button class="eye-btn" @click="showPassword = !showPassword" type="button" tabindex="-1" :aria-label="showPassword ? 'Hide password' : 'Show password'">
                   <svg
                     v-if="!showPassword"
@@ -103,20 +103,20 @@ setTimeout(() => {
   })
 }, 50)
 
-function onInputBlur() {
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-  if (!isMobile) return
+// function onInputBlur() {
+//   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+//   if (!isMobile) return
 
-  setTimeout(() => {
-    window.scrollTo({
-      top: window.scrollY,
-      behavior: 'instant',
-    })
+//   setTimeout(() => {
+//     window.scrollTo({
+//       top: window.scrollY,
+//       behavior: 'instant',
+//     })
 
-    const vh = window.visualViewport?.height ?? window.innerHeight
-    document.documentElement.style.setProperty('--real-vh', `${vh}px`)
-  }, 5)
-}
+//     const vh = window.visualViewport?.height ?? window.innerHeight
+//     document.documentElement.style.setProperty('--real-vh', `${vh}px`)
+//   }, 5)
+// }
 </script>
 
 <style scoped>

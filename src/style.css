@@ -35,15 +35,13 @@ textarea {
 
 html {
   font-size: 16px;
-  height: 100vh;
   background: #0f0314;
 }
 
 html,
 body {
-  height: 100%;
+  height: 100dvh;
   width: 100%;
-  verscroll-behavior-y: none;
   touch-action: pan-x pan-y;
   -webkit-text-size-adjust: none;
   position: fixed;
@@ -63,7 +61,6 @@ body {
 
 body {
   background-image: linear-gradient(var(--angle), hsl(274deg 81% 22%) 0%, hsl(302deg 99% 19%) 13%, hsl(319deg 94% 24%) 27%, hsl(341deg 68% 37%) 42%, hsl(14deg 61% 49%) 60%, hsl(41deg 87% 45%) 100%);
-
   animation: gradientShift 15s ease-in-out infinite;
   background-size: 150% 150%;
   color: #e8e8f0;
@@ -72,7 +69,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -ms-overflow-style: none;
   display: grid;
-  height: 100vh;
   grid-template:
     'messages' 1fr
     'input' auto

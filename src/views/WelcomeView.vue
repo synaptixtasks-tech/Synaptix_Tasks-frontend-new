@@ -558,7 +558,7 @@ a {
   }
 
   .allfoot {
-    margin-bottom: 100px;
+    margin-bottom: 60px;
   }
 }
 </style>

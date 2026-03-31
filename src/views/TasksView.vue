@@ -30,11 +30,11 @@
     <section class="add-task-section animate-on-load" style="transition-delay: 0.1s" aria-label="Add new task" @focusout="handleSectionBlur">
       <div class="add-task-form" :class="{ expanded: isAdding }">
         <div class="add-row">
-          <input v-model="newTitle" placeholder="+ add new task..." @focus="isAdding = true" @keyup.enter="submitTask" @blur="onInputBlur" class="add-input" />
+          <input v-model="newTitle" placeholder="+ add new task..." @focus="isAdding = true" @keyup.enter="submitTask" class="add-input" />
         </div>
         <div class="desc-row">
           <div class="desc-row-inner">
-            <textarea v-model="newDesc" placeholder="Description (optional)" rows="2" @blur="onInputBlur" />
+            <textarea v-model="newDesc" placeholder="Description (optional)" rows="2" />
             <div class="actions-inner">
               <button class="btn btn-primary btn-sm" @click="submitTask" :disabled="!newTitle.trim() || isAddingTask">Add</button>
               <button class="btn btn-sm" @click="cancelAdd">Cancel</button>
@@ -238,20 +238,20 @@ onMounted(() => {
 //   }
 // })
 
-function onInputBlur() {
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-  if (!isMobile) return
+// function onInputBlur() {
+//   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+//   if (!isMobile) return
 
-  setTimeout(() => {
-    window.scrollTo({
-      top: window.scrollY,
-      behavior: 'instant',
-    })
+//   setTimeout(() => {
+//     window.scrollTo({
+//       top: window.scrollY,
+//       behavior: 'instant',
+//     })
 
-    const vh = window.visualViewport?.height ?? window.innerHeight
-    document.documentElement.style.setProperty('--real-vh', `${vh}px`)
-  }, 5)
-}
+//     const vh = window.visualViewport?.height ?? window.innerHeight
+//     document.documentElement.style.setProperty('--real-vh', `${vh}px`)
+//   }, 5)
+// }
 </script>
 
 <style scoped>
