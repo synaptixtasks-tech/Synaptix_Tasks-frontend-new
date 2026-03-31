@@ -225,7 +225,7 @@ function handleFocus(event: FocusEvent) {
       behavior: 'smooth',
       block: 'center',
     })
-  }, 300)
+  }, 150)
 }
 </script>
 
@@ -253,6 +253,7 @@ function handleFocus(event: FocusEvent) {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  margin-bottom: 17.5px;
 }
 
 .page-header {
@@ -564,7 +565,6 @@ function handleFocus(event: FocusEvent) {
   }
 
   .filters {
-    overflow-x: auto;
     gap: 4px;
     padding-bottom: 8px;
   }
