@@ -47,6 +47,7 @@ body {
   overflow: hidden;
   touch-action: manipulation;
   -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
 
 #app {

@@ -252,8 +252,6 @@ function handleFocus(event: FocusEvent) {
   padding-top: 110px;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  margin-bottom: 17.5px;
 }
 
 .page-header {

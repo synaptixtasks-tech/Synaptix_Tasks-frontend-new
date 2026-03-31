@@ -59,6 +59,18 @@ const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, 
 
 const nextTwoFrames = () => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))
 
+const isDesktopNonLinux = (): boolean => {
+  if (typeof window === 'undefined') return false
+  const ua = navigator.userAgent.toLowerCase()
+  const isMobile = /android|iphone|ipad|ipod|mobile|tablet/i.test(ua)
+  if (isMobile) return false
+  return !ua.includes('linux')
+}
+
+if (isDesktopNonLinux()) {
+  document.documentElement.classList.add('not-linux')
+}
+
 onMounted(async () => {
   const preloader = document.getElementById('page-preloader') as HTMLElement | null
   const img = document.querySelector('.welcome-left img') as HTMLElement | null
@@ -115,18 +127,6 @@ onMounted(async () => {
 
   await wait(800)
   img.style.cssText = ''
-
-  const isNotLinux = (): boolean => {
-    if (typeof window === 'undefined') return false
-
-    const platform = window.navigator.platform.toLowerCase()
-
-    return !platform.includes('linux') && !platform.includes('android')
-  }
-
-  if (isNotLinux()) {
-    document.documentElement.classList.add('not-linux')
-  }
 })
 </script>
 
