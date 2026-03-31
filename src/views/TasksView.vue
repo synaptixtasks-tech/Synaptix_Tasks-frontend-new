@@ -30,11 +30,11 @@
     <section class="add-task-section animate-on-load" style="transition-delay: 0.1s" aria-label="Add new task" @focusout="handleSectionBlur">
       <div class="add-task-form" :class="{ expanded: isAdding }">
         <div class="add-row">
-          <input v-model="newTitle" placeholder="+ add new task..." @focus="isAdding = true" @keyup.enter="submitTask" class="add-input" />
+          <input v-model="newTitle" placeholder="+ add new task..." @focus="handleFocus" @keyup.enter="submitTask" class="add-input" />
         </div>
         <div class="desc-row">
           <div class="desc-row-inner">
-            <textarea v-model="newDesc" placeholder="Description (optional)" rows="2" />
+            <textarea v-model="newDesc" placeholder="Description (optional)" rows="2" @focus="handleFocus" />
             <div class="actions-inner">
               <button class="btn btn-primary btn-sm" @click="submitTask" :disabled="!newTitle.trim() || isAddingTask">Add</button>
               <button class="btn btn-sm" @click="cancelAdd">Cancel</button>
@@ -252,6 +252,18 @@ onMounted(() => {
 //     document.documentElement.style.setProperty('--real-vh', `${vh}px`)
 //   }, 5)
 // }
+
+function handleFocus(event: FocusEvent) {
+  isAdding.value = true
+
+  // Даємо клавіатурі 300мс виїхати, потім скролимо до інпуту
+  setTimeout(() => {
+    ;(event.target as HTMLElement).scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })
+  }, 300)
+}
 </script>
 
 <style scoped>
@@ -270,10 +282,12 @@ onMounted(() => {
 
 .tasks-page {
   max-width: 800px;
-  height: var(--real-vh, 100vh, 100dvh);
+  min-height: 100dvh;
   margin: 0 auto;
   padding: clamp(20px, 4vw, 40px) clamp(16px, 5vw, 24px);
   padding-top: 110px;
+  display: flex;
+  flex-direction: column;
 }
 
 .page-header {
