@@ -112,6 +112,10 @@ function formatDate(d: string | null | undefined) {
   opacity: 0.55;
 }
 
+.task-card:last-child {
+  margin-bottom: 17px;
+}
+
 .task-left {
   display: flex;
   gap: 16px;

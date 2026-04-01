@@ -229,12 +229,12 @@ onMounted(async () => {
   font-weight: 600;
   margin: 0;
   line-height: 0;
-  margin-top: -5px;
+  margin-top: -10px;
   font-family: 'Poppins', sans-serif;
 }
 
 .not-linux .welcome-left img {
-  margin-bottom: 0;
+  margin-bottom: -5px;
 }
 .not-linux .welcome-title {
   line-height: 19vh;
@@ -417,6 +417,7 @@ a {
 
   .welcome-subtitle {
     font-size: clamp(24px, 8vw, 40px);
+    margin-top: 0;
   }
 
   .welcome-desc {
@@ -557,7 +558,8 @@ a {
   }
 
   .allfoot {
-    margin-bottom: 60px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 }
 </style>

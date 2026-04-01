@@ -133,9 +133,15 @@ watch(
 
 const filteredTasks = computed(() => {
   let list = tasks.value
+
   if (filter.value === 'active') list = list.filter((t) => !t.completed)
   else if (filter.value === 'done') list = list.filter((t) => t.completed)
-  return [...list].sort((a, b) => (orderMap.value.get(a.id) ?? 0) - (orderMap.value.get(b.id) ?? 0))
+
+  return [...list].sort((a, b) => {
+    const dateA = a.date_created ? new Date(a.date_created).getTime() : 0
+    const dateB = b.date_created ? new Date(b.date_created).getTime() : 0
+    return dateB - dateA
+  })
 })
 
 const stats = computed(() => ({
@@ -286,7 +292,7 @@ function handleFocus(event: FocusEvent) {
 
 .stats-row {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: clamp(8px, 2vw, 16px);
   border-radius: 4px;
@@ -523,13 +529,19 @@ function handleFocus(event: FocusEvent) {
   .stats-row {
     justify-content: center;
     width: 100%;
+    gap: 35px;
+    padding: 8px 12px;
   }
   .stat-num {
     font-size: 22px;
   }
   .stat-divider {
-    width: 30px;
-    height: 1px;
+    background: rgba(180, 96, 131, 0.99);
+    display: none;
+  }
+
+  .stat-label {
+    margin-left: 3px;
   }
 
   .page-title {
@@ -538,15 +550,6 @@ function handleFocus(event: FocusEvent) {
 
   .page-header {
     margin-bottom: 20px;
-  }
-
-  .stats-row {
-    gap: 35px;
-    padding: 8px 12px;
-  }
-
-  .stat-divider {
-    display: none;
   }
 
   .add-task-form {
