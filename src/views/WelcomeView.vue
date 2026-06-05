@@ -231,15 +231,11 @@ onMounted(async () => {
   line-height: 1.2;
   font-family: 'Poppins', sans-serif;
 }
-/*.not-linux .welcome-left img {line-height: 0.95;
-  margin-bottom: -5px;
-}
-.not-linux .welcome-title {
-  line-height: 19vh;
-}
+
 .not-linux .welcome-subtitle {
   line-height: 0.8;
-}*/
+  margin-top: 0;
+}
 
 .welcome-right {
   color: #c8c8d8;
