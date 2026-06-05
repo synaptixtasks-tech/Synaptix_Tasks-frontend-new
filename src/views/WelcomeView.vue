@@ -199,7 +199,7 @@ onMounted(async () => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0;
+  gap: 16px;
 }
 
 .welcome-left img {
@@ -210,16 +210,16 @@ onMounted(async () => {
   max-height: 250px;
   z-index: 1;
   border-radius: 40px;
-  margin-bottom: 1.5%;
+  margin-bottom: 0;
 }
 
 .welcome-title {
   font-size: clamp(32px, 18vw, 190px);
   font-weight: 900;
   color: #e8e8f0;
-  font-family: 'Luckiest Guy', cursive;
+  font-family: 'Luckiest Guy', cursive, sans-serif;
   margin: 0;
-  line-height: 1;
+  line-height: 1.1;
   mix-blend-mode: difference;
 }
 
@@ -227,13 +227,11 @@ onMounted(async () => {
   color: #d4d4e0;
   font-size: clamp(24px, 8vw, 60px);
   font-weight: 600;
-  margin: 0;
-  line-height: 0;
-  margin-top: -10px;
+  margin-top: -7%;
+  line-height: 1.2;
   font-family: 'Poppins', sans-serif;
 }
-
-.not-linux .welcome-left img {
+/*.not-linux .welcome-left img {line-height: 0.95;
   margin-bottom: -5px;
 }
 .not-linux .welcome-title {
@@ -241,7 +239,7 @@ onMounted(async () => {
 }
 .not-linux .welcome-subtitle {
   line-height: 0.8;
-}
+}*/
 
 .welcome-right {
   color: #c8c8d8;
@@ -407,17 +405,20 @@ a {
   .welcome-left img {
     max-height: 375px;
     margin-bottom: 20px;
+    line-height: 0.8;
   }
 
   .welcome-title {
     font-size: clamp(28px, 10vw, 80px);
     margin-right: 0;
-    line-height: 0.95;
+    line-height: 0.5;
   }
 
   .welcome-subtitle {
     font-size: clamp(24px, 8vw, 40px);
     margin-top: 0;
+    line-height: 0.5;
+    margin-bottom: 1%;
   }
 
   .welcome-desc {
@@ -454,7 +455,7 @@ a {
 
   .welcome-title {
     font-size: 60px;
-    line-height: 1.3;
+    line-height: 0.5;
   }
 
   .welcome-desc {
@@ -517,11 +518,12 @@ a {
 
   .welcome-title {
     font-size: 12vw;
-    line-height: 1.3;
+    line-height: 0.5;
   }
 
   .welcome-subtitle {
     font-size: clamp(30px, 40px);
+    margin-top: -1%;
   }
 
   .welcome-actions {
