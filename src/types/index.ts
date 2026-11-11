@@ -1,14 +1,26 @@
+export interface Task {
+  id: string
+  title: string
+  description: string | null
+  completed: boolean
+  dateCreated: string
+  updatedAt: string
+  isDeleted: boolean
+  userId: string
+}
+
 export interface TaskCreate {
+  id?: string
   title: string
   description?: string | null
   completed?: boolean
 }
 
-export interface Task extends TaskCreate {
-  id: number
-  user_id: number
-  date_created: string
-  completed: boolean
+export interface TaskUpdate {
+  id?: string
+  title?: string
+  description?: string | null
+  completed?: boolean
 }
 
 export interface UserCreate {
@@ -17,11 +29,13 @@ export interface UserCreate {
 }
 
 export interface User {
-  id: number
+  id: string
   username: string
+  dateCreated: string
+  updatedAt: string
 }
 
 export interface TokenResponse {
-  access_token: string
-  token_type: string
+  accessToken: string
+  tokenType: string
 }

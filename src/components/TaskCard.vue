@@ -18,7 +18,7 @@
             <span class="tag" :class="task.completed ? 'tag-done' : 'tag-active'">
               {{ task.completed ? 'done' : 'active' }}
             </span>
-            <time class="task-date" :datetime="task.date_created ?? ''">{{ formatDate(task.date_created) }}</time>
+            <time class="task-date" :datetime="task.dateCreated ?? ''">{{ formatDate(task.dateCreated) }}</time>
           </footer>
         </article>
       </div>

@@ -115,7 +115,7 @@ const newDesc = ref('')
 const isAdding = ref(false)
 const filter = ref<'all' | 'active' | 'done'>('all')
 
-const orderMap = ref<Map<number, number>>(new Map())
+const orderMap = ref<Map<string, number>>(new Map())
 
 const isSubmitting = false
 
@@ -138,8 +138,8 @@ const filteredTasks = computed(() => {
   else if (filter.value === 'done') list = list.filter((t) => t.completed)
 
   return [...list].sort((a, b) => {
-    const dateA = a.date_created ? new Date(a.date_created).getTime() : 0
-    const dateB = b.date_created ? new Date(b.date_created).getTime() : 0
+    const dateA = a.dateCreated ? new Date(a.dateCreated).getTime() : 0
+    const dateB = b.dateCreated ? new Date(b.dateCreated).getTime() : 0
     return dateB - dateA
   })
 })
@@ -171,11 +171,11 @@ async function handleToggle(task: Task) {
   await toggleTask(task)
 }
 
-async function handleDelete(id: number) {
+async function handleDelete(id: string) {
   await deleteTask(id)
 }
 
-async function handleEdit(id: number, title: string, description: string | null, completed: boolean) {
+async function handleEdit(id: string, title: string, description: string | null, completed: boolean) {
   await updateTask(id, title, description, completed)
 }
 

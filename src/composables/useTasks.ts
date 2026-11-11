@@ -1,9 +1,14 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query'
 import { computed } from 'vue'
 import { tasksService } from '../services/tasksService'
-import type { Task, TaskCreate } from '../types'
+import type { Task, TaskCreate, TaskUpdate } from '../types'
 
 const TASKS_KEY = ['tasks']
+
+// crypto.randomUUID() istnieje tylko w secure context (HTTPS/localhost)
+function temporaryId(): string {
+  return crypto.randomUUID?.() ?? `temp-${Date.now()}-${Math.random().toString(16).slice(2)}`
+}
 
 export function useTasks() {
   const queryClient = useQueryClient()
@@ -31,12 +36,16 @@ export function useTasks() {
       const previousTasks = queryClient.getQueryData<Task[]>(TASKS_KEY)
 
       // Optimistycznie dodaj nowe zadanie
+      const now = new Date().toISOString()
       const optimisticTask: Task = {
-        id: Date.now(), // Tymczasowe ID
-        ...newTask,
+        id: temporaryId(), // Tymczasowe ID — po refetchu zastąpi je ID z serwera
+        title: newTask.title,
+        description: newTask.description ?? null,
         completed: false,
-        user_id: 0, // Placeholder - serwer zwróci prawdziwe ID
-        date_created: new Date().toISOString(),
+        dateCreated: now,
+        updatedAt: now,
+        isDeleted: false,
+        userId: '',
       }
 
       queryClient.setQueryData<Task[]>(TASKS_KEY, (old) => {
@@ -60,7 +69,7 @@ export function useTasks() {
 
   // Mutation - aktualizacja zadania (optimistic)
   const updateTaskMutation = useMutation({
-    mutationFn: ({ id, task }: { id: number; task: TaskCreate }) =>
+    mutationFn: ({ id, task }: { id: string; task: TaskUpdate }) =>
       tasksService.updateTask(id, task),
     onMutate: async ({ id, task }) => {
       await queryClient.cancelQueries({ queryKey: TASKS_KEY })
@@ -116,7 +125,7 @@ export function useTasks() {
 
   // Mutation - usuwanie zadania (optimistic)
   const deleteTaskMutation = useMutation({
-    mutationFn: (id: number) => tasksService.deleteTask(id),
+    mutationFn: (id: string) => tasksService.deleteTask(id),
     onMutate: async (id) => {
       await queryClient.cancelQueries({ queryKey: TASKS_KEY })
       const previousTasks = queryClient.getQueryData<Task[]>(TASKS_KEY)
@@ -149,7 +158,7 @@ export function useTasks() {
   }
 
   async function updateTask(
-    id: number,
+    id: string,
     title: string,
     description: string | null,
     completed: boolean,
@@ -164,7 +173,7 @@ export function useTasks() {
     await toggleTaskMutation.mutateAsync(task)
   }
 
-  async function deleteTask(id: number) {
+  async function deleteTask(id: string) {
     await deleteTaskMutation.mutateAsync(id)
   }
 

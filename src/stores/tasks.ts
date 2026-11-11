@@ -62,7 +62,7 @@ export const useTasksStore = defineStore('tasks', () => {
   }
 
   async function editTask(
-    id: number,
+    id: string,
     title: string,
     description: string | null,
     completed: boolean,
@@ -76,7 +76,7 @@ export const useTasksStore = defineStore('tasks', () => {
     }
   }
 
-  async function removeTask(id: number): Promise<void> {
+  async function removeTask(id: string): Promise<void> {
     try {
       await tasksService.deleteTask(id)
       tasks.value = tasks.value.filter((t) => t.id !== id)

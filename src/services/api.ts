@@ -1,96 +1,60 @@
 const BACKEND_URL = import.meta.env.VITE_API_URL
 
-function getHeaders() {
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
+export class ApiError extends Error {
+  readonly status: number
+
+  constructor(status: number, message: string) {
+    super(message)
+    this.name = 'ApiError'
+    this.status = status
   }
-  return headers
 }
 
-function handleResponse(respond: Response) {
-  if (!respond.ok) {
-    const statusMessage = `${respond.status} ${respond.statusText}`
-    console.error('API Error:', statusMessage, respond)
-    throw new Error(`API Error ${statusMessage}`)
+function extractErrorMessage(status: number, body: unknown): string {
+  if (body && typeof body === 'object') {
+    const data = body as Record<string, unknown>
+    if (typeof data.error === 'string') return data.error
+    if (data.error && typeof data.error === 'object') {
+      // Format walidacji Zod: { error: { formErrors, fieldErrors } }
+      const flat = data.error as { formErrors?: unknown[]; fieldErrors?: Record<string, unknown[]> }
+      const messages = [
+        ...(flat.formErrors ?? []).map(String),
+        ...Object.values(flat.fieldErrors ?? {}).flat().map(String),
+      ]
+      if (messages.length > 0) return messages.join(', ')
+    }
+    if (typeof data.detail === 'string') return data.detail
   }
-  return respond.json().catch(() => {
-    throw new Error('Failed to parse API response')
-  })
+  return `API Error ${status}`
+}
+
+async function request<T>(method: string, endpoint: string, body?: unknown): Promise<T> {
+  const token = localStorage.getItem('access_token')
+  let res: Response
+  try {
+    res = await fetch(`${BACKEND_URL}${endpoint}`, {
+      method,
+      headers: {
+        ...(body !== undefined && { 'Content-Type': 'application/json' }),
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
+      ...(body !== undefined && { body: JSON.stringify(body) }),
+    })
+  } catch {
+    throw new ApiError(0, 'Cannot connect to server')
+  }
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => null)
+    throw new ApiError(res.status, extractErrorMessage(res.status, data))
+  }
+  if (res.status === 204) return undefined as T
+  return (await res.json()) as T
 }
 
 export const api = {
-  async get(endpoint: string) {
-    try {
-      const respond = await fetch(`${BACKEND_URL}${endpoint}`, {
-        method: 'GET',
-        headers: getHeaders(),
-        credentials: 'include',
-      })
-      return handleResponse(respond)
-    } catch (e) {
-      console.error('GET request failed:', e)
-      throw e
-    }
-  },
-  async post(endpoint: string, data: unknown) {
-    try {
-      const respond = await fetch(`${BACKEND_URL}${endpoint}`, {
-        method: 'POST',
-        headers: getHeaders(),
-        body: JSON.stringify(data),
-        credentials: 'include',
-        cache: 'no-store',
-      })
-      return handleResponse(respond)
-    } catch (e) {
-      console.error('POST request failed:', e)
-      throw e
-    }
-  },
-  async postForm(endpoint: string, data: Record<string, string>) {
-    try {
-      const form = new URLSearchParams(data)
-      const respond = await fetch(`${BACKEND_URL}${endpoint}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: form,
-        credentials: 'include',
-        cache: 'no-store',
-      })
-      return handleResponse(respond)
-    } catch (e) {
-      console.error('POST FORM request failed:', e)
-      throw e
-    }
-  },
-  async put(endpoint: string, data: unknown) {
-    try {
-      const respond = await fetch(`${BACKEND_URL}${endpoint}`, {
-        method: 'PUT',
-        headers: getHeaders(),
-        body: JSON.stringify(data),
-        credentials: 'include',
-      })
-      return handleResponse(respond)
-    } catch (e) {
-      console.error('PUT request failed:', e)
-      throw e
-    }
-  },
-  async delete(endpoint: string) {
-    try {
-      const respond = await fetch(`${BACKEND_URL}${endpoint}`, {
-        method: 'DELETE',
-        headers: getHeaders(),
-        credentials: 'include',
-        cache: 'no-store',
-      })
-      return handleResponse(respond)
-    } catch (e) {
-      console.error('DELETE request failed:', e)
-      throw e
-    }
-  },
+  get: <T>(endpoint: string) => request<T>('GET', endpoint),
+  post: <T>(endpoint: string, data: unknown) => request<T>('POST', endpoint, data),
+  put: <T>(endpoint: string, data: unknown) => request<T>('PUT', endpoint, data),
+  delete: <T = void>(endpoint: string) => request<T>('DELETE', endpoint),
 }

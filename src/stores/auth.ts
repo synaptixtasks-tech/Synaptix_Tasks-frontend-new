@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { authService } from '../services/authService'
+import { ApiError } from '../services/api'
 import type { User } from '@/types'
 
 export const useAuthStore = defineStore('auth', () => {
-  const token = ref<string | null>(null)
+  const token = ref<string | null>(localStorage.getItem('access_token'))
   const user = ref<User | null>(null)
   const loading = ref(false)
   const error = ref<string | null>(null)
@@ -13,19 +14,16 @@ export const useAuthStore = defineStore('auth', () => {
     loading.value = true
     error.value = null
     try {
-      console.log('Attempting login with username:', username)
       await authService.login(username, password)
+      token.value = localStorage.getItem('access_token')
       await fetchUser()
       return true
     } catch (e: unknown) {
-      const errorMsg = (e as { message: string }).message || 'Login failed'
-      console.error('Login error:', errorMsg)
-      if (errorMsg.includes('401')) {
-        error.value = 'Invalid username or password'
-      } else if (errorMsg.includes('Failed to connect') || errorMsg.includes('fetch')) {
-        error.value = 'Cannot connect to server.'
+      console.error('Login error:', e)
+      if (e instanceof ApiError) {
+        error.value = e.status === 401 ? 'Invalid username or password' : e.message
       } else {
-        error.value = errorMsg
+        error.value = 'Cannot connect to server.'
       }
       return false
     } finally {
@@ -37,21 +35,22 @@ export const useAuthStore = defineStore('auth', () => {
     loading.value = true
     error.value = null
     try {
-      console.log('Attempting register with username:', username)
       await authService.register(username, password)
+      token.value = localStorage.getItem('access_token')
       await fetchUser()
       return true
     } catch (e: unknown) {
-      const errorMsg = (e as { message: string }).message || 'Registration failed'
-      console.error('Register error:', errorMsg)
-      if (errorMsg.includes('422')) {
-        error.value = 'Username min 4 chars, password min 8 chars'
-      } else if (errorMsg.includes('already exists') || errorMsg.includes('409')) {
-        error.value = 'Username already exists'
-      } else if (errorMsg.includes('Failed to connect') || errorMsg.includes('fetch')) {
-        error.value = 'Cannot connect to server.'
+      console.error('Register error:', e)
+      if (e instanceof ApiError) {
+        if (e.status === 409) {
+          error.value = 'Username already exists'
+        } else if (e.status === 400) {
+          error.value = 'Username min 4 chars, password min 8 chars'
+        } else {
+          error.value = e.message
+        }
       } else {
-        error.value = errorMsg
+        error.value = 'Cannot connect to server.'
       }
       return false
     } finally {
@@ -60,11 +59,12 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function fetchUser(): Promise<void> {
-    const CurrentUser = await authService.getCurrentUser()
-    if (CurrentUser) {
-      user.value = CurrentUser
+    const currentUser = await authService.getCurrentUser()
+    if (currentUser) {
+      user.value = currentUser
+      token.value = localStorage.getItem('access_token')
     } else {
-      logout()
+      await logout()
     }
   }
 
